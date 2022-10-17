@@ -2,21 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package patient;
+package doctor;
 
-import doctor.Doctor;
 import person.Person;
 
 /**
  *
  * @author rohitpanicker
  */
-public class Patient {
-
-    
+public class Doctor {
     Person person;
     
-    public Patient(Person person) {
+    public Doctor(Person person) {
         this.person = person;
     }
 
@@ -28,11 +25,10 @@ public class Patient {
         this.person = person;
     }
     
-    public boolean isMatch( Patient patient){
+    public boolean isMatch(Doctor doctorProfile){
         
-        return getPerson().getId().equals(patient.getPerson().getId());
+        return getPerson().getId().equals(doctorProfile.getPerson().getId());
     }
-    
     
     
     

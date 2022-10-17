@@ -4,10 +4,38 @@
  */
 package patient;
 
+import doctor.Doctor;
+import java.util.ArrayList;
+import person.Person;
+
 /**
  *
  * @author rohitpanicker
  */
 public class PatientDirectory {
+     ArrayList<Patient> patientList ;
     
+      public PatientDirectory (){
+          
+       patientList = new ArrayList();
+
+    }
+
+    public Patient newPatient(Person newPatient) {
+
+        Patient patient = new Patient(newPatient);
+        patientList.add(patient);
+        return patient;
+    }
+
+    public Patient findPatient(Patient patient) {
+
+        for (Patient patientProfile : patientList) {
+
+            if (patientProfile.isMatch(patient)) {
+                return patientProfile;
+            }
+        }
+            return null; 
+         }
 }
