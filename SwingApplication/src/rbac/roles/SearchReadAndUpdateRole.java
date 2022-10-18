@@ -9,5 +9,9 @@ package rbac.roles;
  * @author rohitpanicker
  */
 public class SearchReadAndUpdateRole extends Role{
+
+    public SearchReadAndUpdateRole() {
+         super(true, true, true, false);
+    }
     
 }

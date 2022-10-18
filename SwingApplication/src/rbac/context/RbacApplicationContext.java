@@ -12,7 +12,7 @@ import rbac.roles.Role;
  */
 public class RbacApplicationContext {
     
-    private Role roleContext ;
+    private Role roleContext = null ;
 
     public Role getRoleContext() {
         return roleContext;
