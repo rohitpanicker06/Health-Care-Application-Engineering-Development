@@ -15,18 +15,9 @@ import vitalSigns.VitalSigns;
  */
 public class Encounter {
     
-    private Doctor doctor;
     private Date encounterDate;
     private VitalSigns vitalSigns;
     private LocalTime localTime;
-
-    public Doctor getDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
-    }
 
     public Date getEncounterDate() {
         return encounterDate;
@@ -52,8 +43,8 @@ public class Encounter {
         this.localTime = localTime;
     }
 
-    public Encounter(Doctor doctor, Date encounterDate, VitalSigns vitalSigns, LocalTime localTime) {
-        this.doctor = doctor;
+    public Encounter(Date encounterDate, VitalSigns vitalSigns, LocalTime localTime) {
+        
         this.encounterDate = encounterDate;
         this.vitalSigns = vitalSigns;
         this.localTime = localTime;

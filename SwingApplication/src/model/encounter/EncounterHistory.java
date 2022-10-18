@@ -26,9 +26,9 @@ public class EncounterHistory {
 
     }
 
-    public Encounter newEcounter(Doctor doctor, Date encounterDate, VitalSigns vitalSigns, LocalTime localTime) {
+    public Encounter newEcounter( Date encounterDate, VitalSigns vitalSigns, LocalTime localTime) {
 
-        Encounter encounter = new Encounter(doctor, encounterDate, vitalSigns, localTime);
+        Encounter encounter = new Encounter(encounterDate, vitalSigns, localTime);
         encounterList.add(encounter);
         return encounter;
     }

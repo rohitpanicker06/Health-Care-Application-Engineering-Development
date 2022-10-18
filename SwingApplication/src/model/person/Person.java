@@ -16,7 +16,6 @@ public class Person {
     private String name;
     private String emailid;
     private long phoneNumber;
-    private String homeAddress;
     private House residence;
     
      public Person (String id){
@@ -64,13 +63,7 @@ public class Person {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getHomeAddress() {
-        return homeAddress;
-    }
-
-    public void setHomeAddress(String homeAddress) {
-        this.homeAddress = homeAddress;
-    }
+   
     
     public boolean isMatch(String id){
         

@@ -4,10 +4,17 @@
  */
 package house;
 
+import us.state.city.community.Community;
+
 /**
  *
  * @author rohitpanicker
  */
 public class House {
+    
+    private Community community;
+    private int buildingNumber;
+    private int apartmentNumber;
+    
     
 }

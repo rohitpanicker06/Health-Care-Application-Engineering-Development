@@ -6,6 +6,7 @@ package hospital;
 
 import java.util.ArrayList;
 import person.Person;
+import us.state.city.City;
 
 /**
  *
@@ -13,6 +14,7 @@ import person.Person;
  */
 public class HospitalDirectory {
      private ArrayList<Hospital> hospitalList ;
+     private City city;
     
     public HospitalDirectory (){
           

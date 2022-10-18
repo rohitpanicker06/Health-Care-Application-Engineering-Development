@@ -4,6 +4,8 @@
  */
 package hospital;
 
+import us.state.city.community.Community;
+
 /**
  *
  * @author rohitpanicker
@@ -11,6 +13,7 @@ package hospital;
 public class Hospital {
 
 private String hospitalName;
+private Community community;
 
     public Hospital(String hospitalName) {
         this.hospitalName = hospitalName;
