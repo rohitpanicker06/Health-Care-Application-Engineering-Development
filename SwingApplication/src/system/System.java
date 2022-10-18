@@ -4,10 +4,20 @@
  */
 package system;
 
+import doctor.DoctorDirectory;
+import patient.PatientDirectory;
+import person.PersonDirectory;
+import us.state.city.City;
+
 /**
  *
  * @author rohitpanicker
  */
 public class System {
+    
+    DoctorDirectory doctorDirectory;
+    PatientDirectory patientDirectory;
+    PersonDirectory personDirectory;
+    City city;
     
 }

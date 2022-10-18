@@ -4,6 +4,8 @@
  */
 package person;
 
+import house.House;
+
 /**
  *
  * @author rohitpanicker
@@ -15,10 +17,19 @@ public class Person {
     private String emailid;
     private long phoneNumber;
     private String homeAddress;
+    private House residence;
     
      public Person (String id){
         
         this.id = id;
+    }
+
+    public House getResidence() {
+        return residence;
+    }
+
+    public void setResidence(House residence) {
+        this.residence = residence;
     }
 
     public String getId() {
