@@ -11,9 +11,9 @@ import java.util.ArrayList;
  * @author rohitpanicker
  */
 public class PersonDirectory {
-    ArrayList<Person> personList ;
+    private ArrayList<Person> personList ;
     
-      public PersonDirectory (){
+    public PersonDirectory (){
           
        personList = new ArrayList();
 

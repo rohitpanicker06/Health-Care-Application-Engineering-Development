@@ -11,7 +11,7 @@ import person.Person;
  * @author rohitpanicker
  */
 public class Doctor {
-    Person person;
+    private Person person;
     
     public Doctor(Person person) {
         this.person = person;

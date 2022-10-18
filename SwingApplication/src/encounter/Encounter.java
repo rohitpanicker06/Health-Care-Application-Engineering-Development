@@ -4,10 +4,64 @@
  */
 package encounter;
 
+import doctor.Doctor;
+import java.time.LocalTime;
+import java.util.Date;
+import vitalSigns.VitalSigns;
+
 /**
  *
  * @author rohitpanicker
  */
 public class Encounter {
+    
+    private Doctor doctor;
+    private Date encounterDate;
+    private VitalSigns vitalSigns;
+    private LocalTime localTime;
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
+    public Date getEncounterDate() {
+        return encounterDate;
+    }
+
+    public void setEncounterDate(Date encounterDate) {
+        this.encounterDate = encounterDate;
+    }
+
+    public VitalSigns getVitalSigns() {
+        return vitalSigns;
+    }
+
+    public void setVitalSigns(VitalSigns vitalSigns) {
+        this.vitalSigns = vitalSigns;
+    }
+
+    public LocalTime getLocalTime() {
+        return localTime;
+    }
+
+    public void setLocalTime(LocalTime localTime) {
+        this.localTime = localTime;
+    }
+
+    public Encounter(Doctor doctor, Date encounterDate, VitalSigns vitalSigns, LocalTime localTime) {
+        this.doctor = doctor;
+        this.encounterDate = encounterDate;
+        this.vitalSigns = vitalSigns;
+        this.localTime = localTime;
+    }
+    
+    public boolean matchDate(Date date)
+    {
+        return getEncounterDate().compareTo(date) == 0;
+    }
     
 }

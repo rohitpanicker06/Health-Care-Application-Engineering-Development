@@ -4,7 +4,7 @@
  */
 package patient;
 
-import doctor.Doctor;
+
 import java.util.ArrayList;
 import person.Person;
 
@@ -13,7 +13,7 @@ import person.Person;
  * @author rohitpanicker
  */
 public class PatientDirectory {
-     ArrayList<Patient> patientList ;
+     private ArrayList<Patient> patientList ;
     
       public PatientDirectory (){
           

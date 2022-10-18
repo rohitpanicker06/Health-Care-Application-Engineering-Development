@@ -13,7 +13,7 @@ import person.Person;
  */
 public class DoctorDirectory {
     
-     ArrayList<Doctor> doctorList ;
+     private ArrayList<Doctor> doctorList ;
     
       public DoctorDirectory (){
           

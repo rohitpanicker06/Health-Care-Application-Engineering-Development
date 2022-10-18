@@ -4,7 +4,8 @@
  */
 package patient;
 
-import doctor.Doctor;
+
+import encounter.EncounterHistory;
 import person.Person;
 
 /**
@@ -14,10 +15,13 @@ import person.Person;
 public class Patient {
 
     
-    Person person;
+    private Person person;
+    private EncounterHistory encounterHistory;
+    
     
     public Patient(Person person) {
         this.person = person;
+        this.encounterHistory = new EncounterHistory();
     }
 
     public Person getPerson() {

@@ -2,16 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package vitalSigns;
+package system;
 
 /**
  *
  * @author rohitpanicker
  */
-public class VitalSigns {
+public class System {
     
-    int bodyTemperature;
-    int pulseRate;
-    int respirationRate;
-    String bloodPressure;
 }
