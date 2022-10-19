@@ -4,6 +4,8 @@
  */
 package ui;
 
+import javax.swing.JOptionPane;
+import rbac.context.RbacApplicationContext;
 import static ui.HomeScreen.applicationContext;
 
 /**
@@ -18,13 +20,29 @@ public class HomeScreenNotDefault extends javax.swing.JPanel {
     public HomeScreenNotDefault() {
         initComponents();
          checkLoginLabel();
+         checkForLogoutLabel();
     }
     private void checkLoginLabel()
     {
         if(applicationContext.getRoleContext() == null)
         {
+            loginToConitueLabel.setVisible(true);
+            loginToContinuePanel.setVisible(true);
+        }else{
             loginToConitueLabel.setVisible(false);
             loginToContinuePanel.setVisible(false);
+        }
+    }
+    
+    private void checkForLogoutLabel()
+    {
+        if(RbacApplicationContext.getInstance().getRoleContext() == null)
+        {
+           logoutLabel.setVisible(false);
+            
+        }else{
+            logoutLabel.setVisible(true);
+            
         }
     }
 
@@ -39,6 +57,7 @@ public class HomeScreenNotDefault extends javax.swing.JPanel {
 
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        logoutLabel = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -54,6 +73,15 @@ public class HomeScreenNotDefault extends javax.swing.JPanel {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("MEDICAL RESOURCE FINDER");
 
+        logoutLabel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        logoutLabel.setForeground(new java.awt.Color(255, 255, 255));
+        logoutLabel.setText("Logout");
+        logoutLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                logoutLabelMousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -61,13 +89,17 @@ public class HomeScreenNotDefault extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(479, 479, 479)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(550, Short.MAX_VALUE))
+                .addGap(205, 205, 205)
+                .addComponent(logoutLabel)
+                .addContainerGap(302, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                    .addComponent(logoutLabel))
                 .addContainerGap())
         );
 
@@ -143,6 +175,18 @@ public class HomeScreenNotDefault extends javax.swing.JPanel {
         add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 260, 860));
     }// </editor-fold>//GEN-END:initComponents
 
+    private void logoutLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLabelMousePressed
+        // TODO add your handling code here:
+
+        RbacApplicationContext rbacApplicationContext = RbacApplicationContext.getInstance();
+        rbacApplicationContext.setRoleContext(null);
+        JOptionPane.showMessageDialog(this, "Logged Out");
+        HomeScreenNotDefault homeScreenNotDefault = new HomeScreenNotDefault();
+        HomeScreen.homeScreen.getjSplitPane1().setRightComponent(homeScreenNotDefault);
+        HomeScreen.homeScreen.getjSplitPane1().setDividerLocation(150);
+
+    }//GEN-LAST:event_logoutLabelMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel3;
@@ -152,5 +196,6 @@ public class HomeScreenNotDefault extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JLabel loginToConitueLabel;
     private javax.swing.JPanel loginToContinuePanel;
+    private javax.swing.JLabel logoutLabel;
     // End of variables declaration//GEN-END:variables
 }

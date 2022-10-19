@@ -6,6 +6,7 @@ package ui;
 
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import rbac.context.RbacApplicationContext;
@@ -19,17 +20,21 @@ public class HomeScreen extends javax.swing.JFrame {
     /**
      * Creates new form HomeScreen
      */
-    public static RbacApplicationContext applicationContext = new RbacApplicationContext();
+    public static RbacApplicationContext applicationContext = RbacApplicationContext.getInstance();
     public HomeScreen() {
         initComponents();
         checkLoginLabel();
         
     }
     
+    
     private void checkLoginLabel()
     {
         if(applicationContext.getRoleContext() == null)
         {
+            loginToConitueLabel.setVisible(true);
+            loginToContinuePanel.setVisible(true);
+        }else{
             loginToConitueLabel.setVisible(false);
             loginToContinuePanel.setVisible(false);
         }
@@ -248,7 +253,7 @@ public class HomeScreen extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(479, 479, 479)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(550, Short.MAX_VALUE))
+                .addGap(550, 550, 550))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -383,16 +388,21 @@ public class HomeScreen extends javax.swing.JFrame {
 
     private void btnLoginMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMousePressed
         // TODO add your handling code here:
+        if(RbacApplicationContext.getInstance().getRoleContext() == null){
         setColor(btnLogin);
         resetColor(btnHome);
         resetColor(btnDirectory);
         LoginJPanel loginJPanel = new LoginJPanel();
         jSplitPane1.setRightComponent(loginJPanel);
         jSplitPane1.setDividerLocation(150);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "You are already logged in");
+        }
         
         
     }//GEN-LAST:event_btnLoginMousePressed
-
+     public static HomeScreen homeScreen;
     /**
      * @param args the command line arguments
      */
@@ -423,7 +433,8 @@ public class HomeScreen extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HomeScreen().setVisible(true);
+                homeScreen = new HomeScreen();
+                homeScreen.setVisible(true);
                 
                 
             }

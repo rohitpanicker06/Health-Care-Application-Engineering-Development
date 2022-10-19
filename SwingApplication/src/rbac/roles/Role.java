@@ -11,19 +11,13 @@ import rbac.context.RbacApplicationContext;
  * @author rohitpanicker
  */
 public class Role {
-    RbacApplicationContext rbacApplicationContext = new RbacApplicationContext();
+    
     private boolean read = false;
     private boolean write= false;
     private boolean search = false;
     private boolean create = false;
 
-    public RbacApplicationContext getRbacApplicationContext() {
-        return rbacApplicationContext;
-    }
-
-    public void setRbacApplicationContext(RbacApplicationContext rbacApplicationContext) {
-        this.rbacApplicationContext = rbacApplicationContext;
-    }
+   
 
     public boolean isRead() {
         return read;
@@ -64,9 +58,6 @@ public class Role {
         this.create = create;
     }
     
-    public void setApplicationContext(Role role)
-    {
-        rbacApplicationContext.setRoleContext(role);
-    }
+  
     
 }

@@ -11,8 +11,21 @@ import rbac.roles.Role;
  * @author rohitpanicker
  */
 public class RbacApplicationContext {
+    private static RbacApplicationContext rbacApplicationContext = null;
+     private Role roleContext = null ;
+    private RbacApplicationContext()
+    {
+       
+    }
     
-    private Role roleContext = null ;
+    public static RbacApplicationContext getInstance() 
+    { 
+        if (rbacApplicationContext == null) 
+            rbacApplicationContext = new RbacApplicationContext(); 
+  
+        return rbacApplicationContext; 
+    } 
+   
 
     public Role getRoleContext() {
         return roleContext;
