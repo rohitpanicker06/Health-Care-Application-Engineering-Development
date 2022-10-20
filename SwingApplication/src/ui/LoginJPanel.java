@@ -4,6 +4,7 @@
  */
 package ui;
 
+import java.awt.Component;
 import javax.swing.JOptionPane;
 import rbac.context.RbacApplicationContext;
 import rbac.roles.AdminRole;
@@ -231,17 +232,21 @@ public class LoginJPanel extends javax.swing.JPanel {
         int userTypeIndex = userTypeDropBox.getSelectedIndex();
         System.out.println("index = " +userTypeIndex);
         Role role = null;
+        Component comp = null;
         if(validate(userName,password,userTypeIndex))
         {
             switch (userTypeIndex) {
                 case 0:
                     role = new AdminRole();
+                    comp= new HomeScreenNotDefault();
                     break;
                 case 1:
                     role = new ReadOnlyRole();
+                    comp= new PatientPanel();
                     break;
                 case 2:
                     role = new SearchReadAndUpdateRole();
+                    comp= new DoctorPanel();
                     break;
                 case 3:
                     role = new AdminRole();
@@ -257,8 +262,8 @@ public class LoginJPanel extends javax.swing.JPanel {
             RbacApplicationContext rbacApplicationContext = RbacApplicationContext.getInstance();
             rbacApplicationContext.setRoleContext(role);
             JOptionPane.showMessageDialog(this, "Login Successfull");
-            HomeScreenNotDefault homeScreenNotDefault = new HomeScreenNotDefault();
-            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(homeScreenNotDefault);
+            
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(comp);
             HomeScreen.homeScreen.getjSplitPane1().setDividerLocation(150);
         }  
         

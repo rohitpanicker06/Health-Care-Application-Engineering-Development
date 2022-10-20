@@ -17,6 +17,7 @@ public class Patient {
     
     private Person person;
     private EncounterHistory encounterHistory;
+    private int insuranceId;
     
     
     public Patient(Person person) {
