@@ -21,6 +21,23 @@ public class DoctorPanel extends javax.swing.JPanel {
         searchComboBox.setVisible(false);
         searchTextField.setVisible(false);
         goButton.setVisible(false);
+        makeLabelsDisappear();
+    }
+    
+    public void makeLabelsDisappear()
+    {
+        searchComboBox.setVisible(false);
+        searchTextField.setVisible(false);
+        goButton.setVisible(false);
+        patientIDLabel.setVisible(false);
+        nameLabel.setVisible(false);
+        ageLabel.setVisible(false);
+        genderLabel.setVisible(false);
+        addressLabel.setVisible(false);
+        insuranceIdLabel.setVisible(false);
+        emailIdLabel.setVisible(false);
+        phoneNumberLabel.setVisible(false);
+
     }
 
     /**
@@ -38,21 +55,21 @@ public class DoctorPanel extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRecords = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        patientIDLabel = new javax.swing.JLabel();
+        nameLabel = new javax.swing.JLabel();
+        ageLabel = new javax.swing.JLabel();
+        phoneNumberLabel = new javax.swing.JLabel();
+        genderLabel = new javax.swing.JLabel();
+        addressLabel = new javax.swing.JLabel();
+        insuranceIdLabel = new javax.swing.JLabel();
+        emailIdLabel = new javax.swing.JLabel();
         searchComboBox = new javax.swing.JComboBox<>();
         searchTextField = new javax.swing.JTextField();
         goButton = new javax.swing.JButton();
@@ -124,18 +141,58 @@ public class DoctorPanel extends javax.swing.JPanel {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
+        jButton2.setText("Search Patient");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Encounter History");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("View Patient Details");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("View All Patients");
+
+        jButton3.setText("Record Encounter");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(766, 766, 766))
+                .addGap(29, 29, 29)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 260, 860));
@@ -155,54 +212,29 @@ public class DoctorPanel extends javax.swing.JPanel {
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 1060, 200));
 
-        jButton1.setText("View All Patients");
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 430, 160, 40));
+        patientIDLabel.setText("Patient ID:");
+        add(patientIDLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 430, 80, 30));
 
-        jButton2.setText("Search Patient");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 300, 160, 40));
+        nameLabel.setText("Name");
+        add(nameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 500, 80, 30));
 
-        jButton3.setText("Record Encounter");
-        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 430, 160, 40));
+        ageLabel.setText("Age");
+        add(ageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 560, 80, 30));
 
-        jLabel1.setText("Patient ID:");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 560, 80, 30));
+        phoneNumberLabel.setText("Phone Number:");
+        add(phoneNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 550, 100, 30));
 
-        jLabel2.setText("Name");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 630, 80, 30));
+        genderLabel.setText("Gender");
+        add(genderLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 620, 80, 30));
 
-        jLabel4.setText("Age");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 690, 80, 30));
+        addressLabel.setText("Address");
+        add(addressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 690, 80, 30));
 
-        jLabel6.setText("Phone Number:");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 690, 100, 30));
+        insuranceIdLabel.setText("Insurance ID");
+        add(insuranceIdLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 430, 80, 30));
 
-        jLabel7.setText("Gender");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 750, 80, 30));
-
-        jLabel8.setText("Address");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 810, 80, 30));
-
-        jLabel9.setText("Insurance ID");
-        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 560, 80, 30));
-
-        jLabel10.setText("Email ID:");
-        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 620, 80, 30));
-
-        jButton4.setText("View Patient Details");
-        add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 430, 160, 40));
-
-        jButton5.setText("Encounter History");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 430, 160, 40));
+        emailIdLabel.setText("Email ID:");
+        add(emailIdLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 490, 80, 30));
 
         searchComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Name", "Insurance ID", "Mobile Number", "Age" }));
         add(searchComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 310, 130, -1));
@@ -254,29 +286,45 @@ public class DoctorPanel extends javax.swing.JPanel {
         HomeScreen.homeScreen.getjSplitPane1().setDividerLocation(150);
     }//GEN-LAST:event_logoutLabelMousePressed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        
+        searchComboBox.setVisible(false);
+        searchTextField.setVisible(false);
+        goButton.setVisible(false);
+        patientIDLabel.setVisible(true);
+        nameLabel.setVisible(true);
+        ageLabel.setVisible(true);
+        genderLabel.setVisible(true);
+        addressLabel.setVisible(true);
+        insuranceIdLabel.setVisible(true);
+        emailIdLabel.setVisible(true);
+        phoneNumberLabel.setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel addressLabel;
+    private javax.swing.JLabel ageLabel;
+    private javax.swing.JLabel emailIdLabel;
+    private javax.swing.JLabel genderLabel;
     private javax.swing.JButton goButton;
+    private javax.swing.JLabel insuranceIdLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel logoutLabel;
+    private javax.swing.JLabel nameLabel;
+    private javax.swing.JLabel patientIDLabel;
+    private javax.swing.JLabel phoneNumberLabel;
     private javax.swing.JComboBox<String> searchComboBox;
     private javax.swing.JTextField searchTextField;
     private javax.swing.JTable tblRecords;

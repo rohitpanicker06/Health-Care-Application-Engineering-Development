@@ -25,6 +25,7 @@ public class HomeScreen extends javax.swing.JFrame {
         initComponents();
         checkLoginLabel();
         
+        
     }
     
     
