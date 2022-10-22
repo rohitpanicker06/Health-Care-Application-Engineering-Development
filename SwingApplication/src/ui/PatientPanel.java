@@ -177,7 +177,7 @@ public class PatientPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
           int selectedRowIndex = tblRecords.getSelectedRow();
         if (selectedRowIndex == -1) {
-            JOptionPane.showMessageDialog(this, "No Patient is selected, Please Try Again");
+            JOptionPane.showMessageDialog(this, "No Hospital is selected, Please Try Again");
             return;
         }
         Hospital hospital = (Hospital) tblRecords.getValueAt(selectedRowIndex, 0);
