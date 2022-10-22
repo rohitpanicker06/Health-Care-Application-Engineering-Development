@@ -4,6 +4,7 @@
  */
 package hospital;
 
+import doctor.DoctorDirectory;
 import us.state.city.community.Community;
 
 /**
@@ -15,13 +16,24 @@ public class Hospital {
 private String hospitalName;
 private Community community;
 private int hospitalId;
+private DoctorDirectory doctorDirectory = new DoctorDirectory();
 
     public Hospital(String hospitalName, Community community, int hospitalId) {
         this.hospitalName = hospitalName;
         this.community = community;
         this.hospitalId = hospitalId;
+        
     }
 
+    public DoctorDirectory getDoctorDirectory() {
+        return doctorDirectory;
+    }
+
+    public void setDoctorDirectory(DoctorDirectory doctorDirectory) {
+        this.doctorDirectory = doctorDirectory;
+    }
+
+   
     public int getHospitalId() {
         return hospitalId;
     }

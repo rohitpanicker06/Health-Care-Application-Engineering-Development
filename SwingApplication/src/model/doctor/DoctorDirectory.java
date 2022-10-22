@@ -14,6 +14,16 @@ import person.Person;
 public class DoctorDirectory {
     
      private ArrayList<Doctor> doctorList ;
+
+    public ArrayList<Doctor> getDoctorList() {
+        return doctorList;
+    }
+
+    public void setDoctorList(ArrayList<Doctor> doctorList) {
+        this.doctorList = doctorList;
+    }
+     
+     
     
       public DoctorDirectory (){
           

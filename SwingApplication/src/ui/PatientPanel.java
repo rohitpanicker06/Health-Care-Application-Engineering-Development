@@ -4,6 +4,9 @@
  */
 package ui;
 
+import doctor.Doctor;
+import doctor.DoctorDirectory;
+import encounter.Encounter;
 import hospital.Hospital;
 import hospital.HospitalDirectory;
 import java.util.ArrayList;
@@ -172,6 +175,66 @@ public class PatientPanel extends javax.swing.JPanel {
 
     private void btnViewDoctorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDoctorsActionPerformed
         // TODO add your handling code here:
+          int selectedRowIndex = tblRecords.getSelectedRow();
+        if (selectedRowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "No Patient is selected, Please Try Again");
+            return;
+        }
+        Hospital hospital = (Hospital) tblRecords.getValueAt(selectedRowIndex, 0);
+        populateTableRecordsWithEncounterHistory(hospital);
+    }                                                      
+    private void populateTableRecordsWithEncounterHistory(Hospital hospital)
+    {
+        
+         DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+         try{
+        TableColumn tableColumn = tblRecords.getColumnModel().getColumn(4);
+        tblRecords.removeColumn(tableColumn);
+        
+        }catch(Exception e)
+        {
+            System.out.println("Error while deleting table column 4");
+        }
+        
+        try{
+        TableColumn tableColumn_two = tblRecords.getColumnModel().getColumn(4);
+        tblRecords.removeColumn(tableColumn_two);
+        }catch(Exception e)
+        {
+            System.out.println("Error while deleting table column 5");
+        }
+        //tableModel.addColumn("Blood Pressure");
+        //tableModel.addColumn("Doctor Name");
+         JTableHeader th = tblRecords.getTableHeader();
+         TableColumnModel tcm = th.getColumnModel();
+         TableColumn tc = tcm.getColumn(0);
+        tc.setHeaderValue( "ID" );
+        TableColumn tc_one = tcm.getColumn(1);
+        tc_one.setHeaderValue("Doctor Name");
+        //TableColumn tc_two = tcm.getColumn(2);
+       // tc_two.setHeaderValue("Pulse Rate");
+       // TableColumn tc_three = tcm.getColumn(3);
+        //tc_three.setHeaderValue("Respiration Rate");
+       
+        
+        th.repaint();
+        tableModel.setRowCount(0);
+        DoctorDirectory doctorDirectory = hospital.getDoctorDirectory();
+        try {
+            for (Doctor  doctor : doctorDirectory.getDoctorList()) {
+
+                Object[] row = new Object[2];
+                row[0] = doctor;
+                row[1] = doctor.getPerson().getName();
+                tableModel.addRow(row);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occured while populating Table e= " + e.getMessage());
+        }
+        
+        
+    
     }//GEN-LAST:event_btnViewDoctorsActionPerformed
 
     private void btnNearbyHospitalsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNearbyHospitalsActionPerformed

@@ -30,6 +30,9 @@ public class Doctor {
         return getPerson().getId().equals(doctorProfile.getPerson().getId());
     }
     
-    
+     @Override
+    public String toString() {
+        return String.valueOf(getPerson().getId());
+    }
     
 }
