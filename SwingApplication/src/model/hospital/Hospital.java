@@ -14,6 +14,29 @@ public class Hospital {
 
 private String hospitalName;
 private Community community;
+private int hospitalId;
+
+    public Hospital(String hospitalName, Community community, int hospitalId) {
+        this.hospitalName = hospitalName;
+        this.community = community;
+        this.hospitalId = hospitalId;
+    }
+
+    public int getHospitalId() {
+        return hospitalId;
+    }
+
+    public void setHospitalId(int hospitalId) {
+        this.hospitalId = hospitalId;
+    }
+
+    public Community getCommunity() {
+        return community;
+    }
+
+    public void setCommunity(Community community) {
+        this.community = community;
+    }
 
     public Hospital(String hospitalName) {
         this.hospitalName = hospitalName;
@@ -37,6 +60,9 @@ private Community community;
         }
     }
 
-    
+     @Override
+    public String toString() {
+        return String.valueOf(getHospitalId());
+    }
     
 }

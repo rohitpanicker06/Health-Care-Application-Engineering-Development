@@ -113,7 +113,8 @@ public class DoctorPanel extends javax.swing.JPanel {
         {
             System.out.println("Error while deleting table column 5");
         }
-        
+        th.repaint();
+        tableModel.setRowCount(0);
         try {
             for (Patient  patient : PatientDirectory.patientList) {
 

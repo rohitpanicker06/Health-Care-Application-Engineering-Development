@@ -7,20 +7,34 @@ package hospital;
 import java.util.ArrayList;
 import person.Person;
 import us.state.city.City;
+import us.state.city.community.Community;
 
 /**
  *
  * @author rohitpanicker
  */
 public class HospitalDirectory {
-     private ArrayList<Hospital> hospitalList ;
-     private City city;
-    
-    public HospitalDirectory (){
-          
-       hospitalList = new ArrayList();
+     private static ArrayList<Hospital> hospitalList = hospitalList = new ArrayList();
+     
+     static{
+         City city = new City("Massacheuttus", "USA", "Boston");
+         Community community  = new Community (city, "Huntington", "251","02115");
+         Hospital hospital_one = new Hospital("Harvard Medical Center", community, 881);
+         hospitalList.add(hospital_one);
+         Hospital hospital_two = new Hospital("Boston Medical Center", community, 882);
+         hospitalList.add(hospital_two);
+         
+     }
 
+    public ArrayList<Hospital> getHospitalList() {
+        return hospitalList;
     }
+
+    public static void setHospitalList(ArrayList<Hospital> hospitalList) {
+        HospitalDirectory.hospitalList = hospitalList;
+    }
+    
+   
 
     public Hospital newHospital(String name) {
 

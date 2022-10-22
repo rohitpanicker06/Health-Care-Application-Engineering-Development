@@ -14,6 +14,22 @@ public class Community {
     
     private City city;
 
+    public Community(City city, String communityName, String location, String zipCode) {
+        this.city = city;
+        this.communityName = communityName;
+        this.location = location;
+        this.zipCode = zipCode;
+    }
+    private String communityName;
+
+    public String getCommunityName() {
+        return communityName;
+    }
+
+    public void setCommunityName(String communityName) {
+        this.communityName = communityName;
+    }
+
     public City getCity() {
         return city;
     }

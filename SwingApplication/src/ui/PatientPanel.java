@@ -4,7 +4,17 @@
  */
 package ui;
 
+import hospital.Hospital;
+import hospital.HospitalDirectory;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import patient.Patient;
+import patient.PatientDirectory;
+import rbac.application.user.User;
 import rbac.context.RbacApplicationContext;
 
 /**
@@ -166,13 +176,69 @@ public class PatientPanel extends javax.swing.JPanel {
 
     private void btnNearbyHospitalsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNearbyHospitalsActionPerformed
         // TODO add your handling code here:
-       // String city = getLoggedInPatient();
-       
+        User user = getLoggedInUser();
+        String city = user.getPerson().getResidence().getCommunity().getCity().getName();
+        String zipcode = user.getPerson().getResidence().getCommunity().getZipCode();
+        HospitalDirectory hospitalDirectory = new HospitalDirectory();
+        ArrayList<Hospital> nearbyHospital = searchNearbyHospitalsByCity(city, hospitalDirectory);
+        populateNearbyHospitalsTable(nearbyHospital);
+        
         
     }//GEN-LAST:event_btnNearbyHospitalsActionPerformed
-    private void getLoggedInPatient()
+    private void populateNearbyHospitalsTable(ArrayList<Hospital> nearbyHospitalList)
     {
+        DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+        tableModel.setRowCount(0);
+      
+         JTableHeader th = tblRecords.getTableHeader();
+         TableColumnModel tcm = th.getColumnModel();
+         TableColumn tc = tcm.getColumn(0);
+        tc.setHeaderValue( "ID" );
+        TableColumn tc_one = tcm.getColumn(1);
+        tc_one.setHeaderValue("Hospital Name");
+        TableColumn tc_two = tcm.getColumn(2);
+        tc_two.setHeaderValue("Community Name");
+        th.repaint();
+        tableModel.setRowCount(0);
         
+        
+        try {
+            for (Hospital  hospital : nearbyHospitalList) {
+
+                Object[] row = new Object[3];
+                row[0] = hospital;
+                row[1] = hospital.getHospitalName();
+                row[2] = hospital.getCommunity().getCommunityName();
+               
+                tableModel.addRow(row);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occured while populating Table e= " + e.getMessage());
+        }
+
+    }
+    
+    private ArrayList<Hospital> searchNearbyHospitalsByCity(String city, HospitalDirectory hospitalDirectory)
+    {   
+        ArrayList<Hospital> result = new ArrayList<Hospital>();
+        for(Hospital hospital : hospitalDirectory.getHospitalList())
+        {
+            if(hospital.getCommunity().getCity().getName().equalsIgnoreCase(city))
+            {
+                result.add(hospital);
+            }else{
+                continue;
+            }
+        }
+        return result;
+        
+    }
+    
+    private User getLoggedInUser()
+    {
+        User user = RbacApplicationContext.getInstance().getUser();
+        return user;
     }
     private void logoutLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLabelMousePressed
         // TODO add your handling code here:

@@ -14,6 +14,12 @@ public class House {
     
     private Community community;
 
+    public House(Community community, int buildingNumber, int apartmentNumber) {
+        this.community = community;
+        this.buildingNumber = buildingNumber;
+        this.apartmentNumber = apartmentNumber;
+    }
+
     public Community getCommunity() {
         return community;
     }
