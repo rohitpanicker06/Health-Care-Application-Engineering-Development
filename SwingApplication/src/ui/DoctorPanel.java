@@ -86,6 +86,34 @@ public class DoctorPanel extends javax.swing.JPanel {
      private void populateAndFillRecordsTable() {
         DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
         tableModel.setRowCount(0);
+      
+         JTableHeader th = tblRecords.getTableHeader();
+         TableColumnModel tcm = th.getColumnModel();
+         TableColumn tc = tcm.getColumn(0);
+        tc.setHeaderValue( "ID" );
+        TableColumn tc_one = tcm.getColumn(1);
+        tc_one.setHeaderValue("Name");
+        TableColumn tc_two = tcm.getColumn(2);
+        tc_two.setHeaderValue("Gender");
+        TableColumn tc_three = tcm.getColumn(3);
+        tc_three.setHeaderValue("Age");
+        try{
+        TableColumn tableColumn = tblRecords.getColumnModel().getColumn(4);
+        tblRecords.removeColumn(tableColumn);
+        
+        }catch(Exception e)
+        {
+            System.out.println("Error while deleting table column 4");
+        }
+        
+        try{
+        TableColumn tableColumn_two = tblRecords.getColumnModel().getColumn(4);
+        tblRecords.removeColumn(tableColumn_two);
+        }catch(Exception e)
+        {
+            System.out.println("Error while deleting table column 5");
+        }
+        
         try {
             for (Patient  patient : PatientDirectory.patientList) {
 
@@ -399,6 +427,22 @@ public class DoctorPanel extends javax.swing.JPanel {
     {
         
          DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+         try{
+        TableColumn tableColumn = tblRecords.getColumnModel().getColumn(4);
+        tblRecords.removeColumn(tableColumn);
+        
+        }catch(Exception e)
+        {
+            System.out.println("Error while deleting table column 4");
+        }
+        
+        try{
+        TableColumn tableColumn_two = tblRecords.getColumnModel().getColumn(4);
+        tblRecords.removeColumn(tableColumn_two);
+        }catch(Exception e)
+        {
+            System.out.println("Error while deleting table column 5");
+        }
         tableModel.addColumn("Blood Pressure");
         tableModel.addColumn("Doctor Name");
          JTableHeader th = tblRecords.getTableHeader();
@@ -448,6 +492,7 @@ public class DoctorPanel extends javax.swing.JPanel {
         
         RbacApplicationContext rbacApplicationContext = RbacApplicationContext.getInstance();
         rbacApplicationContext.setRoleContext(null);
+        rbacApplicationContext.setUser(null);
         JOptionPane.showMessageDialog(this, "Logged Out");
         HomeScreenNotDefault homeScreenNotDefault = new HomeScreenNotDefault();
         HomeScreen.homeScreen.getjSplitPane1().setRightComponent(homeScreenNotDefault);

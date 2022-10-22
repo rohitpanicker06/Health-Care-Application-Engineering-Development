@@ -180,6 +180,7 @@ public class HomeScreenNotDefault extends javax.swing.JPanel {
 
         RbacApplicationContext rbacApplicationContext = RbacApplicationContext.getInstance();
         rbacApplicationContext.setRoleContext(null);
+        rbacApplicationContext.setUser(null);
         JOptionPane.showMessageDialog(this, "Logged Out");
         HomeScreenNotDefault homeScreenNotDefault = new HomeScreenNotDefault();
         HomeScreen.homeScreen.getjSplitPane1().setRightComponent(homeScreenNotDefault);

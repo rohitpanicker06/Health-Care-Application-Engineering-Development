@@ -6,6 +6,7 @@ package ui;
 
 import java.awt.Component;
 import javax.swing.JOptionPane;
+import rbac.application.user.UserListDirectory;
 import rbac.context.RbacApplicationContext;
 import rbac.roles.AdminRole;
 import rbac.roles.ReadOnlyRole;
@@ -228,12 +229,13 @@ public class LoginJPanel extends javax.swing.JPanel {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
         String userName = userNameTextField.getText();
-        String password = passwordField.getPassword().toString();
+        String password = passwordField.getText();
         int userTypeIndex = userTypeDropBox.getSelectedIndex();
+        UserListDirectory userListDirectory = new UserListDirectory();
         System.out.println("index = " +userTypeIndex);
         Role role = null;
         Component comp = null;
-        if(validate(userName,password,userTypeIndex))
+        if(userListDirectory.checkUserValidation(userName,password))
         {
             switch (userTypeIndex) {
                 case 0:
@@ -261,11 +263,15 @@ public class LoginJPanel extends javax.swing.JPanel {
             
             RbacApplicationContext rbacApplicationContext = RbacApplicationContext.getInstance();
             rbacApplicationContext.setRoleContext(role);
+            rbacApplicationContext.setUser(userListDirectory.getUser(userName));
+            
             JOptionPane.showMessageDialog(this, "Login Successfull");
             
             HomeScreen.homeScreen.getjSplitPane1().setRightComponent(comp);
             HomeScreen.homeScreen.getjSplitPane1().setDividerLocation(150);
-        }  
+        } else{
+            JOptionPane.showMessageDialog(this, "Login Failed try again");
+        } 
         
     }//GEN-LAST:event_loginButtonActionPerformed
    private boolean validate(String userName, String password,  int userTypeIndex)

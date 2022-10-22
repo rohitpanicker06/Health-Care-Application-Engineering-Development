@@ -4,6 +4,7 @@
  */
 package rbac.context;
 
+import rbac.application.user.User;
 import rbac.roles.Role;
 
 /**
@@ -13,6 +14,15 @@ import rbac.roles.Role;
 public class RbacApplicationContext {
     private static RbacApplicationContext rbacApplicationContext = null;
      private Role roleContext = null ;
+     private User user = null;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
     private RbacApplicationContext()
     {
        
