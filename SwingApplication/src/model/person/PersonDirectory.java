@@ -4,6 +4,7 @@
  */
 package person;
 
+import house.House;
 import java.util.ArrayList;
 
 /**
@@ -19,9 +20,9 @@ public class PersonDirectory {
 
     }
 
-    public Person newPerson(String id) {
+    public Person newPerson(String id, String name, String emailid, long phoneNumber, House residence, String gender, int age) {
 
-        Person person = new Person(id);
+        Person person = new Person(id, name, emailid, phoneNumber, residence, gender, age);
         personList.add(person);
         return person;
     }

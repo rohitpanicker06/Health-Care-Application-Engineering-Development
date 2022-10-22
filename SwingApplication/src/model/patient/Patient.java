@@ -5,8 +5,11 @@
 package patient;
 
 
+import encounter.Encounter;
 import encounter.EncounterHistory;
+import java.util.ArrayList;
 import person.Person;
+import vitalSigns.VitalSigns;
 
 /**
  *
@@ -14,15 +17,51 @@ import person.Person;
  */
 public class Patient {
 
+    public ArrayList<Encounter> getEncounterHistoryList() {
+        return encounterHistory.getEncounterList();
+        
+    }
+    
+    public EncounterHistory getEncounterHistory(){
+        return encounterHistory;
+    }
+
+    public void setEncounterHistory(EncounterHistory encounterHistory) {
+        this.encounterHistory = encounterHistory;
+    }
+
+    public int getInsuranceId() {
+        return insuranceId;
+    }
+
+    public void setInsuranceId(int insuranceId) {
+        this.insuranceId = insuranceId;
+    }
+
     
     private Person person;
     private EncounterHistory encounterHistory;
     private int insuranceId;
+
+    public Patient(Person person, EncounterHistory encounterHistory, int insuranceId) {
+        this.person = person;
+        this.encounterHistory = encounterHistory;
+        this.insuranceId = insuranceId;
+    }
+
+    public Patient(Person person, int insuranceId) {
+        this.person = person;
+        this.insuranceId = insuranceId;
+        this.encounterHistory = new EncounterHistory();
+        
+    }
     
+ 
     
     public Patient(Person person) {
         this.person = person;
         this.encounterHistory = new EncounterHistory();
+        this.insuranceId = 0;
     }
 
     public Person getPerson() {
@@ -38,6 +77,10 @@ public class Patient {
         return getPerson().getId().equals(patient.getPerson().getId());
     }
     
+     @Override
+    public String toString() {
+        return String.valueOf(this.person.getId());
+    }
     
     
     

@@ -9,6 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import patient.PatientDirectory;
+import person.Person;
+import person.PersonDirectory;
 import rbac.context.RbacApplicationContext;
 
 /**
@@ -24,8 +27,24 @@ public class HomeScreen extends javax.swing.JFrame {
     public HomeScreen() {
         initComponents();
         checkLoginLabel();
+        populatePatientTable();
+        
+    }
+    
+    private void populatePatientTable()
+    {
+        PersonDirectory personDirectory = new PersonDirectory();
+        personDirectory.newPerson("1", "Rohit", "rohit@gmail.com", 976212, null, "male", 23);
+        personDirectory.newPerson("2", "Rahul", "rahul@gmail.com", 123454, null, "male", 24);
+        Person person = personDirectory.findPerson("1");
+        Person person_two  = personDirectory.findPerson("2");
+        PatientDirectory patientDirectory = new PatientDirectory();
+        patientDirectory.newPatient(person, 25);
+        patientDirectory.newPatient(person_two,26);
         
         
+       
+       
     }
     
     

@@ -23,4 +23,12 @@ public class DateParser {
         return dateGenerated;
     }
     
+    public static Date getCurrentDate() throws ParseException
+    {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+    Date date = new Date();  
+    String dateNow = formatter.format(date);
+    return DateParser.getDateFromString(dateNow);
+    }
+    
 }

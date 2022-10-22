@@ -18,6 +18,14 @@ public class VitalSigns {
     String bloodPressure;
     private Doctor doctor;
 
+    public VitalSigns(int bodyTemperature, int pulseRate, int respirationRate, String bloodPressure, Doctor doctor) {
+        this.bodyTemperature = bodyTemperature;
+        this.pulseRate = pulseRate;
+        this.respirationRate = respirationRate;
+        this.bloodPressure = bloodPressure;
+        this.doctor = doctor;
+    }
+
     public int getBodyTemperature() {
         return bodyTemperature;
     }

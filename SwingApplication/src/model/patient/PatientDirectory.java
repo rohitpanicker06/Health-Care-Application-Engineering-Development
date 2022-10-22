@@ -5,6 +5,7 @@
 package patient;
 
 
+import encounter.EncounterHistory;
 import java.util.ArrayList;
 import person.Person;
 
@@ -13,7 +14,15 @@ import person.Person;
  * @author rohitpanicker
  */
 public class PatientDirectory {
-     private ArrayList<Patient> patientList ;
+     public static  ArrayList<Patient> patientList ;
+
+    public ArrayList<Patient> getPatientList() {
+        return patientList;
+    }
+
+    public void setPatientList(ArrayList<Patient> patientList) {
+        this.patientList = patientList;
+    }
     
       public PatientDirectory (){
           
@@ -21,7 +30,21 @@ public class PatientDirectory {
 
     }
 
-    public Patient newPatient(Person newPatient) {
+    public Patient newPatient(Person newPatient, EncounterHistory encounterHistory, int insuranceId) {
+
+        Patient patient = new Patient(newPatient, encounterHistory, insuranceId);
+        patientList.add(patient);
+        return patient;
+    }
+    
+    public Patient newPatient(Person newPatient,int insuranceId) {
+
+        Patient patient = new Patient(newPatient, insuranceId);
+        patientList.add(patient);
+        return patient;
+    }
+    
+     public Patient newPatient(Person newPatient) {
 
         Patient patient = new Patient(newPatient);
         patientList.add(patient);

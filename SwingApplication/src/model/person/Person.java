@@ -17,6 +17,34 @@ public class Person {
     private String emailid;
     private long phoneNumber;
     private House residence;
+    private String gender;
+    private int age;
+
+    public Person(String id, String name, String emailid, long phoneNumber, House residence, String gender, int age) {
+        this.id = id;
+        this.name = name;
+        this.emailid = emailid;
+        this.phoneNumber = phoneNumber;
+        this.residence = residence;
+        this.gender = gender;
+        this.age = age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
     
      public Person (String id){
         

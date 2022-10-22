@@ -55,4 +55,10 @@ public class Encounter {
         return getEncounterDate().compareTo(date) == 0;
     }
     
+    
+     @Override
+    public String toString() {
+        return this.encounterDate.toString();
+    }
+    
 }

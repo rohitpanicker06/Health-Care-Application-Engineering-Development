@@ -26,6 +26,14 @@ public class EncounterHistory {
 
     }
 
+    public ArrayList<Encounter> getEncounterList() {
+        return encounterList;
+    }
+
+    public void setEncounterList(ArrayList<Encounter> encounterList) {
+        this.encounterList = encounterList;
+    }
+
     public Encounter newEcounter( Date encounterDate, VitalSigns vitalSigns, LocalTime localTime) {
 
         Encounter encounter = new Encounter(encounterDate, vitalSigns, localTime);
