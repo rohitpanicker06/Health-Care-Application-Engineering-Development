@@ -13,6 +13,9 @@ import patient.PatientDirectory;
 import person.Person;
 import person.PersonDirectory;
 import rbac.context.RbacApplicationContext;
+import rbac.role.Role;
+import rbac.roles.roleImplementation.HospitalAdminRoleBase;
+import rbac.roles.roleImplementation.SystemAdminRoleBase;
 
 /**
  *
@@ -403,6 +406,22 @@ public class HomeScreen extends javax.swing.JFrame {
         setColor(btnDirectory);
         resetColor(btnHome);
         resetColor(btnLogin);
+        if(applicationContext.getUser() == null){
+            JOptionPane.showMessageDialog(this, "Please login first");
+            return;
+            
+        }else if(applicationContext.getUser() != null){
+         Role role = applicationContext.getRoleContext();
+            if(role instanceof SystemAdminRoleBase || role instanceof HospitalAdminRoleBase)
+            {
+                 AllDirectoriesPanel allDirectoriesPanel = new AllDirectoriesPanel();
+        jSplitPane1.setRightComponent(allDirectoriesPanel);
+        getjSplitPane1().setDividerLocation(150);
+            }else{
+                 JOptionPane.showMessageDialog(this, "You dont have access to this");
+            return;
+        }
+        }
         
     }//GEN-LAST:event_btnDirectoryMousePressed
 

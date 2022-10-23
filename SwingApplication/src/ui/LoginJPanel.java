@@ -8,10 +8,11 @@ import java.awt.Component;
 import javax.swing.JOptionPane;
 import rbac.application.user.UserListDirectory;
 import rbac.context.RbacApplicationContext;
-import rbac.roles.AdminRole;
-import rbac.roles.ReadOnlyRole;
-import rbac.roles.Role;
-import rbac.roles.SearchReadAndUpdateRole;
+import rbac.roles.roleImplementation.SystemAdminRoleBase;
+import rbac.roles.roleImplementation.PatientRoleBase;
+import rbac.role.Role;
+import rbac.roles.roleImplementation.DoctorRoleBase;
+import rbac.roles.roleImplementation.HospitalAdminRoleBase;
 import static ui.HomeScreen.applicationContext;
 
 /**
@@ -235,34 +236,39 @@ public class LoginJPanel extends javax.swing.JPanel {
         System.out.println("index = " +userTypeIndex);
         Role role = null;
         Component comp = null;
+        RbacApplicationContext rbacApplicationContext = RbacApplicationContext.getInstance();
         if(userListDirectory.checkUserValidation(userName,password))
         {
             switch (userTypeIndex) {
                 case 0:
-                    role = new AdminRole();
+                    role = new SystemAdminRoleBase();
+                    rbacApplicationContext.setRoleContext(role);
                     comp= new HomeScreenNotDefault();
                     break;
                 case 1:
-                    role = new ReadOnlyRole();
+                    role = new PatientRoleBase();
+                    rbacApplicationContext.setRoleContext(role);
                     comp= new PatientPanel();
                     break;
                 case 2:
-                    role = new SearchReadAndUpdateRole();
+                    role = new DoctorRoleBase();
+                    rbacApplicationContext.setRoleContext(role);
                     comp= new DoctorPanel();
                     break;
                 case 3:
-                    role = new AdminRole();
+                    role = new HospitalAdminRoleBase();
+                    rbacApplicationContext.setRoleContext(role);
+                    comp = new HomeScreenNotDefault();
                     break;
                 case 4:
-                    role = new AdminRole();
+                    role = new SystemAdminRoleBase();
+                    rbacApplicationContext.setRoleContext(role);
                     break;
                 default:
                     
                     break;
             }
             
-            RbacApplicationContext rbacApplicationContext = RbacApplicationContext.getInstance();
-            rbacApplicationContext.setRoleContext(role);
             rbacApplicationContext.setUser(userListDirectory.getUser(userName));
             
             JOptionPane.showMessageDialog(this, "Login Successfull");

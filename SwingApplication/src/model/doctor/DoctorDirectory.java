@@ -4,8 +4,11 @@
  */
 package doctor;
 
+import house.House;
 import java.util.ArrayList;
 import person.Person;
+import us.state.city.City;
+import us.state.city.community.Community;
 
 /**
  *
@@ -13,7 +16,29 @@ import person.Person;
  */
 public class DoctorDirectory {
     
-     private ArrayList<Doctor> doctorList ;
+     private static ArrayList<Doctor> doctorList  ;
+     
+     static{
+         doctorList =  new ArrayList<>();
+         City city = new City("Massacheuttus", "USA", "Boston");
+         Community community  = new Community (city, "Huntington", "251","02115");
+        
+         House house = new House(community, 89, 890);
+         Person person = new Person("65", "Niral Pethe", "nirmal@gmail.com", 9768, house, "Male", 50);
+         Doctor doctor = new Doctor(person);
+         doctorList.add(doctor);
+         
+         
+  
+        
+        
+         Person person_two = new Person("66", "Niral Pethe2", "nirmal2@gmail.com", 97682, house, "Male2", 52);
+         Doctor doctor_two = new Doctor(person_two);
+         doctorList.add(doctor_two);
+         
+         
+        
+     }
 
     public ArrayList<Doctor> getDoctorList() {
         return doctorList;
@@ -25,11 +50,6 @@ public class DoctorDirectory {
      
      
     
-      public DoctorDirectory (){
-          
-       doctorList = new ArrayList();
-
-    }
 
     public Doctor newDoctor(Person person) {
 

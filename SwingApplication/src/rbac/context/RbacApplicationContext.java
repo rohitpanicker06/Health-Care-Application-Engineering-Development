@@ -5,7 +5,7 @@
 package rbac.context;
 
 import rbac.application.user.User;
-import rbac.roles.Role;
+import rbac.role.Role;
 
 /**
  *

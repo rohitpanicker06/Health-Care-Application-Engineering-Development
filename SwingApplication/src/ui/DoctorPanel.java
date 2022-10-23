@@ -146,6 +146,8 @@ public class DoctorPanel extends javax.swing.JPanel {
         insuranceIdLabel.setVisible(false);
         emailIdLabel.setVisible(false);
         phoneNumberLabel.setVisible(false);
+        enterVitalRecordLabel.setVisible(false);
+        saveVariable.setVisible(false);
 
     }
 
@@ -182,7 +184,7 @@ public class DoctorPanel extends javax.swing.JPanel {
         searchComboBox = new javax.swing.JComboBox<>();
         searchTextField = new javax.swing.JTextField();
         goButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        enterVitalRecordLabel = new javax.swing.JLabel();
         phoneNumberTextField = new javax.swing.JTextField();
         patientIDtxtField = new javax.swing.JTextField();
         nameTxtField = new javax.swing.JTextField();
@@ -385,9 +387,9 @@ public class DoctorPanel extends javax.swing.JPanel {
         });
         add(goButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 310, -1, -1));
 
-        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
-        jLabel1.setText("Enter Vital Record");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 320, 240, 70));
+        enterVitalRecordLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 24)); // NOI18N
+        enterVitalRecordLabel.setText("Enter Vital Record");
+        add(enterVitalRecordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 320, 240, 70));
         add(phoneNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 540, 150, -1));
         add(patientIDtxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 440, 150, -1));
         add(nameTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 500, 150, -1));
@@ -524,6 +526,8 @@ public class DoctorPanel extends javax.swing.JPanel {
     private void recordEncounterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recordEncounterButtonActionPerformed
         // TODO add your handling code here:
         makeLabelsDisappear();
+        saveVariable.setVisible(true);
+        enterVitalRecordLabel.setVisible(true);
         int selectedRowIndex = tblRecords.getSelectedRow();
         if (selectedRowIndex == -1) {
             JOptionPane.showMessageDialog(this, "No Patient is selected, Please Try Again");
@@ -580,6 +584,7 @@ public class DoctorPanel extends javax.swing.JPanel {
     private javax.swing.JLabel emailIdLabel;
     private javax.swing.JTextField emailidTextField;
     private javax.swing.JButton encounterHistoryButton;
+    private javax.swing.JLabel enterVitalRecordLabel;
     private javax.swing.JLabel genderLabel;
     private javax.swing.JTextField genderTxtField;
     private javax.swing.JButton goButton;
@@ -587,7 +592,6 @@ public class DoctorPanel extends javax.swing.JPanel {
     private javax.swing.JTextField insuranceIdTxtField;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;
