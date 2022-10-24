@@ -19,6 +19,10 @@ import patient.Patient;
 import patient.PatientDirectory;
 import rbac.application.user.User;
 import rbac.context.RbacApplicationContext;
+import rbac.roles.roleImplementation.DoctorRoleBase;
+import rbac.roles.roleImplementation.HospitalAdminRoleBase;
+import rbac.roles.roleImplementation.PatientRoleBase;
+import rbac.roles.roleImplementation.SystemAdminRoleBase;
 
 /**
  *
@@ -31,6 +35,16 @@ public class PatientPanel extends javax.swing.JPanel {
      */
     public PatientPanel() {
         initComponents();
+        makeLabelAndButtonDisappearOrAppear(false);
+    }
+    
+    private void makeLabelAndButtonDisappearOrAppear(Boolean value)
+    {
+        searchBylabel.setVisible(value);
+        searchComboBoxHospital.setVisible(value);
+        btnSearchGo.setVisible(value);
+       txtSearchHospital.setVisible(value);
+       
     }
 
     /**
@@ -50,8 +64,13 @@ public class PatientPanel extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         btnNearbyHospitals = new javax.swing.JButton();
         btnViewDoctors = new javax.swing.JButton();
+        btnSearchHospitals = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRecords = new javax.swing.JTable();
+        searchComboBoxHospital = new javax.swing.JComboBox<>();
+        searchBylabel = new javax.swing.JLabel();
+        btnSearchGo = new javax.swing.JButton();
+        txtSearchHospital = new javax.swing.JTextField();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -135,6 +154,13 @@ public class PatientPanel extends javax.swing.JPanel {
             }
         });
 
+        btnSearchHospitals.setText("Search Hospitals ");
+        btnSearchHospitals.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchHospitalsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -142,6 +168,7 @@ public class PatientPanel extends javax.swing.JPanel {
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnNearbyHospitals, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnViewDoctors, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnSearchHospitals, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,6 +179,8 @@ public class PatientPanel extends javax.swing.JPanel {
                 .addComponent(btnNearbyHospitals, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49)
                 .addComponent(btnViewDoctors, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addComponent(btnSearchHospitals, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -171,6 +200,21 @@ public class PatientPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblRecords);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 1060, 260));
+
+        searchComboBoxHospital.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "Name", "Pincode", "City" }));
+        add(searchComboBoxHospital, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 410, 130, -1));
+
+        searchBylabel.setText("Search By");
+        add(searchBylabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 410, 90, -1));
+
+        btnSearchGo.setText("Search");
+        btnSearchGo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchGoActionPerformed(evt);
+            }
+        });
+        add(btnSearchGo, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 410, 100, -1));
+        add(txtSearchHospital, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 410, 180, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnViewDoctorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDoctorsActionPerformed
@@ -187,38 +231,18 @@ public class PatientPanel extends javax.swing.JPanel {
     {
         
          DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
-         try{
-        TableColumn tableColumn = tblRecords.getColumnModel().getColumn(4);
-        tblRecords.removeColumn(tableColumn);
+         tableModel.setRowCount(0);
+         tableModel.setColumnCount(0);
         
-        }catch(Exception e)
-        {
-            System.out.println("Error while deleting table column 4");
-        }
-        
-        try{
-        TableColumn tableColumn_two = tblRecords.getColumnModel().getColumn(4);
-        tblRecords.removeColumn(tableColumn_two);
-        }catch(Exception e)
-        {
-            System.out.println("Error while deleting table column 5");
-        }
-        //tableModel.addColumn("Blood Pressure");
-        //tableModel.addColumn("Doctor Name");
-         JTableHeader th = tblRecords.getTableHeader();
-         TableColumnModel tcm = th.getColumnModel();
-         TableColumn tc = tcm.getColumn(0);
-        tc.setHeaderValue( "ID" );
-        TableColumn tc_one = tcm.getColumn(1);
-        tc_one.setHeaderValue("Doctor Name");
-        //TableColumn tc_two = tcm.getColumn(2);
-       // tc_two.setHeaderValue("Pulse Rate");
-       // TableColumn tc_three = tcm.getColumn(3);
-        //tc_three.setHeaderValue("Respiration Rate");
        
         
-        th.repaint();
-        tableModel.setRowCount(0);
+        tableModel.addColumn("ID" );
+       
+        tableModel.addColumn("Doctor Name");
+       
+        
+       
+        
         DoctorDirectory doctorDirectory = hospital.getDoctorDirectory();
         try {
             for (Doctor  doctor : doctorDirectory.getDoctorList()) {
@@ -252,17 +276,16 @@ public class PatientPanel extends javax.swing.JPanel {
     {
         DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
         tableModel.setRowCount(0);
+        tableModel.setColumnCount(0);
       
-         JTableHeader th = tblRecords.getTableHeader();
-         TableColumnModel tcm = th.getColumnModel();
-         TableColumn tc = tcm.getColumn(0);
-        tc.setHeaderValue( "ID" );
-        TableColumn tc_one = tcm.getColumn(1);
-        tc_one.setHeaderValue("Hospital Name");
-        TableColumn tc_two = tcm.getColumn(2);
-        tc_two.setHeaderValue("Community Name");
-        th.repaint();
-        tableModel.setRowCount(0);
+        
+        tableModel.addColumn("ID" );
+       
+        tableModel.addColumn("Hospital Name");
+       
+        tableModel.addColumn("Community Name");
+        
+       
         
         
         try {
@@ -315,9 +338,93 @@ public class PatientPanel extends javax.swing.JPanel {
         HomeScreen.homeScreen.getjSplitPane1().setDividerLocation(150);
     }//GEN-LAST:event_logoutLabelMousePressed
 
+    private void btnSearchHospitalsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchHospitalsActionPerformed
+        // TODO add your handling code here:
+        
+        makeLabelAndButtonDisappearOrAppear(true);
+    }//GEN-LAST:event_btnSearchHospitalsActionPerformed
+
+    private void btnSearchGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchGoActionPerformed
+        // TODO add your handling code here:
+        int userTypeIndex = searchComboBoxHospital.getSelectedIndex();
+        String txtSearch = txtSearchHospital.getText();
+        HospitalDirectory hospitalDirectory = new HospitalDirectory();
+        ArrayList<Hospital> nearbyHospital = null;
+       
+        
+        switch (userTypeIndex) {
+                case 0:
+                    nearbyHospital = searchById(Integer.parseInt(txtSearch), hospitalDirectory);
+                    break;
+                case 1:
+                    nearbyHospital = searchByName(txtSearch, hospitalDirectory);
+                    break;
+                case 2:
+                    nearbyHospital = searchByZipCode(txtSearch, hospitalDirectory);
+                    break;
+                case 3:
+                    nearbyHospital = searchNearbyHospitalsByCity(txtSearch, hospitalDirectory);
+                    break;
+               
+                   
+                default:
+                    
+                    break;
+            }
+        
+         populateNearbyHospitalsTable(nearbyHospital);
+        
+    }//GEN-LAST:event_btnSearchGoActionPerformed
+   private ArrayList<Hospital> searchById(int id, HospitalDirectory hospitalDirectory)
+   {
+        ArrayList<Hospital> result = new ArrayList<Hospital>();
+        for(Hospital hospital : hospitalDirectory.getHospitalList())
+        {
+            if(hospital.getHospitalId() == id)
+            {
+                result.add(hospital);
+            }else{
+                continue;
+            }
+        }
+        return result;
+   }
+   
+   private ArrayList<Hospital> searchByName(String name, HospitalDirectory hospitalDirectory)
+   {
+        ArrayList<Hospital> result = new ArrayList<Hospital>();
+        for(Hospital hospital : hospitalDirectory.getHospitalList())
+        {
+            if(hospital.getHospitalName().equals(name))
+            {
+                result.add(hospital);
+            }else{
+                continue;
+            }
+        }
+        return result;
+   }
+   
+   private ArrayList<Hospital> searchByZipCode(String zipCode, HospitalDirectory hospitalDirectory)
+   {
+        ArrayList<Hospital> result = new ArrayList<Hospital>();
+        for(Hospital hospital : hospitalDirectory.getHospitalList())
+        {
+            if(hospital.getCommunity().getZipCode().equals(zipCode))
+            {
+                result.add(hospital);
+            }else{
+                continue;
+            }
+        }
+        return result;
+   }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNearbyHospitals;
+    private javax.swing.JButton btnSearchGo;
+    private javax.swing.JButton btnSearchHospitals;
     private javax.swing.JButton btnViewDoctors;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
@@ -326,6 +433,9 @@ public class PatientPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel logoutLabel;
+    private javax.swing.JLabel searchBylabel;
+    private javax.swing.JComboBox<String> searchComboBoxHospital;
     private javax.swing.JTable tblRecords;
+    private javax.swing.JTextField txtSearchHospital;
     // End of variables declaration//GEN-END:variables
 }

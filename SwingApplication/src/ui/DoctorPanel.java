@@ -85,9 +85,14 @@ public class DoctorPanel extends javax.swing.JPanel {
     
      private void populateAndFillRecordsTable() {
         DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+
         tableModel.setRowCount(0);
-      
-         JTableHeader th = tblRecords.getTableHeader();
+        tableModel.setColumnCount(0);
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Name");
+        tableModel.addColumn("Gender");
+        tableModel.addColumn("Age");
+        /* JTableHeader th = tblRecords.getTableHeader();
          TableColumnModel tcm = th.getColumnModel();
          TableColumn tc = tcm.getColumn(0);
         tc.setHeaderValue( "ID" );
@@ -96,7 +101,7 @@ public class DoctorPanel extends javax.swing.JPanel {
         TableColumn tc_two = tcm.getColumn(2);
         tc_two.setHeaderValue("Gender");
         TableColumn tc_three = tcm.getColumn(3);
-        tc_three.setHeaderValue("Age");
+        tc_three.setHeaderValue("Age");*/
         try{
         TableColumn tableColumn = tblRecords.getColumnModel().getColumn(4);
         tblRecords.removeColumn(tableColumn);
@@ -113,7 +118,7 @@ public class DoctorPanel extends javax.swing.JPanel {
         {
             System.out.println("Error while deleting table column 5");
         }
-        th.repaint();
+       // th.repaint();
         tableModel.setRowCount(0);
         try {
             for (Patient  patient : PatientDirectory.patientList) {
@@ -168,7 +173,7 @@ public class DoctorPanel extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         encounterHistoryButton = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnViewPatientDetails = new javax.swing.JButton();
         viewAllPatientsButton = new javax.swing.JButton();
         recordEncounterButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -276,10 +281,10 @@ public class DoctorPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton4.setText("View Patient Details");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnViewPatientDetails.setText("View Patient Details");
+        btnViewPatientDetails.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnViewPatientDetailsActionPerformed(evt);
             }
         });
 
@@ -304,7 +309,7 @@ public class DoctorPanel extends javax.swing.JPanel {
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(encounterHistoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnViewPatientDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(viewAllPatientsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(recordEncounterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -318,7 +323,7 @@ public class DoctorPanel extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addComponent(encounterHistoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnViewPatientDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
                 .addComponent(viewAllPatientsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
@@ -418,6 +423,7 @@ public class DoctorPanel extends javax.swing.JPanel {
 
     private void encounterHistoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encounterHistoryButtonActionPerformed
         // TODO add your handling code here:
+        disappearVitalLabels();
         int selectedRowIndex = tblRecords.getSelectedRow();
         if (selectedRowIndex == -1) {
             JOptionPane.showMessageDialog(this, "No Patient is selected, Please Try Again");
@@ -446,9 +452,14 @@ public class DoctorPanel extends javax.swing.JPanel {
         {
             System.out.println("Error while deleting table column 5");
         }
+        tableModel.setColumnCount(0);
+        tableModel.addColumn("Date");
+        tableModel.addColumn("Body Temp");
+        tableModel.addColumn("Pulse Rate");
+        tableModel.addColumn("Respiration Rate");
         tableModel.addColumn("Blood Pressure");
         tableModel.addColumn("Doctor Name");
-         JTableHeader th = tblRecords.getTableHeader();
+         /*JTableHeader th = tblRecords.getTableHeader();
          TableColumnModel tcm = th.getColumnModel();
          TableColumn tc = tcm.getColumn(0);
         tc.setHeaderValue( "Date" );
@@ -457,10 +468,10 @@ public class DoctorPanel extends javax.swing.JPanel {
         TableColumn tc_two = tcm.getColumn(2);
         tc_two.setHeaderValue("Pulse Rate");
         TableColumn tc_three = tcm.getColumn(3);
-        tc_three.setHeaderValue("Respiration Rate");
+        tc_three.setHeaderValue("Respiration Rate");*/
        
         
-        th.repaint();
+      //  th.repaint();
         tableModel.setRowCount(0);
         
         try {
@@ -502,7 +513,7 @@ public class DoctorPanel extends javax.swing.JPanel {
         HomeScreen.homeScreen.getjSplitPane1().setDividerLocation(150);
     }//GEN-LAST:event_logoutLabelMousePressed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnViewPatientDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewPatientDetailsActionPerformed
         // TODO add your handling code here:
         
         searchComboBox.setVisible(false);
@@ -516,13 +527,74 @@ public class DoctorPanel extends javax.swing.JPanel {
         insuranceIdLabel.setVisible(true);
         emailIdLabel.setVisible(true);
         phoneNumberLabel.setVisible(true);
-    }//GEN-LAST:event_jButton4ActionPerformed
-
+        makeAllTxtFieldsAppear();
+        
+        DefaultTableModel tableModel = (DefaultTableModel)tblRecords.getModel();
+         int selectedRowIndex = tblRecords.getSelectedRow();
+        if (selectedRowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "No Patient is selected, Please Try Again");
+            return;
+        }
+        Patient patient = (Patient) tblRecords.getValueAt(selectedRowIndex, 0);
+        patientIDtxtField.setText(patient.getPerson().getId());
+        nameTxtField.setText(patient.getPerson().getName());
+        ageTxtField.setText(String.valueOf(patient.getPerson().getAge()));
+       genderTxtField.setText(patient.getPerson().getGender());
+       try{
+       String address = patient.getPerson().getResidence().getBuildingNumber() + " #" + patient.getPerson().getResidence().getApartmentNumber() + " " + patient.getPerson().getResidence().getCommunity().getCommunityName() + " " + 
+                        patient.getPerson().getResidence().getCommunity().getLocation() + " " + patient.getPerson().getResidence().getCommunity().getCity() + " " + patient.getPerson().getResidence().getCommunity().getCity();
+       
+       addressTextField.setText(address);
+       
+       }catch(Exception e)
+       {
+           
+       }
+       insuranceIdTxtField.setText(String.valueOf(patient.getInsuranceId()));
+       emailidTextField.setText(patient.getPerson().getEmailid());
+       phoneNumberTextField.setText(String.valueOf(patient.getPerson().getPhoneNumber()));
+       
+        
+               
+        
+        
+        
+        
+    }//GEN-LAST:event_btnViewPatientDetailsActionPerformed
+    private void clearTxtFields()
+    {
+        patientIDtxtField.setText("");
+        nameTxtField.setText("");
+        ageTxtField.setText("");
+        genderTxtField.setText("");
+        addressTextField.setText("");
+        insuranceIdTxtField.setText("");
+        emailidTextField.setText("");
+        phoneNumberTextField.setText("");
+    }
     private void viewAllPatientsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllPatientsButtonActionPerformed
         // TODO add your handling code here:
+        disappearVitalLabels();
+        makeTxtFieldsDisappear();
          populateAndFillRecordsTable();
     }//GEN-LAST:event_viewAllPatientsButtonActionPerformed
-
+    private void disappearVitalLabels(){
+       enterVitalRecordLabel.setVisible(false);
+       searchComboBox.setVisible(false);
+        searchTextField.setVisible(false);
+        goButton.setVisible(false);
+        patientIDLabel.setVisible(false);
+        nameLabel.setVisible(false);
+        ageLabel.setVisible(false);
+        genderLabel.setVisible(false);
+        addressLabel.setVisible(false);
+        insuranceIdLabel.setVisible(false);
+        emailIdLabel.setVisible(false);
+        phoneNumberLabel.setVisible(false);
+        enterVitalRecordLabel.setVisible(false);
+        saveVariable.setVisible(false);
+       
+    }
     private void recordEncounterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recordEncounterButtonActionPerformed
         // TODO add your handling code here:
         makeLabelsDisappear();
@@ -572,7 +644,7 @@ public class DoctorPanel extends javax.swing.JPanel {
         } catch (ParseException ex) {
             Logger.getLogger(DoctorPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        clearTxtFields();
     }//GEN-LAST:event_saveVariableActionPerformed
 
 
@@ -581,6 +653,7 @@ public class DoctorPanel extends javax.swing.JPanel {
     private javax.swing.JTextField addressTextField;
     private javax.swing.JLabel ageLabel;
     private javax.swing.JTextField ageTxtField;
+    private javax.swing.JButton btnViewPatientDetails;
     private javax.swing.JLabel emailIdLabel;
     private javax.swing.JTextField emailidTextField;
     private javax.swing.JButton encounterHistoryButton;
@@ -591,7 +664,6 @@ public class DoctorPanel extends javax.swing.JPanel {
     private javax.swing.JLabel insuranceIdLabel;
     private javax.swing.JTextField insuranceIdTxtField;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;

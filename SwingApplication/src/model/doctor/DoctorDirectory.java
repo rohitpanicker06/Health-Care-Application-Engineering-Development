@@ -16,7 +16,7 @@ import us.state.city.community.Community;
  */
 public class DoctorDirectory {
     
-     private static ArrayList<Doctor> doctorList  ;
+     private static ArrayList<Doctor> doctorList;
      
      static{
          doctorList =  new ArrayList<>();
@@ -24,7 +24,7 @@ public class DoctorDirectory {
          Community community  = new Community (city, "Huntington", "251","02115");
         
          House house = new House(community, 89, 890);
-         Person person = new Person("65", "Niral Pethe", "nirmal@gmail.com", 9768, house, "Male", 50);
+         Person person = new Person("55", "Niral Pethe", "nirmal@gmail.com", 9768, house, "Male", 50);
          Doctor doctor = new Doctor(person);
          doctorList.add(doctor);
          
@@ -32,7 +32,7 @@ public class DoctorDirectory {
   
         
         
-         Person person_two = new Person("66", "Niral Pethe2", "nirmal2@gmail.com", 97682, house, "Male2", 52);
+         Person person_two = new Person("56", "Niral Pethe2", "nirmal2@gmail.com", 97682, house, "Male2", 52);
          Doctor doctor_two = new Doctor(person_two);
          doctorList.add(doctor_two);
          

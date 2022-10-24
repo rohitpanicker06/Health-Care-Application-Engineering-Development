@@ -5,6 +5,7 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -12,9 +13,12 @@ import javax.swing.JSplitPane;
 import patient.PatientDirectory;
 import person.Person;
 import person.PersonDirectory;
+import rbac.application.user.UserListDirectory;
 import rbac.context.RbacApplicationContext;
 import rbac.role.Role;
+import rbac.roles.roleImplementation.DoctorRoleBase;
 import rbac.roles.roleImplementation.HospitalAdminRoleBase;
+import rbac.roles.roleImplementation.PatientRoleBase;
 import rbac.roles.roleImplementation.SystemAdminRoleBase;
 
 /**
@@ -393,12 +397,31 @@ public class HomeScreen extends javax.swing.JFrame {
         setColor(btnHome);
         resetColor(btnDirectory);
         resetColor(btnLogin);
-        HomeScreenNotDefault homeScreenNotDefault = new HomeScreenNotDefault();
-        jSplitPane1.setRightComponent(homeScreenNotDefault);
-        getjSplitPane1().setDividerLocation(150);
         
+        UserListDirectory userListDirectory = new UserListDirectory();
+       
+        Role role = RbacApplicationContext.getInstance().getRoleContext();
+        Component comp = null;
+        RbacApplicationContext rbacApplicationContext = RbacApplicationContext.getInstance();
+        if(role != null)
+        {
+           if(role instanceof SystemAdminRoleBase) {
+                
+                    comp= new HomeScreenNotDefault();
+           }else if(role instanceof DoctorRoleBase){
+                    comp= new DoctorPanel();
+           }else if (role instanceof HospitalAdminRoleBase){
+               
+                    comp= new DoctorPanel();
+           }else if( role instanceof PatientRoleBase){
+                    comp = new PatientPanel();
+                  
+            }
+            
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(comp);
+            HomeScreen.homeScreen.getjSplitPane1().setDividerLocation(150);
         
-        
+        }  
     }//GEN-LAST:event_btnHomeMousePressed
 
     private void btnDirectoryMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDirectoryMousePressed
