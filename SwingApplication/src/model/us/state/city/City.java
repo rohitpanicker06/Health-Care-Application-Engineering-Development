@@ -14,11 +14,18 @@ public class City {
     private String country;
     private String name;
 
+    public City() {
+    }
+
     public City(String state, String country, String name) {
         this.state = state;
         this.country = country;
         this.name = name;
     }
+
+   
+
+    
 
     public String getState() {
         return state;

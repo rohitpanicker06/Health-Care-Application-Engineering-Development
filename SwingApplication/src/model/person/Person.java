@@ -9,8 +9,7 @@ import house.House;
 /**
  *
  * @author rohitpanicker
- */
-public class Person {
+ */public class Person {
     
     private String id;
     private String name;

@@ -16,7 +16,7 @@ import us.state.city.community.Community;
  */
 public class DoctorDirectory {
     
-     private static ArrayList<Doctor> doctorList;
+     public static ArrayList<Doctor> doctorList;
      
      static{
          doctorList =  new ArrayList<>();

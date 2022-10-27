@@ -16,6 +16,7 @@ import javax.swing.table.TableColumnModel;
 import patient.Patient;
 import patient.PatientDirectory;
 import rbac.context.RbacApplicationContext;
+import ui.crud.panels.PatientCrud;
 
 /**
  *
@@ -50,7 +51,10 @@ public class AllDirectoriesPanel extends javax.swing.JPanel {
         btnDoctorDirectory = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRecords = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        viewRecordBtn = new javax.swing.JButton();
+        deleteRecordBtn = new javax.swing.JButton();
+        createRecordBtn = new javax.swing.JButton();
+        updateRecordBtn = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -189,8 +193,37 @@ public class AllDirectoriesPanel extends javax.swing.JPanel {
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 1060, 260));
 
-        jButton1.setText("Update Selected Record");
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 350, 300, 30));
+        viewRecordBtn.setText("View Patient Details");
+        viewRecordBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewRecordBtnActionPerformed(evt);
+            }
+        });
+        add(viewRecordBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 350, 200, 30));
+
+        deleteRecordBtn.setText("Delete Patient Record");
+        deleteRecordBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteRecordBtnActionPerformed(evt);
+            }
+        });
+        add(deleteRecordBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 350, 200, 30));
+
+        createRecordBtn.setText("Create New Patient");
+        createRecordBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createRecordBtnActionPerformed(evt);
+            }
+        });
+        add(createRecordBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 350, 170, 30));
+
+        updateRecordBtn.setText("Update Patient Details");
+        updateRecordBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateRecordBtnActionPerformed(evt);
+            }
+        });
+        add(updateRecordBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 350, 200, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHospitalDirectoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHospitalDirectoryActionPerformed
@@ -232,7 +265,10 @@ private void populateAndFillHospitalRecord(){
 }
     private void btnPatientDirectoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPatientDirectoryActionPerformed
         // TODO add your handling code here:
-        
+        createRecordBtn.setText("Create New Patient");
+        viewRecordBtn.setText("View Patient Details");
+        updateRecordBtn.setText("Update Patient Details");
+        deleteRecordBtn.setText("Delete Patient");
         populateAndFillPatientRecordsTable();
        
     }//GEN-LAST:event_btnPatientDirectoryActionPerformed
@@ -287,7 +323,12 @@ private void populateAndFillHospitalRecord(){
     }
     private void btnDoctorDirectoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoctorDirectoryActionPerformed
         // TODO add your handling code here:
+        createRecordBtn.setText("Create New Doctor");
+        viewRecordBtn.setText("View Doctor Record");
+        updateRecordBtn.setText("Update Doctor Record");
+        deleteRecordBtn.setText("Delete Doctor Record");
         populateDoctorDirectoryTable();
+        
     }//GEN-LAST:event_btnDoctorDirectoryActionPerformed
 
     private void logoutLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLabelMousePressed
@@ -301,7 +342,111 @@ private void populateAndFillHospitalRecord(){
         HomeScreen.homeScreen.getjSplitPane1().setRightComponent(homeScreenNotDefault);
         HomeScreen.homeScreen.getjSplitPane1().setDividerLocation(150);
     }//GEN-LAST:event_logoutLabelMousePressed
-private void populateDoctorDirectoryTable()
+
+    private void createRecordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createRecordBtnActionPerformed
+        // TODO add your handling code here:
+        
+        String txt = createRecordBtn.getText();
+        if(txt.contains("Patient"))
+        {
+            PatientCrud patientCrud = new PatientCrud("cp");
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);
+        }else if(txt.contains("Doctor")){
+            PatientCrud patientCrud = new PatientCrud("cd");
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);
+        
+    }
+    }//GEN-LAST:event_createRecordBtnActionPerformed
+
+    private void viewRecordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewRecordBtnActionPerformed
+        // TODO add your handling code here:
+        String txt = viewRecordBtn.getText();
+         int selectedRowIndex = tblRecords.getSelectedRow();
+        if (selectedRowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "No Patient is selected, Please Try Again");
+            return;
+        }
+        
+         if(txt.contains("Patient"))
+        {   
+            
+        Patient patient = (Patient) tblRecords.getValueAt(selectedRowIndex, 0);
+        
+            PatientCrud patientCrud = new PatientCrud(patient, "pv");
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);
+        }else if(txt.contains("Doctor")){
+             
+            Doctor doctor = (Doctor) tblRecords.getValueAt(selectedRowIndex, 0);
+            PatientCrud patientCrud = new PatientCrud(doctor, "dv");
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);
+        
+    }
+    }//GEN-LAST:event_viewRecordBtnActionPerformed
+
+    private void updateRecordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateRecordBtnActionPerformed
+        // TODO add your handling code here:
+          // TODO add your handling code here:
+        String txt = updateRecordBtn.getText();
+          int selectedRowIndex = tblRecords.getSelectedRow();
+        if (selectedRowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "No Patient is selected, Please Try Again");
+            return;
+        }
+        
+         if(txt.contains("Patient"))
+        {   
+            Patient patient = (Patient) tblRecords.getValueAt(selectedRowIndex, 0);
+        
+            PatientCrud patientCrud = new PatientCrud(patient, "pu");
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);
+        }else if (txt.contains("Doctor")){
+         Doctor doctor = (Doctor) tblRecords.getValueAt(selectedRowIndex, 0);
+            PatientCrud patientCrud = new PatientCrud(doctor, "du");
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);
+    }
+    }//GEN-LAST:event_updateRecordBtnActionPerformed
+
+    private void deleteRecordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteRecordBtnActionPerformed
+        // TODO add your handling code here:
+        
+        String txt = deleteRecordBtn.getText();
+         int selectedRowIndex = tblRecords.getSelectedRow();
+
+            if (selectedRowIndex == -1) {
+                JOptionPane.showMessageDialog(this, "No Row is selected to Delete, Please Try Again");
+                return;
+            }
+        if(txt.contains("Patient")){
+        
+           
+            DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+            Patient patient = (Patient) tableModel.getValueAt(selectedRowIndex, 0);
+            deleteRecord(patient);
+          
+       
+        }
+        else if (txt.contains("Doctor")){
+             DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+            Doctor doctor = (Doctor) tableModel.getValueAt(selectedRowIndex, 0);
+            deleteDoctorRecord(doctor);
+            
+        }
+    }//GEN-LAST:event_deleteRecordBtnActionPerformed
+    private void deleteDoctorRecord(Doctor doctor)
+    {
+      DoctorDirectory.doctorList.remove(doctor); 
+       JOptionPane.showMessageDialog(this, "Record deleted successfully");
+       populateDoctorDirectoryTable();
+    }
+    
+    private void deleteRecord(Patient patient){
+    PatientDirectory.patientList.remove(patient);
+
+        JOptionPane.showMessageDialog(this, "Record deleted successfully");
+        populateAndFillPatientRecordsTable();
+}
+    
+    private void populateDoctorDirectoryTable()
     {
           
          DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
@@ -359,7 +504,8 @@ private void populateDoctorDirectoryTable()
     private javax.swing.JButton btnDoctorDirectory;
     private javax.swing.JButton btnHospitalDirectory;
     private javax.swing.JButton btnPatientDirectory;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton createRecordBtn;
+    private javax.swing.JButton deleteRecordBtn;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;
@@ -368,5 +514,7 @@ private void populateDoctorDirectoryTable()
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel logoutLabel;
     private javax.swing.JTable tblRecords;
+    private javax.swing.JButton updateRecordBtn;
+    private javax.swing.JButton viewRecordBtn;
     // End of variables declaration//GEN-END:variables
 }
