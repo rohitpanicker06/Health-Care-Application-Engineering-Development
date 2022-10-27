@@ -12,6 +12,8 @@ import ui.HomeScreen;
 import ui.HomeScreenNotDefault;
 import us.state.city.City;
 import us.state.city.community.Community;
+import utility.RegexConstants;
+import utility.ValidationHelper;
 
 /**
  *
@@ -264,18 +266,74 @@ public class HospitalCrud extends javax.swing.JPanel {
 
     private void createDoctorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createDoctorBtnActionPerformed
         // TODO add your handling code here:
-      
-            String id = hospitalIdTxtField.getText();
-            String name = nameTxtField.getText();
+         int errorCount = 0;
+          StringBuffer errorNotifier = new StringBuffer("Please correct the following Errors\n");
+            String id = null, name = null, cityName = null , state = null, country = null, communityName = null, zipCode = null, address = null;
+            
+            if(ValidationHelper.isInteger(hospitalIdTxtField.getText())){
+             id = hospitalIdTxtField.getText();
+            }
+            else{
+                errorCount++;
+            errorNotifier.append(errorCount).append(". Hospital ID should be an Integer\n");
+            }
+            
+            if(ValidationHelper.isValidName(nameTxtField.getText()))
+            {
+             name = nameTxtField.getText();
+            }else{
+                errorCount++;
+            errorNotifier.append(errorCount).append(". Hospital Name should be a String\n");
+            }
+             
+            if(ValidationHelper.isValidName(cityTxtField.getText()))
+            {
+             cityName = cityTxtField.getText();
+            }else{
+                 errorCount++;
+            errorNotifier.append(errorCount).append(". City Name should be a String\n");
+            }
+            
+            if(ValidationHelper.isValidName(stateTxtField.getText())){
+             state = stateTxtField.getText();
+            }else{
+                errorCount++;
+            errorNotifier.append(errorCount).append(". State Name should be a String\n");
+            }
+            
+            if(ValidationHelper.isValidName(countryTxtField.getText())){
+             country = countryTxtField.getText();
+            }else{
+                 errorCount++;
+            errorNotifier.append(errorCount).append(". Country Name should be a String\n");
+            }
            
-            String cityName = cityTxtField.getText();
-            String state = stateTxtField.getText();
-            String country = countryTxtField.getText();
-           
-            String communityName = communityNameTxtField1.getText();
-            String zipCode = zipCodeTxtField.getText();
-            String address = addressTxtField.getText();
-
+            if(ValidationHelper.isValidName(communityNameTxtField1.getText())){
+             communityName = communityNameTxtField1.getText();
+            }else{
+                errorCount++;
+            errorNotifier.append(errorCount).append(". Community Name should be a String\n");
+            }
+            if(ValidationHelper.isInteger(zipCodeTxtField.getText()))
+            {
+             zipCode = zipCodeTxtField.getText();
+            }else{
+                errorCount++;
+            errorNotifier.append(errorCount).append(". ZipCode should be an Integer\n");
+            }
+            
+            if(ValidationHelper.isValidName(addressTxtField.getText())){
+             address = addressTxtField.getText();
+            }else{
+                errorCount++;
+            errorNotifier.append(errorCount).append(". Address should be a String\n");
+            }
+            
+            if(errorCount > 0 )
+            {
+                 JOptionPane.showMessageDialog(this, errorNotifier.toString());
+            }
+            else{
             City city = new City(state, country,  cityName);
             Community community = new Community(city, communityName, country, zipCode);
             if(operation.contains("create")){
@@ -292,6 +350,7 @@ public class HospitalCrud extends javax.swing.JPanel {
             
              JOptionPane.showMessageDialog(this,"Updated Hospital Record Successfuly");
    
+            }
             }
           
 

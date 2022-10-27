@@ -6,9 +6,12 @@ package ui;
 
 import encounter.Encounter;
 import encounter.EncounterHistory;
+import hospital.Hospital;
+import hospital.HospitalDirectory;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +24,7 @@ import patient.PatientDirectory;
 import rbac.context.RbacApplicationContext;
 import patient.Patient;
 import utility.DateParser;
+import utility.ValidationHelper;
 import vitalSigns.VitalSigns;
 
 /**
@@ -141,6 +145,7 @@ public class DoctorPanel extends javax.swing.JPanel {
     public void makeLabelsDisappear()
     {
         searchComboBox.setVisible(false);
+       searchByLabel.setVisible(false);
         searchTextField.setVisible(false);
         goButton.setVisible(false);
         patientIDLabel.setVisible(false);
@@ -199,6 +204,7 @@ public class DoctorPanel extends javax.swing.JPanel {
         insuranceIdTxtField = new javax.swing.JTextField();
         emailidTextField = new javax.swing.JTextField();
         saveVariable = new javax.swing.JButton();
+        searchByLabel = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -384,7 +390,7 @@ public class DoctorPanel extends javax.swing.JPanel {
         });
         add(searchTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 310, 220, -1));
 
-        goButton.setText("GO");
+        goButton.setText("Search");
         goButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 goButtonActionPerformed(evt);
@@ -411,13 +417,20 @@ public class DoctorPanel extends javax.swing.JPanel {
             }
         });
         add(saveVariable, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 740, 80, 30));
+
+        searchByLabel.setText("Search By");
+        add(searchByLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 310, 130, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        makeLabelsDisappear();
+        makeTxtFieldsDisappear();
         searchComboBox.setVisible(true);
         searchTextField.setVisible(true);
+        searchByLabel.setVisible(true);
         goButton.setVisible(true);
+        
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -499,8 +512,89 @@ public class DoctorPanel extends javax.swing.JPanel {
 
     private void goButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goButtonActionPerformed
         // TODO add your handling code here:
+        
+         int userTypeIndex = searchComboBox.getSelectedIndex();
+        String txtSearch = searchTextField.getText();
+        
+        if(txtSearch.isBlank() || txtSearch.isEmpty() || txtSearch == null)
+        {
+            JOptionPane.showMessageDialog(this, "Please enter the key for Searching and Try Again");
+            return;
+        }
+        ArrayList<Patient> patientList = null;
+       
+        
+        switch (userTypeIndex) {
+                case 0:
+                    patientList = searchById(txtSearch );
+                    break;
+                case 1:
+                    patientList = searchByName(txtSearch);
+                    break;
+                case 2:
+                    patientList = searchByInsuranceID(txtSearch);
+                    break;
+                case 3:
+                    patientList = searchByMobileNumber(txtSearch);
+                    break;
+                case 4:
+                    patientList = searchByAge(txtSearch);
+                    break;
+               
+                   
+                default:
+                    
+                    break;
+            }
+        
+         populatePatientsTable(patientList);
     }//GEN-LAST:event_goButtonActionPerformed
+    private void populatePatientsTable(ArrayList<Patient> patientList)
+    {
+         DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
 
+        tableModel.setRowCount(0);
+        tableModel.setColumnCount(0);
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Name");
+        tableModel.addColumn("Gender");
+        tableModel.addColumn("Age");
+       
+        try{
+        TableColumn tableColumn = tblRecords.getColumnModel().getColumn(4);
+        tblRecords.removeColumn(tableColumn);
+        
+        }catch(Exception e)
+        {
+            System.out.println("Error while deleting table column 4");
+        }
+        
+        try{
+        TableColumn tableColumn_two = tblRecords.getColumnModel().getColumn(4);
+        tblRecords.removeColumn(tableColumn_two);
+        }catch(Exception e)
+        {
+            System.out.println("Error while deleting table column 5");
+        }
+       // th.repaint();
+        tableModel.setRowCount(0);
+        try {
+            for (Patient  patient : patientList) {
+
+                Object[] row = new Object[4];
+                row[0] = patient;
+                row[1] = patient.getPerson().getName();
+                row[2] = patient.getPerson().getGender();
+                row[3] = patient.getPerson().getAge();
+                tableModel.addRow(row);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occured while populating Table e= " + e.getMessage());
+        }
+
+    
+    }
     private void logoutLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLabelMousePressed
         // TODO add your handling code here:
         
@@ -517,6 +611,7 @@ public class DoctorPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         
         searchComboBox.setVisible(false);
+        searchByLabel.setVisible(false);
         searchTextField.setVisible(false);
         goButton.setVisible(false);
         patientIDLabel.setVisible(true);
@@ -575,11 +670,13 @@ public class DoctorPanel extends javax.swing.JPanel {
     private void viewAllPatientsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllPatientsButtonActionPerformed
         // TODO add your handling code here:
         disappearVitalLabels();
+        searchByLabel.setVisible(false);
         makeTxtFieldsDisappear();
          populateAndFillRecordsTable();
     }//GEN-LAST:event_viewAllPatientsButtonActionPerformed
     private void disappearVitalLabels(){
        enterVitalRecordLabel.setVisible(false);
+       searchByLabel.setVisible(false);
        searchComboBox.setVisible(false);
         searchTextField.setVisible(false);
         goButton.setVisible(false);
@@ -626,11 +723,45 @@ public class DoctorPanel extends javax.swing.JPanel {
 
     private void saveVariableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveVariableActionPerformed
         // TODO add your handling code here:
-        int pulseRate = Integer.parseInt(ageTxtField.getText());
-        int respirationRate = Integer.parseInt(genderTxtField.getText());
-        String bloodPressure = addressTextField.getText();
-        int bodyTemp = Integer.parseInt(patientIDtxtField.getText());
+         int errorCount = 0;
+         int pulseRate =0, respirationRate=0, bodyTemp=0;
+         String bloodPressure = null;
+        StringBuffer errorNotifier = new StringBuffer("Please correct the following Errors\n");
         
+        if(ValidationHelper.isInteger(ageTxtField.getText()))
+                {
+         pulseRate = Integer.parseInt(ageTxtField.getText());
+                }else{
+            errorCount++;
+            errorNotifier.append(errorCount).append(". Pulse Rate should be of integers\n");
+
+        }
+        if(ValidationHelper.isInteger(genderTxtField.getText()))
+        {
+         respirationRate = Integer.parseInt(genderTxtField.getText());
+        }
+        else{
+             errorCount++;
+            errorNotifier.append(errorCount).append(". Respiration Rate should be of integers\n");
+        }
+        
+        if(ValidationHelper.checkBloodPressure(addressTextField.getText())){
+         bloodPressure = addressTextField.getText();
+        }else{
+             errorCount++;
+            errorNotifier.append(errorCount).append(". Blood Pressure Rate should be in proper Format\n");
+        }
+        
+        if(ValidationHelper.checkBodyTemp(patientIDtxtField.getText())){
+         bodyTemp = Integer.parseInt(patientIDtxtField.getText());
+        }else{
+            errorCount++;
+            errorNotifier.append(errorCount).append(". Body Temp should be in proper Format\n");
+        
+        }
+        if (errorCount > 0) {
+                JOptionPane.showMessageDialog(this, errorNotifier.toString());
+        }else{
         VitalSigns vitalSigns = new VitalSigns(bodyTemp,pulseRate, respirationRate, bloodPressure, null);
         int selectedRowIndex = tblRecords.getSelectedRow();
         if (selectedRowIndex == -1) {
@@ -645,6 +776,7 @@ public class DoctorPanel extends javax.swing.JPanel {
             Logger.getLogger(DoctorPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         clearTxtFields();
+        }
     }//GEN-LAST:event_saveVariableActionPerformed
 
 
@@ -679,9 +811,86 @@ public class DoctorPanel extends javax.swing.JPanel {
     private javax.swing.JTextField phoneNumberTextField;
     private javax.swing.JButton recordEncounterButton;
     private javax.swing.JButton saveVariable;
+    private javax.swing.JLabel searchByLabel;
     private javax.swing.JComboBox<String> searchComboBox;
     private javax.swing.JTextField searchTextField;
     private javax.swing.JTable tblRecords;
     private javax.swing.JButton viewAllPatientsButton;
     // End of variables declaration//GEN-END:variables
+
+    private ArrayList<Patient> searchById(String id) {
+       
+        ArrayList<Patient> patientResult = new ArrayList<>();
+        for(Patient patient : PatientDirectory.patientList)
+        {
+            if(patient.getPerson().getId().equals(id))
+            {
+                patientResult.add(patient);
+                return patientResult;
+            }
+        }
+        
+        return patientResult;
+    }
+
+    private ArrayList<Patient> searchByName(String name) {
+       ArrayList<Patient> patientResult = new ArrayList<>();
+        for(Patient patient : PatientDirectory.patientList)
+        {
+            if(patient.getPerson().getName().contains(name))
+            {
+                patientResult.add(patient);
+                
+            }
+        }
+        
+        return patientResult;
+    }
+
+    private ArrayList<Patient> searchByInsuranceID(String insuranceId) {
+         
+         ArrayList<Patient> patientResult = new ArrayList<>();
+        for(Patient patient : PatientDirectory.patientList)
+        {
+            if(patient.getInsuranceId() == Integer.parseInt(insuranceId))
+            {
+                patientResult.add(patient);
+                return patientResult;
+                
+            }
+        }
+        
+        return patientResult;
+        
+    }
+
+    private ArrayList<Patient> searchByMobileNumber(String mobileNumber) {
+          ArrayList<Patient> patientResult = new ArrayList<>();
+        for(Patient patient : PatientDirectory.patientList)
+        {
+            if(patient.getPerson().getPhoneNumber()== Long.parseLong(mobileNumber))
+            {
+                patientResult.add(patient);
+               
+                
+            }
+        }
+        
+        return patientResult;
+    }
+
+    private ArrayList<Patient> searchByAge(String age) {
+        ArrayList<Patient> patientResult = new ArrayList<>();
+        for(Patient patient : PatientDirectory.patientList)
+        {
+            if(patient.getPerson().getAge()== Integer.parseInt(age))
+            {
+                patientResult.add(patient);
+               
+                
+            }
+        }
+        
+        return patientResult;
+    }
 }

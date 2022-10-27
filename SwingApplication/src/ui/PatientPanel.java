@@ -348,6 +348,11 @@ public class PatientPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         int userTypeIndex = searchComboBoxHospital.getSelectedIndex();
         String txtSearch = txtSearchHospital.getText();
+         if(txtSearch.isBlank() || txtSearch.isEmpty() || txtSearch == null)
+        {
+            JOptionPane.showMessageDialog(this, "Please enter the key for Searching and Try Again");
+            return;
+        }
         HospitalDirectory hospitalDirectory = new HospitalDirectory();
         ArrayList<Hospital> nearbyHospital = null;
        

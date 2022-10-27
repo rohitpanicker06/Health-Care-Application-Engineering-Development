@@ -31,5 +31,14 @@ public class ValidationHelper {
     public static boolean checkPhoneNumberWith10Digits(String phoneNumber) {
         return RegexCheckHelper.dynamicRegexCheckHelper(RegexConstants.PHONE_NUMBER_VALIDATOR_10_DIGIT, phoneNumber);
     }
-
+    
+    public static boolean checkBloodPressure(String bloodPressure)
+    {
+        return RegexCheckHelper.dynamicRegexCheckHelper(RegexConstants.BLOOD_PRESSURE_REGEX, bloodPressure);
+    }
+    
+    public static boolean checkBodyTemp(String bodyTemp)
+    {
+        return  RegexCheckHelper.dynamicRegexCheckHelper(RegexConstants.BODY_TEMP, bodyTemp);
+    }
 }
