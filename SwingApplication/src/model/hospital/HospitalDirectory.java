@@ -18,7 +18,7 @@ import us.state.city.community.Community;
  * @author rohitpanicker
  */
 public class HospitalDirectory {
-     private static ArrayList<Hospital> hospitalList = hospitalList = new ArrayList();
+     public static ArrayList<Hospital> hospitalList = hospitalList = new ArrayList();
      
      static{
           City city = new City("Massacheuttus", "USA", "Boston");

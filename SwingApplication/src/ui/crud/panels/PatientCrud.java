@@ -85,6 +85,8 @@ public class PatientCrud extends javax.swing.JPanel {
          }
          }
      }
+     
+    
     
     public PatientCrud(Patient patient, String operation)
     {
@@ -257,7 +259,7 @@ public class PatientCrud extends javax.swing.JPanel {
         add(insuranceIdLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 690, 90, -1));
 
         personNameLabel.setText("Name:");
-        add(personNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 220, 70, -1));
+        add(personNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 220, 120, -1));
 
         emailIdPersonLabel.setText("Email ID:");
         add(emailIdPersonLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 280, 70, -1));

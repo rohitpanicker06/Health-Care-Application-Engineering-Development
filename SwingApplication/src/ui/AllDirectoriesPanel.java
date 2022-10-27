@@ -16,6 +16,7 @@ import javax.swing.table.TableColumnModel;
 import patient.Patient;
 import patient.PatientDirectory;
 import rbac.context.RbacApplicationContext;
+import ui.crud.panels.HospitalCrud;
 import ui.crud.panels.PatientCrud;
 
 /**
@@ -228,8 +229,12 @@ public class AllDirectoriesPanel extends javax.swing.JPanel {
 
     private void btnHospitalDirectoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHospitalDirectoryActionPerformed
       
-       
+     createRecordBtn.setText("Create New Hospital");
+        viewRecordBtn.setText("View Hospital Details");
+        updateRecordBtn.setText("Update Hospital Details");
+        deleteRecordBtn.setText("Delete Hospital Record");   
     populateAndFillHospitalRecord();
+    
     }//GEN-LAST:event_btnHospitalDirectoryActionPerformed
 private void populateAndFillHospitalRecord(){
     DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
@@ -353,8 +358,11 @@ private void populateAndFillHospitalRecord(){
             HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);
         }else if(txt.contains("Doctor")){
             PatientCrud patientCrud = new PatientCrud("cd");
-            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);
-        
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);   
+    }else if (txt.contains("Hospital"))
+    {
+        HospitalCrud hospitalCrud = new HospitalCrud("create");
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(hospitalCrud); 
     }
     }//GEN-LAST:event_createRecordBtnActionPerformed
 
@@ -380,6 +388,12 @@ private void populateAndFillHospitalRecord(){
             PatientCrud patientCrud = new PatientCrud(doctor, "dv");
             HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);
         
+    }else if(txt.contains("Hospital"))
+    {
+         Hospital hospital = (Hospital) tblRecords.getValueAt(selectedRowIndex, 0);
+         HospitalCrud hospitalCrud = new HospitalCrud(hospital,"populate");
+          HomeScreen.homeScreen.getjSplitPane1().setRightComponent(hospitalCrud);
+         
     }
     }//GEN-LAST:event_viewRecordBtnActionPerformed
 
@@ -403,6 +417,11 @@ private void populateAndFillHospitalRecord(){
          Doctor doctor = (Doctor) tblRecords.getValueAt(selectedRowIndex, 0);
             PatientCrud patientCrud = new PatientCrud(doctor, "du");
             HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);
+    }else if (txt.contains("Hospital"))
+    {
+         Hospital hospital = (Hospital) tblRecords.getValueAt(selectedRowIndex, 0);
+            HospitalCrud hospitalCrud = new HospitalCrud(hospital, "update");
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(hospitalCrud);
     }
     }//GEN-LAST:event_updateRecordBtnActionPerformed
 
@@ -430,8 +449,18 @@ private void populateAndFillHospitalRecord(){
             Doctor doctor = (Doctor) tableModel.getValueAt(selectedRowIndex, 0);
             deleteDoctorRecord(doctor);
             
+        }else if (txt.contains("Hospital")){
+             DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+            Hospital hospital = (Hospital) tableModel.getValueAt(selectedRowIndex, 0);
+            deleteHospitalRecord(hospital);
         }
     }//GEN-LAST:event_deleteRecordBtnActionPerformed
+   private void deleteHospitalRecord(Hospital hospital)
+   {
+       HospitalDirectory.hospitalList.remove(hospital);
+       JOptionPane.showMessageDialog(this, "Record deleted successfully");
+       populateAndFillHospitalRecord();
+   }
     private void deleteDoctorRecord(Doctor doctor)
     {
       DoctorDirectory.doctorList.remove(doctor); 
