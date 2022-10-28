@@ -18,6 +18,60 @@ import us.state.city.community.Community;
 public class UserListDirectory {
     
     private static ArrayList<User> userList = new ArrayList<>();
+    private static ArrayList<User> patientList = new ArrayList<>();
+    private static ArrayList<User> systemAdminList = new ArrayList<>();
+    private static ArrayList<User> doctorUserList = new ArrayList<>();
+    private static ArrayList<User> hospitalAdminList = new ArrayList<>();
+    private static ArrayList<User> communityAdminList = new ArrayList<>();
+
+    public static ArrayList<User> getUserList() {
+        return userList;
+    }
+
+    public static void setUserList(ArrayList<User> userList) {
+        UserListDirectory.userList = userList;
+    }
+
+    public static ArrayList<User> getPatientList() {
+        return patientList;
+    }
+
+    public static void setPatientList(ArrayList<User> patientList) {
+        UserListDirectory.patientList = patientList;
+    }
+
+    public static ArrayList<User> getSystemAdminList() {
+        return systemAdminList;
+    }
+
+    public static void setSystemAdminList(ArrayList<User> systemAdminList) {
+        UserListDirectory.systemAdminList = systemAdminList;
+    }
+
+    public static ArrayList<User> getDoctorUserList() {
+        return doctorUserList;
+    }
+
+    public static void setDoctorUserList(ArrayList<User> doctorUserList) {
+        UserListDirectory.doctorUserList = doctorUserList;
+    }
+
+    public static ArrayList<User> getHospitalAdminList() {
+        return hospitalAdminList;
+    }
+
+    public static void setHospitalAdminList(ArrayList<User> hospitalAdminList) {
+        UserListDirectory.hospitalAdminList = hospitalAdminList;
+    }
+
+    public static ArrayList<User> getCommunityAdminList() {
+        return communityAdminList;
+    }
+
+    public static void setCommunityAdminList(ArrayList<User> communityAdminList) {
+        UserListDirectory.communityAdminList = communityAdminList;
+    }
+    
     static{
         
          City city = new City("Massacheuttus", "USA", "Boston");
@@ -28,7 +82,7 @@ public class UserListDirectory {
          userList.add(user);
     }
     
-    public User getUser(String userName)
+    public User getUser(String userName, ArrayList<User> userList)
     {
         for(User user: userList)
         {
@@ -38,15 +92,37 @@ public class UserListDirectory {
         }
         return null;
     }
-    public boolean checkUserValidation(String name, String password){
-        User user = getUser(name);
+    
+    public User getUser(String name, int selectedIndex )
+    {
+         User user = null;
+        switch (selectedIndex) {
+            case 0 -> user = getUser(name, systemAdminList);
+            case 1 -> user = getUser(name, patientList);
+            case 2 -> user = getUser(name, doctorUserList);
+            case 3 -> user = getUser(name, hospitalAdminList);
+            case 4 -> user = getUser(name, communityAdminList);
+            default -> {
+            }
+        }
+        return user;
+    }
+    
+    public boolean checkUserValidation(String name, String password, int selectedIndex){
+        User user = null;
+        switch (selectedIndex) {
+            case 0 -> user = getUser(name, systemAdminList);
+            case 1 -> user = getUser(name, patientList);
+            case 2 -> user = getUser(name, doctorUserList);
+            case 3 -> user = getUser(name, hospitalAdminList);
+            case 4 -> user = getUser(name, communityAdminList);
+            default -> {
+            }
+        }
+        
        if(user != null)
        {
-           if(user.getPassword().equals(password)){
-               return true;
-           }else{
-               return false;
-           }
+            return user.getPassword().equals(password);
        }else{
            return false;
        }

@@ -17,6 +17,7 @@ import ui.HomeScreen;
 import ui.HomeScreenNotDefault;
 import us.state.city.City;
 import us.state.city.community.Community;
+import utility.ValidationHelper;
 
 /**
  *
@@ -414,21 +415,101 @@ public class PatientCrud extends javax.swing.JPanel {
     }
     private void createPatientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPatientBtnActionPerformed
         // TODO add your handling code here:
+        int errorCount =0;
+        StringBuffer errorNotifier = new StringBuffer();
+        String id = null, name = null, emailId = null, phoneNumber = null, cityName = null, state = null,
+                country = null, gender = null, age = null, insuranceId = null, communityName = null, zipCode = null,
+                address = null;
         if(this.operation.contains("cp") || this.operation.contains("cd")){
-        String id = idTxtField.getText();
-        String name = nameTxtField.getText();
-        String emailId = emailIdTxtField.getText();
-        String phoneNumber = phnNumberTxtField.getText();
-        String cityName = cityTxtField.getText();
-        String state = stateTxtField.getText();
-        String country = countryTxtField.getText();
-        String gender = genderTxtField.getText();
-        String age = ageTxtField.getText();
-        String insuranceId = insuranceIdTxtField.getText();
-        String communityName = communityNameTxtField.getText();
-        String zipCode = zipCodeTxtField.getText();
-        String address = addressTxtField.getText();
+         if(ValidationHelper.isInteger(idTxtField.getText()))
+         {
+         id = idTxtField.getText();
+         }else{
+             errorCount++;
+            errorNotifier.append(errorCount).append(". Hospital ID should be an Integer\n");
+         }
+         if(ValidationHelper.isValidName(nameTxtField.getText()))
+         {
+         name = nameTxtField.getText();
+         }else{
+              errorCount++;
+            errorNotifier.append(errorCount).append(". Name should be a String\n");
+         }
+         if(ValidationHelper.isValidEmailID(emailIdTxtField.getText())){
+         emailId = emailIdTxtField.getText();
+         }else{
+            errorCount++;
+            errorNotifier.append(errorCount).append(". Email Id should be in xyz@gmail.com format\n"); 
+         }
+         if(ValidationHelper.checkPhoneNumberWith10Digits(phnNumberTxtField.getText())){
+         phoneNumber = phnNumberTxtField.getText();
+         }else{
+              errorCount++;
+            errorNotifier.append(errorCount).append(". Phone number should be of 10 digits\n"); 
+         }
+         if(ValidationHelper.isValidName(cityTxtField.getText())){
+         cityName = cityTxtField.getText();
+         }else{
+            errorCount++;
+            errorNotifier.append(errorCount).append(". Phone number should be a String\n");  
+         }
+         if(ValidationHelper.isValidName(stateTxtField.getText()))
+         {
+         state = stateTxtField.getText();
+         }else{
+             errorCount++;
+            errorNotifier.append(errorCount).append(". State should be a String\n");  
+         }
+         
+         if(ValidationHelper.isValidName(countryTxtField.getText())){
+         country = countryTxtField.getText();
+         }else{
+             errorCount++;
+            errorNotifier.append(errorCount).append(". Country should be a String\n");  
+         }
+         if(ValidationHelper.isValidName(genderTxtField.getText())){
+         gender = genderTxtField.getText();
+         }else{
+              errorCount++;
+            errorNotifier.append(errorCount).append(". Gender should be a String\n");
+         }
+         if(ValidationHelper.isInteger(ageTxtField.getText())){
+         age = ageTxtField.getText();
+         }else{
+              errorCount++;
+            errorNotifier.append(errorCount).append(". Age should be an Integer\n");
+         }
+         
+         if(ValidationHelper.isInteger(insuranceIdTxtField.getText())){
+              insuranceId = insuranceIdTxtField.getText();
+         }else{
+              errorCount++;
+            errorNotifier.append(errorCount).append(". Insurance ID should be an Integer\n");
+         }
         
+         if(ValidationHelper.isValidName(communityNameTxtField.getText())){
+         communityName = communityNameTxtField.getText();
+         }else{
+              errorCount++;
+            errorNotifier.append(errorCount).append(". Community Name should be a String\n");
+         }
+         if(ValidationHelper.isInteger(zipCodeTxtField.getText())){
+         zipCode = zipCodeTxtField.getText();
+         }else{
+              errorCount++;
+            errorNotifier.append(errorCount).append(". Zipcode should be an Integer\n");
+         }
+         if(ValidationHelper.isValidName(addressTxtField.getText())){
+         address = addressTxtField.getText();
+         }else{
+              errorCount++;
+            errorNotifier.append(errorCount).append(". Address should be a String\n");
+         }
+        
+        if(errorCount > 0 )
+            {
+                 JOptionPane.showMessageDialog(this, errorNotifier.toString());
+            }else{
         
         City city = new City(state, country,  cityName);
         Community community = new Community(city, communityName, country, zipCode);
@@ -444,7 +525,7 @@ public class PatientCrud extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this,"Created New Doctor");
        }
            
-       }
+       
         else if(this.operation.contains("pu")){
             updatePatient();
         }
@@ -454,6 +535,8 @@ public class PatientCrud extends javax.swing.JPanel {
         }
         
          clearPatinetCrudFields();
+        }
+        }
     }//GEN-LAST:event_createPatientBtnActionPerformed
 
 

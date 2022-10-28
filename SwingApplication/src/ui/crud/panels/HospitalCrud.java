@@ -332,6 +332,7 @@ public class HospitalCrud extends javax.swing.JPanel {
             if(errorCount > 0 )
             {
                  JOptionPane.showMessageDialog(this, errorNotifier.toString());
+                 return;
             }
             else{
             City city = new City(state, country,  cityName);

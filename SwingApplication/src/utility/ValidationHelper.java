@@ -41,4 +41,8 @@ public class ValidationHelper {
     {
         return  RegexCheckHelper.dynamicRegexCheckHelper(RegexConstants.BODY_TEMP, bodyTemp);
     }
+
+    public static boolean checkIfUserNameIsUnique(String text, int selectedIndex) {
+       return true;
+    }
 }
