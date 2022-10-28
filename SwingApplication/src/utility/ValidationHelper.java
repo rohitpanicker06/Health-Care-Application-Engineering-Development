@@ -7,6 +7,8 @@ package utility;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import rbac.application.user.User;
+import rbac.application.user.UserListDirectory;
 
 
 /**
@@ -42,7 +44,13 @@ public class ValidationHelper {
         return  RegexCheckHelper.dynamicRegexCheckHelper(RegexConstants.BODY_TEMP, bodyTemp);
     }
 
-    public static boolean checkIfUserNameIsUnique(String text, int selectedIndex) {
-       return true;
+    public static boolean checkIfUserNameIsUnique(String userName, int selectedIndex) {
+       User user = new UserListDirectory().getUser(userName, selectedIndex);
+       if(user == null)
+       {
+           return true;
+       }else{
+           return false;
+       }
     }
 }
