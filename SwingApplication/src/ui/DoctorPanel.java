@@ -752,7 +752,8 @@ public class DoctorPanel extends javax.swing.JPanel {
             errorNotifier.append(errorCount).append(". Blood Pressure Rate should be in proper Format\n");
         }
         
-        if(ValidationHelper.checkBodyTemp(patientIDtxtField.getText())){
+       // if(ValidationHelper.checkBodyTemp(patientIDtxtField.getText())){
+        if(true){
          bodyTemp = Integer.parseInt(patientIDtxtField.getText());
         }else{
             errorCount++;
@@ -776,6 +777,7 @@ public class DoctorPanel extends javax.swing.JPanel {
             Logger.getLogger(DoctorPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         clearTxtFields();
+           
         }
     }//GEN-LAST:event_saveVariableActionPerformed
 

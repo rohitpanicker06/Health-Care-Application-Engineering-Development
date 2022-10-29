@@ -155,6 +155,7 @@ public class PatientCrud extends javax.swing.JPanel {
         addressLabel = new javax.swing.JLabel();
         zipCodeLabel = new javax.swing.JLabel();
         zipCodeTxtField = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -322,6 +323,14 @@ public class PatientCrud extends javax.swing.JPanel {
         zipCodeLabel.setText("ZipCode:");
         add(zipCodeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 220, 130, -1));
         add(zipCodeTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 210, 200, -1));
+
+        jButton1.setText("View Encounter History");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 500, 380, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLabelMousePressed
@@ -396,7 +405,7 @@ public class PatientCrud extends javax.swing.JPanel {
     }
     
     private void populatePatinetCrudFields()
-    {   
+    {   try{
         createPatientBtn.setVisible(false);
         idTxtField.setText(patient.getPerson().getId());
         nameTxtField.setText(patient.getPerson().getName());
@@ -411,6 +420,10 @@ public class PatientCrud extends javax.swing.JPanel {
         communityNameTxtField.setText(patient.getPerson().getResidence().getCommunity().getCommunityName());
         zipCodeTxtField.setText(patient.getPerson().getResidence().getCommunity().getZipCode());
         addressTxtField.setText(patient.getPerson().getResidence().getCommunity().getLocation());
+    }catch(Exception e)
+    {
+        
+    }
             
     }
     private void createPatientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPatientBtnActionPerformed
@@ -539,6 +552,15 @@ public class PatientCrud extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_createPatientBtnActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        EncounterHistoryPanel encounterHistoryPanel = new EncounterHistoryPanel(patient);
+        HomeScreen.homeScreen.getjSplitPane1().setRightComponent(encounterHistoryPanel);
+        HomeScreen.homeScreen.getjSplitPane1().setDividerLocation(150);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addressLabel;
@@ -559,6 +581,7 @@ public class PatientCrud extends javax.swing.JPanel {
     private javax.swing.JTextField idTxtField;
     private javax.swing.JLabel insuranceIdLabel;
     private javax.swing.JTextField insuranceIdTxtField;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;

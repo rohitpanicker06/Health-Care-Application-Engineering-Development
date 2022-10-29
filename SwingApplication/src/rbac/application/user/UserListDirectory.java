@@ -80,6 +80,11 @@ public class UserListDirectory {
          Person person = new Person("01", "Rohit Panicker", "rohitpanicker06@gmail.com", 97621238, house, "Male", 23);
          User user = new User("admin", "admin", person);
          userList.add(user);
+         patientList.add(user);
+         systemAdminList.add(user);
+         doctorUserList.add(user);
+         hospitalAdminList.add(user);
+         communityAdminList.add(user);
     }
     
     public User getUser(String userName, ArrayList<User> userList)
