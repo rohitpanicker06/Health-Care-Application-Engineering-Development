@@ -12,8 +12,14 @@ import patient.Patient;
 import patient.PatientDirectory;
 import person.Person;
 import rbac.context.RbacApplicationContext;
+import rbac.role.Role;
+import rbac.roles.roleImplementation.DoctorRoleBase;
+import rbac.roles.roleImplementation.HospitalAdminRoleBase;
+import rbac.roles.roleImplementation.SystemAdminRoleBase;
 import rbac.roles.roleInterface.SystemAdminRoleInterface;
+import ui.AllDirectoriesPanel;
 import ui.HomeScreen;
+import static ui.HomeScreen.applicationContext;
 import ui.HomeScreenNotDefault;
 import us.state.city.City;
 import us.state.city.community.Community;
@@ -537,9 +543,8 @@ public class PatientCrud extends javax.swing.JPanel {
         DoctorDirectory.doctorList.add(doctor);
         JOptionPane.showMessageDialog(this,"Created New Doctor");
        }
-           
-       
-        else if(this.operation.contains("pu")){
+        }
+        }else if(this.operation.contains("pu")){
             updatePatient();
         }
         else if(this.operation.contains("du"))
@@ -548,16 +553,24 @@ public class PatientCrud extends javax.swing.JPanel {
         }
         
          clearPatinetCrudFields();
-        }
-        }
+        
+        
     }//GEN-LAST:event_createPatientBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+         if(applicationContext.getUser() != null){
+         Role role = applicationContext.getRoleContext();
+            if(role instanceof SystemAdminRoleBase || role instanceof HospitalAdminRoleBase || role instanceof DoctorRoleBase)
+            {
         EncounterHistoryPanel encounterHistoryPanel = new EncounterHistoryPanel(patient);
         HomeScreen.homeScreen.getjSplitPane1().setRightComponent(encounterHistoryPanel);
         HomeScreen.homeScreen.getjSplitPane1().setDividerLocation(150);
+            }else{
+                 JOptionPane.showMessageDialog(this, "You dont have access to this");
+            return;
+        }
+         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -7,6 +7,7 @@ package patient;
 
 import encounter.Encounter;
 import encounter.EncounterHistory;
+import hospital.Hospital;
 import java.util.ArrayList;
 import person.Person;
 import vitalSigns.VitalSigns;
@@ -42,6 +43,22 @@ public class Patient {
     private Person person;
     private EncounterHistory encounterHistory;
     private int insuranceId;
+    private Hospital hospital;
+
+    public Hospital getHospital() {
+        return hospital;
+    }
+
+    public void setHospital(Hospital hospital) {
+        this.hospital = hospital;
+    }
+
+    public Patient(Person person, EncounterHistory encounterHistory, int insuranceId, Hospital hospital) {
+        this.person = person;
+        this.encounterHistory = encounterHistory;
+        this.insuranceId = insuranceId;
+        this.hospital = hospital;
+    }
 
     public Patient(Person person, EncounterHistory encounterHistory, int insuranceId) {
         this.person = person;

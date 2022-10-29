@@ -16,6 +16,7 @@ import person.PersonDirectory;
 import rbac.application.user.UserListDirectory;
 import rbac.context.RbacApplicationContext;
 import rbac.role.Role;
+import rbac.roles.roleImplementation.CommunityAdminRoleBase;
 import rbac.roles.roleImplementation.DoctorRoleBase;
 import rbac.roles.roleImplementation.HospitalAdminRoleBase;
 import rbac.roles.roleImplementation.PatientRoleBase;
@@ -40,14 +41,7 @@ public class HomeScreen extends javax.swing.JFrame {
     
     private void populatePatientTable()
     {
-        PersonDirectory personDirectory = new PersonDirectory();
-        personDirectory.newPerson("1", "Rohit", "rohit@gmail.com", 976212, null, "male", 23);
-        personDirectory.newPerson("2", "Rahul", "rahul@gmail.com", 123454, null, "male", 24);
-        Person person = personDirectory.findPerson("1");
-        Person person_two  = personDirectory.findPerson("2");
-        PatientDirectory patientDirectory = new PatientDirectory();
-        patientDirectory.newPatient(person, 25);
-        patientDirectory.newPatient(person_two,26);
+       
         
         
        
@@ -407,15 +401,21 @@ public class HomeScreen extends javax.swing.JFrame {
         {
            if(role instanceof SystemAdminRoleBase) {
                 
-                    comp= new HomeScreenNotDefault();
+                    comp= new AllDirectoriesPanel();
+                    
            }else if(role instanceof DoctorRoleBase){
                     comp= new DoctorPanel();
+                    
            }else if (role instanceof HospitalAdminRoleBase){
                
                     comp= new DoctorPanel();
+                    
            }else if( role instanceof PatientRoleBase){
                     comp = new PatientPanel();
                   
+            }else if(role instanceof CommunityAdminRoleBase)
+            {
+                comp = new CommunityAdminPanel();
             }
             
             HomeScreen.homeScreen.getjSplitPane1().setRightComponent(comp);
@@ -495,8 +495,10 @@ public class HomeScreen extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 homeScreen = new HomeScreen();
                 homeScreen.setVisible(true);
+                PopulateData.populateData();
                 
                 
             }

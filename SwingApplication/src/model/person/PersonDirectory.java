@@ -12,13 +12,9 @@ import java.util.ArrayList;
  * @author rohitpanicker
  */
 public class PersonDirectory {
-    private ArrayList<Person> personList ;
+    public static ArrayList<Person> personList = new ArrayList<>() ;
     
-    public PersonDirectory (){
-          
-       personList = new ArrayList();
-
-    }
+   
 
     public Person newPerson(String id, String name, String emailid, long phoneNumber, House residence, String gender, int age) {
 

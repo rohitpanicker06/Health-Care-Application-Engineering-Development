@@ -11,6 +11,7 @@ import rbac.context.RbacApplicationContext;
 import rbac.roles.roleImplementation.SystemAdminRoleBase;
 import rbac.roles.roleImplementation.PatientRoleBase;
 import rbac.role.Role;
+import rbac.roles.roleImplementation.CommunityAdminRoleBase;
 import rbac.roles.roleImplementation.DoctorRoleBase;
 import rbac.roles.roleImplementation.HospitalAdminRoleBase;
 import static ui.HomeScreen.applicationContext;
@@ -293,8 +294,9 @@ public class LoginJPanel extends javax.swing.JPanel {
                     comp = new HomeScreenNotDefault();
                     break;
                 case 4:
-                    role = new SystemAdminRoleBase();
+                    role = new CommunityAdminRoleBase();
                     rbacApplicationContext.setRoleContext(role);
+                    comp = new CommunityAdminPanel();
                     break;
                 default:
                     

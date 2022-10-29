@@ -2,25 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package ui;
+package ui.crud.panels;
 
-import doctor.Doctor;
-import doctor.DoctorDirectory;
 import house.House;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import model.state.city.community.CommunityDirectory;
-import patient.Patient;
-import patient.PatientDirectory;
 import person.Person;
-import person.PersonDirectory;
-import rbac.application.user.User;
-import rbac.application.user.UserListDirectory;
 import rbac.context.RbacApplicationContext;
+import ui.HomeScreen;
+import ui.HomeScreenNotDefault;
 import us.state.city.City;
 import us.state.city.community.Community;
 import utility.ValidationHelper;
@@ -29,24 +18,35 @@ import utility.ValidationHelper;
  *
  * @author rohitpanicker
  */
-public class SignUpPanel extends javax.swing.JPanel {
+public class PersonCrud extends javax.swing.JPanel {
 
-  
-    JPanel loginJpanel;
     /**
-     * Creates new form SignUpPanel
+     * Creates new form PersonCrud
      */
-    public SignUpPanel() {
+    
+    Person person = null;
+    public PersonCrud(Person person) {
         initComponents();
-        insuranceIdLabel.setVisible(false);
-        insuranceIdTxtField.setVisible(false);
+        this.person = person;
+        populateFields();
+        
     }
     
-    public SignUpPanel(JPanel jpanel){
-        initComponents();
-        insuranceIdLabel.setVisible(false);
-        insuranceIdTxtField.setVisible(false);
-        loginJpanel=jpanel;
+    public void populateFields()
+    {
+        idTxtField.setText(person.getId());
+        nameTxtField.setText(person.getName());
+        phnNumberTxtField.setText(String.valueOf(person.getPhoneNumber()));
+        zipCodeTxtField.setText(person.getResidence().getCommunity().getZipCode());
+        emailIdTxtField.setText(person.getEmailid());
+        cityTxtField.setText(person.getResidence().getCommunity().getCity().getName());
+        stateTxtField.setText(person.getResidence().getCommunity().getCity().getState());
+        countryTxtField.setText(person.getResidence().getCommunity().getCity().getCountry());
+        genderTxtField.setText(person.getGender());
+        ageTxtField.setText(String.valueOf(person.getAge()));
+        communityNameTxtField.setText(person.getResidence().getCommunity().getCommunityName());
+        addressTxtField.setText(person.getResidence().getCommunity().getLocation());
+        
         
     }
 
@@ -66,8 +66,14 @@ public class SignUpPanel extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         loginToContinuePanel = new javax.swing.JPanel();
-        loginToConitueLabel = new javax.swing.JLabel();
-        insuranceIdLabel = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        logoutLabel1 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        loginToContinuePanel1 = new javax.swing.JPanel();
         personNameLabel = new javax.swing.JLabel();
         emailIdPersonLabel = new javax.swing.JLabel();
         phonePersonalLabel = new javax.swing.JLabel();
@@ -76,7 +82,6 @@ public class SignUpPanel extends javax.swing.JPanel {
         countryLabel = new javax.swing.JLabel();
         genderLabel = new javax.swing.JLabel();
         ageLabel = new javax.swing.JLabel();
-        insuranceIdTxtField = new javax.swing.JTextField();
         addressTxtField = new javax.swing.JTextField();
         nameTxtField = new javax.swing.JTextField();
         emailIdTxtField = new javax.swing.JTextField();
@@ -86,7 +91,7 @@ public class SignUpPanel extends javax.swing.JPanel {
         countryTxtField = new javax.swing.JTextField();
         genderTxtField = new javax.swing.JTextField();
         ageTxtField = new javax.swing.JTextField();
-        signUpBtn = new javax.swing.JButton();
+        createPatientBtn = new javax.swing.JButton();
         personIdLabel1 = new javax.swing.JLabel();
         idTxtField = new javax.swing.JTextField();
         communityNameLabel = new javax.swing.JLabel();
@@ -94,12 +99,6 @@ public class SignUpPanel extends javax.swing.JPanel {
         addressLabel = new javax.swing.JLabel();
         zipCodeLabel = new javax.swing.JLabel();
         zipCodeTxtField = new javax.swing.JTextField();
-        userTypeLabel = new javax.swing.JLabel();
-        userTypeComboBox = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        userNameTxtField1 = new javax.swing.JTextField();
-        passwordTxtField = new javax.swing.JPasswordField();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -126,9 +125,9 @@ public class SignUpPanel extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(479, 479, 479)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(205, 205, 205)
+                .addGap(296, 296, 296)
                 .addComponent(logoutLabel)
-                .addContainerGap(302, Short.MAX_VALUE))
+                .addGap(211, 211, 211))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,26 +170,15 @@ public class SignUpPanel extends javax.swing.JPanel {
 
         loginToContinuePanel.setBackground(new java.awt.Color(77, 165, 124));
 
-        loginToConitueLabel.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
-        loginToConitueLabel.setForeground(new java.awt.Color(255, 255, 255));
-        loginToConitueLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        loginToConitueLabel.setText("SIGN UP");
-
         javax.swing.GroupLayout loginToContinuePanelLayout = new javax.swing.GroupLayout(loginToContinuePanel);
         loginToContinuePanel.setLayout(loginToContinuePanelLayout);
         loginToContinuePanelLayout.setHorizontalGroup(
             loginToContinuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginToContinuePanelLayout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(loginToConitueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 260, Short.MAX_VALUE)
         );
         loginToContinuePanelLayout.setVerticalGroup(
             loginToContinuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(loginToContinuePanelLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(loginToConitueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+            .addGap(0, 169, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -212,96 +200,170 @@ public class SignUpPanel extends javax.swing.JPanel {
 
         add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 260, 860));
 
-        insuranceIdLabel.setText("Insurance ID:");
-        add(insuranceIdLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 790, 90, -1));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel6.setBackground(new java.awt.Color(0, 153, 0));
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("MEDICAL RESOURCE FINDER");
+
+        logoutLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        logoutLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        logoutLabel1.setText("Logout");
+        logoutLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                logoutLabel1MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(479, 479, 479)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(296, 296, 296)
+                .addComponent(logoutLabel1)
+                .addGap(211, 211, 211))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                    .addComponent(logoutLabel1))
+                .addContainerGap())
+        );
+
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 1390, 70));
+
+        jPanel7.setBackground(new java.awt.Color(0, 204, 51));
+
+        jPanel8.setBackground(new java.awt.Color(200, 248, 202));
+
+        jLabel6.setBackground(new java.awt.Color(0, 102, 51));
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 102, 51));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("WELCOME");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
+        loginToContinuePanel1.setBackground(new java.awt.Color(77, 165, 124));
+
+        javax.swing.GroupLayout loginToContinuePanel1Layout = new javax.swing.GroupLayout(loginToContinuePanel1);
+        loginToContinuePanel1.setLayout(loginToContinuePanel1Layout);
+        loginToContinuePanel1Layout.setHorizontalGroup(
+            loginToContinuePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 260, Short.MAX_VALUE)
+        );
+        loginToContinuePanel1Layout.setVerticalGroup(
+            loginToContinuePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 169, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(loginToContinuePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(loginToContinuePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(400, 400, 400))
+        );
+
+        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 260, 860));
 
         personNameLabel.setText("Name:");
-        add(personNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 270, 120, -1));
+        jPanel1.add(personNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 220, 120, -1));
 
         emailIdPersonLabel.setText("Email ID:");
-        add(emailIdPersonLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, 70, -1));
+        jPanel1.add(emailIdPersonLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 280, 70, -1));
 
         phonePersonalLabel.setText("Phone Number:");
-        add(phonePersonalLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 400, 100, -1));
+        jPanel1.add(phonePersonalLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 100, -1));
 
         cityLabel.setText("City:");
-        add(cityLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 460, 40, -1));
+        jPanel1.add(cityLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 390, 40, -1));
 
         stateLabel.setText("State");
-        add(stateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 520, 40, -1));
+        jPanel1.add(stateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 450, 40, -1));
 
         countryLabel.setText("Country:");
-        add(countryLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 580, 60, -1));
+        jPanel1.add(countryLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 510, 60, -1));
 
         genderLabel.setText("Gender");
-        add(genderLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 640, 60, -1));
+        jPanel1.add(genderLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 570, 60, -1));
 
         ageLabel.setText("Age:");
-        add(ageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 730, 60, -1));
-        add(insuranceIdTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 780, 150, -1));
-        add(addressTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 250, 200, 130));
+        jPanel1.add(ageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 630, 60, -1));
+        jPanel1.add(addressTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 280, 200, 130));
 
         nameTxtField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameTxtFieldActionPerformed(evt);
             }
         });
-        add(nameTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, 150, -1));
-        add(emailIdTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 330, 150, -1));
-        add(phnNumberTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 400, 150, -1));
-        add(cityTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 460, 150, -1));
-        add(stateTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 520, 150, -1));
-        add(countryTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 580, 150, -1));
-        add(genderTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 640, 150, -1));
-        add(ageTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 710, 150, -1));
+        jPanel1.add(nameTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 220, 150, -1));
+        jPanel1.add(emailIdTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 280, 150, -1));
+        jPanel1.add(phnNumberTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 340, 150, -1));
+        jPanel1.add(cityTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 390, 150, -1));
+        jPanel1.add(stateTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 450, 150, -1));
+        jPanel1.add(countryTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 510, 150, -1));
+        jPanel1.add(genderTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 570, 150, -1));
+        jPanel1.add(ageTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 630, 150, -1));
 
-        signUpBtn.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        signUpBtn.setText("SIGN UP");
-        signUpBtn.addActionListener(new java.awt.event.ActionListener() {
+        createPatientBtn.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        createPatientBtn.setText("UPDATE");
+        createPatientBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signUpBtnActionPerformed(evt);
+                createPatientBtnActionPerformed(evt);
             }
         });
-        add(signUpBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 740, 300, 80));
+        jPanel1.add(createPatientBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 740, 300, 80));
 
         personIdLabel1.setText("ID:");
-        add(personIdLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 210, 70, -1));
-        add(idTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 210, 150, -1));
+        jPanel1.add(personIdLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 150, 70, -1));
+        jPanel1.add(idTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 150, 150, -1));
 
         communityNameLabel.setText("Community Name:");
-        add(communityNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 120, 130, -1));
-        add(communityNameTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 120, 200, -1));
+        jPanel1.add(communityNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 150, 130, -1));
+        jPanel1.add(communityNameTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 150, 200, -1));
 
         addressLabel.setText("Address:");
-        add(addressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 270, 130, -1));
+        jPanel1.add(addressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 280, 130, -1));
 
         zipCodeLabel.setText("ZipCode:");
-        add(zipCodeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 190, 130, -1));
-        add(zipCodeTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 180, 200, -1));
+        jPanel1.add(zipCodeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 220, 130, -1));
+        jPanel1.add(zipCodeTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 210, 200, -1));
 
-        userTypeLabel.setText("Role");
-        add(userTypeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 100, -1));
-
-        userTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "System Admin", "Patient", "Doctor", "Hospital Admin", "Community Admin" }));
-        userTypeComboBox.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                userTypeComboBoxItemStateChanged(evt);
-            }
-        });
-        userTypeComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userTypeComboBoxActionPerformed(evt);
-            }
-        });
-        add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, 190, -1));
-
-        jLabel1.setText("Username:");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 460, 130, -1));
-
-        jLabel2.setText("Password");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 550, 90, -1));
-        add(userNameTxtField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 460, 200, -1));
-        add(passwordTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 550, 200, -1));
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLabelMousePressed
@@ -316,17 +378,29 @@ public class SignUpPanel extends javax.swing.JPanel {
         HomeScreen.homeScreen.getjSplitPane1().setDividerLocation(150);
     }//GEN-LAST:event_logoutLabelMousePressed
 
+    private void logoutLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLabel1MousePressed
+        // TODO add your handling code here:
+
+        RbacApplicationContext rbacApplicationContext = RbacApplicationContext.getInstance();
+        rbacApplicationContext.setRoleContext(null);
+        rbacApplicationContext.setUser(null);
+        JOptionPane.showMessageDialog(this, "Logged Out");
+        HomeScreenNotDefault homeScreenNotDefault = new HomeScreenNotDefault();
+        HomeScreen.homeScreen.getjSplitPane1().setRightComponent(homeScreenNotDefault);
+        HomeScreen.homeScreen.getjSplitPane1().setDividerLocation(150);
+    }//GEN-LAST:event_logoutLabel1MousePressed
+
     private void nameTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTxtFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nameTxtFieldActionPerformed
 
-    private void signUpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpBtnActionPerformed
+    private void createPatientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPatientBtnActionPerformed
         // TODO add your handling code here:
         int errorCount =0;
         StringBuffer errorNotifier = new StringBuffer();
         String id = null, name = null, emailId = null, phoneNumber = null, cityName = null, state = null,
         country = null, gender = null, age = null, insuranceId = null, communityName = null, zipCode = null,
-        address = null, userName= null, password= null;
+        address = null;
        
             if(ValidationHelper.isInteger(idTxtField.getText()))
             {
@@ -386,15 +460,7 @@ public class SignUpPanel extends javax.swing.JPanel {
                 errorCount++;
                 errorNotifier.append(errorCount).append(". Age should be an Integer\n");
             }
-            
-            if(userTypeComboBox.getSelectedIndex() == 1){
-            if(ValidationHelper.isInteger(insuranceIdTxtField.getText())){
-                insuranceId = insuranceIdTxtField.getText();
-            }else{
-                errorCount++;
-                errorNotifier.append(errorCount).append(". Insurance ID should be an Integer\n");
-            }
-            }
+
 
             if(ValidationHelper.isValidName(communityNameTxtField.getText())){
                 communityName = communityNameTxtField.getText();
@@ -414,107 +480,32 @@ public class SignUpPanel extends javax.swing.JPanel {
                 errorCount++;
                 errorNotifier.append(errorCount).append(". Address should be a String\n");
             }
-            
-            if(ValidationHelper.checkIfUserNameIsUnique(userNameTxtField1.getText(), userTypeComboBox.getSelectedIndex()))
-            {
-                userName = userNameTxtField1.getText();
-            }else{
-                 errorCount++;
-                errorNotifier.append(errorCount).append(". This userName already exists, please choose another\n");
-            }
-            
-            if(passwordTxtField.getText()!= null)
-            {
-                password = passwordTxtField.getText();
-            }else{
-                 errorCount++;
-                errorNotifier.append(errorCount).append(". Please enter password\n");
-            }
 
             if(errorCount > 0 )
             {
                 JOptionPane.showMessageDialog(this, errorNotifier.toString());
-                return;
             }else{
-                
-                int selectedIndex = userTypeComboBox.getSelectedIndex();
+
                 City city = new City(state, country,  cityName);
                 Community community = new Community(city, communityName, country, zipCode);
-                CommunityDirectory.communityList.add(community);
                 House house = new House(community, 7, 8);
-                Person person = new Person(id, name, emailId, Long.parseLong(phoneNumber), house, gender, Integer.parseInt(age));
-                PersonDirectory.personList.add(person);
-                User newUser = new User(userName, password, person);
-            // System Admin, Patient, Doctor, Hospital Admin, Community Admin
-            switch (selectedIndex) {
-                case 0:
-                    UserListDirectory.getSystemAdminList().add(newUser);
-                    break;
-                case 1:
-                    UserListDirectory.getPatientList().add(newUser);
-                    Patient newPatient = new Patient(person, null, Integer.parseInt(insuranceId));
-                    PatientDirectory.patientList.add(newPatient);
-                    break;
-                case 2:
-                    Doctor doctor = new Doctor(person);
-                    DoctorDirectory.doctorList.add(doctor);
-                    UserListDirectory.getDoctorUserList().add(newUser);
-                    break;
-                case 3:
-                    UserListDirectory.getHospitalAdminList().add(newUser);
-                    break;
-                case 4:
-                    UserListDirectory.getCommunityAdminList().add(newUser);
-                    break;
-                default:
-                    break;
-            }
+                 
+               this.person.setId(id);
+               this.person.setName(name);
+               this.person.setAge(Integer.parseInt(age));
+               this.person.setEmailid(emailId);
+               this.person.setGender(gender);
+               this.person.setPhoneNumber(Long.parseLong(phoneNumber));
+               this.person.setResidence(house);
                
-                JOptionPane.showMessageDialog(this,"Sign Up Successful");
-                clearAllTxtFields();
-                HomeScreen.homeScreen.getjSplitPane1().setRightComponent(loginJpanel);
-                }
-   
-    }//GEN-LAST:event_signUpBtnActionPerformed
+               JOptionPane.showMessageDialog(this, "Person Record Updated Successfully");
+               
+            }
+       
+          
 
-   
-    private void userTypeComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_userTypeComboBoxItemStateChanged
-        // TODO add your handling code here:
-        
-        
-    }//GEN-LAST:event_userTypeComboBoxItemStateChanged
+    }//GEN-LAST:event_createPatientBtnActionPerformed
 
-    private void userTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTypeComboBoxActionPerformed
-        // TODO add your handling code here:
-        
-        if(userTypeComboBox.getSelectedIndex() == 1)
-        {
-            insuranceIdLabel.setVisible(true);
-            insuranceIdTxtField.setVisible(true);
-        }else{
-            insuranceIdLabel.setVisible(false);
-            insuranceIdTxtField.setVisible(false);
-        }
-        
-    }//GEN-LAST:event_userTypeComboBoxActionPerformed
- private void clearAllTxtFields()
-    {
-        addressTxtField.setText("");
-        ageTxtField.setText("");
-        cityTxtField.setText("");
-        communityNameTxtField.setText("");
-        countryTxtField.setText("");
-        emailIdTxtField.setText("");
-        genderTxtField.setText("");
-        idTxtField.setText("");
-        insuranceIdTxtField.setText("");
-        nameTxtField.setText("");
-        passwordTxtField.setText("");
-        phnNumberTxtField.setText("");
-        stateTxtField.setText("");
-        userNameTxtField1.setText("");
-        zipCodeTxtField.setText("");
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addressLabel;
@@ -527,36 +518,37 @@ public class SignUpPanel extends javax.swing.JPanel {
     private javax.swing.JTextField communityNameTxtField;
     private javax.swing.JLabel countryLabel;
     private javax.swing.JTextField countryTxtField;
+    private javax.swing.JButton createPatientBtn;
     private javax.swing.JLabel emailIdPersonLabel;
     private javax.swing.JTextField emailIdTxtField;
     private javax.swing.JLabel genderLabel;
     private javax.swing.JTextField genderTxtField;
     private javax.swing.JTextField idTxtField;
-    private javax.swing.JLabel insuranceIdLabel;
-    private javax.swing.JTextField insuranceIdTxtField;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JLabel loginToConitueLabel;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel loginToContinuePanel;
+    private javax.swing.JPanel loginToContinuePanel1;
     private javax.swing.JLabel logoutLabel;
+    private javax.swing.JLabel logoutLabel1;
     private javax.swing.JTextField nameTxtField;
-    private javax.swing.JPasswordField passwordTxtField;
     private javax.swing.JLabel personIdLabel1;
     private javax.swing.JLabel personNameLabel;
     private javax.swing.JTextField phnNumberTxtField;
     private javax.swing.JLabel phonePersonalLabel;
-    private javax.swing.JButton signUpBtn;
     private javax.swing.JLabel stateLabel;
     private javax.swing.JTextField stateTxtField;
-    private javax.swing.JTextField userNameTxtField1;
-    private javax.swing.JComboBox<String> userTypeComboBox;
-    private javax.swing.JLabel userTypeLabel;
     private javax.swing.JLabel zipCodeLabel;
     private javax.swing.JTextField zipCodeTxtField;
     // End of variables declaration//GEN-END:variables
+
+    
 }

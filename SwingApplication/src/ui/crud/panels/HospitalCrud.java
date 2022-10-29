@@ -7,6 +7,7 @@ package ui.crud.panels;
 import hospital.Hospital;
 import hospital.HospitalDirectory;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import rbac.context.RbacApplicationContext;
 import ui.HomeScreen;
 import ui.HomeScreenNotDefault;
@@ -27,11 +28,30 @@ public class HospitalCrud extends javax.swing.JPanel {
     
     public String operation;
     public Hospital hospital;
+    private JPanel jpanel = null;
     public HospitalCrud(String operation) {
         
         this.operation = operation;
         initComponents();
     }
+    
+    public HospitalCrud(Hospital hospital,String operation, JPanel jpanel) {
+       
+        initComponents();
+        this.operation = operation;
+        this.hospital = hospital;
+        this.jpanel = jpanel;
+         if(operation.equals("populate"))
+        {  createDoctorBtn.setVisible(false);
+           populateTable(hospital);
+        }else if(operation.equals("update"))
+        {  createDoctorBtn.setVisible(true);
+           createDoctorBtn.setText("Update");
+            populateTable(hospital);
+            
+        }
+    }
+    
     
     public HospitalCrud(Hospital hospital,String operation) {
        
@@ -349,8 +369,14 @@ public class HospitalCrud extends javax.swing.JPanel {
             hospital.setHospitalId(Integer.parseInt(id));
             hospital.setHospitalName(name);
             
-             JOptionPane.showMessageDialog(this,"Updated Hospital Record Successfuly");
-   
+             JOptionPane.showMessageDialog(this,"Updated Hospital Record Successfulys");
+               if(jpanel != null)
+               {
+                   HomeScreen.homeScreen.getjSplitPane1().setRightComponent(jpanel);
+                   HomeScreen.homeScreen.getjSplitPane1().setDividerLocation(150);
+                   
+                   
+               }
             }
             }
           
