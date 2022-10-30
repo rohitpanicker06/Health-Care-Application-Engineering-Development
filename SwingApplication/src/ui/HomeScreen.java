@@ -408,7 +408,7 @@ public class HomeScreen extends javax.swing.JFrame {
                     
            }else if (role instanceof HospitalAdminRoleBase){
                
-                    comp= new DoctorPanel();
+                    comp= new HospitalAdminPanel();
                     
            }else if( role instanceof PatientRoleBase){
                     comp = new PatientPanel();

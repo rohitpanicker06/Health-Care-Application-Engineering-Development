@@ -4,8 +4,20 @@
  */
 package ui;
 
+import doctor.Doctor;
+import hospital.Hospital;
+import hospital.HospitalDirectory;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import patient.Patient;
+import patient.PatientDirectory;
+import person.Person;
 import rbac.context.RbacApplicationContext;
+import ui.crud.panels.HospitalCrud;
+import ui.crud.panels.PatientCrud;
+import ui.crud.panels.PersonCrud;
 
 /**
  *
@@ -35,7 +47,20 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        loginToContinuePanel = new javax.swing.JPanel();
+        allHospitalBtn = new javax.swing.JButton();
+        allHospitalBtn1 = new javax.swing.JButton();
+        allHospitalBtn2 = new javax.swing.JButton();
+        allHospitalBtn3 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblRecords = new javax.swing.JTable();
+        searchLabel = new javax.swing.JLabel();
+        searchByComboBox = new javax.swing.JComboBox<>();
+        deletBtn = new javax.swing.JButton();
+        goBtn = new javax.swing.JButton();
+        updateBtn1 = new javax.swing.JButton();
+        createHospital = new javax.swing.JButton();
+        viewPatients = new javax.swing.JButton();
+        updatePatient = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -95,7 +120,7 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,37 +130,125 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        loginToContinuePanel.setBackground(new java.awt.Color(77, 165, 124));
+        allHospitalBtn.setText("View Doctors");
+        allHospitalBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                allHospitalBtnActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout loginToContinuePanelLayout = new javax.swing.GroupLayout(loginToContinuePanel);
-        loginToContinuePanel.setLayout(loginToContinuePanelLayout);
-        loginToContinuePanelLayout.setHorizontalGroup(
-            loginToContinuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 260, Short.MAX_VALUE)
-        );
-        loginToContinuePanelLayout.setVerticalGroup(
-            loginToContinuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 169, Short.MAX_VALUE)
-        );
+        allHospitalBtn1.setText("View Patients");
+        allHospitalBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                allHospitalBtn1ActionPerformed(evt);
+            }
+        });
+
+        allHospitalBtn2.setText("All Hospitals");
+        allHospitalBtn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                allHospitalBtn2ActionPerformed(evt);
+            }
+        });
+
+        allHospitalBtn3.setText("Search Hospital");
+        allHospitalBtn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                allHospitalBtn3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(loginToContinuePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(allHospitalBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+            .addComponent(allHospitalBtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(allHospitalBtn3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(allHospitalBtn2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(loginToContinuePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(400, 400, 400))
+                .addGap(18, 18, 18)
+                .addComponent(allHospitalBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(allHospitalBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(allHospitalBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(allHospitalBtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 260, 860));
+
+        tblRecords.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Name", "Gender", "Age"
+            }
+        ));
+        jScrollPane1.setViewportView(tblRecords);
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 1060, 200));
+
+        searchLabel.setText("Search By");
+        add(searchLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 140, 30));
+
+        searchByComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        add(searchByComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 290, 180, 50));
+
+        deletBtn.setText("Update Hospital Record");
+        deletBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deletBtnActionPerformed(evt);
+            }
+        });
+        add(deletBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 370, -1, 30));
+
+        goBtn.setText("Go");
+        add(goBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 300, 110, 30));
+
+        updateBtn1.setText("Delete Hospital");
+        updateBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtn1ActionPerformed(evt);
+            }
+        });
+        add(updateBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 370, 160, 30));
+
+        createHospital.setText("Create Hospital");
+        createHospital.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createHospitalActionPerformed(evt);
+            }
+        });
+        add(createHospital, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 370, 180, 30));
+
+        viewPatients.setText("View Patient");
+        viewPatients.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewPatientsActionPerformed(evt);
+            }
+        });
+        add(viewPatients, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 370, 160, 30));
+
+        updatePatient.setText("UpdatePatient");
+        updatePatient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updatePatientActionPerformed(evt);
+            }
+        });
+        add(updatePatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 370, 180, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLabelMousePressed
@@ -150,14 +263,230 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
         HomeScreen.homeScreen.getjSplitPane1().setDividerLocation(150);
     }//GEN-LAST:event_logoutLabelMousePressed
 
+    private void allHospitalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allHospitalBtnActionPerformed
+        // TODO add your handling code here:
+        deletBtn.setText("Update Hospital Record");
+        String searchText= searchByComboBox.getItemAt(searchByComboBox.getSelectedIndex());
+        populateHospitalTable(HospitalDirectory.hospitalList);
+    }//GEN-LAST:event_allHospitalBtnActionPerformed
+
+    private void allHospitalBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allHospitalBtn1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_allHospitalBtn1ActionPerformed
+
+    private void allHospitalBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allHospitalBtn2ActionPerformed
+        // TODO add your handling code here:
+        searchByComboBox.setVisible(false);
+        searchLabel.setVisible(false);
+        goBtn.setVisible(false);
+        deletBtn.setText("Update Hospital Record");
+        String searchText= searchByComboBox.getItemAt(searchByComboBox.getSelectedIndex());
+        populateHospitalTable(HospitalDirectory.hospitalList);
+    }//GEN-LAST:event_allHospitalBtn2ActionPerformed
+
+    private void allHospitalBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allHospitalBtn3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_allHospitalBtn3ActionPerformed
+
+    private void deletBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletBtnActionPerformed
+        // TODO add your handling code here:
+
+        String txt = deletBtn.getText();
+        int selectedRowIndex = tblRecords.getSelectedRow();
+        if (selectedRowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "No Record is selected, Please Try Again");
+            return;
+        }
+
+        if(txt.contains("Hospital"))
+        {
+            Hospital hospital = (Hospital) tblRecords.getValueAt(selectedRowIndex, 0);
+
+            HospitalCrud hospitalCrud = new HospitalCrud(hospital, "update", this);
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(hospitalCrud);
+
+        }else if (txt.contains("Doctor")){
+            Doctor doctor = (Doctor) tblRecords.getValueAt(selectedRowIndex, 0);
+            PatientCrud patientCrud = new PatientCrud(doctor, "du");
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);
+        }  else if(txt.contains("Patient"))
+        {
+            Patient patient = (Patient) tblRecords.getValueAt(selectedRowIndex, 0);
+
+            PatientCrud patientCrud = new PatientCrud(patient, "pu");
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);
+        }else if(txt.contains("Person"))
+        {
+            Person person = (Person ) tblRecords.getValueAt(selectedRowIndex, 0);
+            PersonCrud personCrud = new PersonCrud(person);
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(personCrud);
+        }
+    }//GEN-LAST:event_deletBtnActionPerformed
+
+    private void updateBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtn1ActionPerformed
+        // TODO add your handling code here:
+        
+        String txt = deletBtn.getText();
+        int selectedRowIndex = tblRecords.getSelectedRow();
+        if (selectedRowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "No Record is selected, Please Try Again");
+            return;
+        }
+
+            Hospital hospital = (Hospital) tblRecords.getValueAt(selectedRowIndex, 0);
+            HospitalDirectory.hospitalList.remove(hospital);
+            JOptionPane.showMessageDialog(this, "Hospital Deleted Successfully");
+            populateHospitalTable(HospitalDirectory.hospitalList);
+        
+    }//GEN-LAST:event_updateBtn1ActionPerformed
+
+    private void createHospitalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createHospitalActionPerformed
+        // TODO add your handling code here:
+        HospitalCrud hospitalCrud = new HospitalCrud("create");
+        HomeScreen.homeScreen.getjSplitPane1().setRightComponent(hospitalCrud);
+        HomeScreen.homeScreen.getjSplitPane1().setDividerLocation(150);
+    }//GEN-LAST:event_createHospitalActionPerformed
+
+    private void viewPatientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewPatientsActionPerformed
+        // TODO add your handling code here:
+          String txt = deletBtn.getText();
+        int selectedRowIndex = tblRecords.getSelectedRow();
+        if (selectedRowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "No Record is selected, Please Try Again");
+            return;
+        }
+
+            Hospital hospital = (Hospital) tblRecords.getValueAt(selectedRowIndex, 0);
+            ArrayList<Patient> patientList = hospital.getPatientList();
+            populateAndFillRecordsTable(patientList);
+            
+            
+    }//GEN-LAST:event_viewPatientsActionPerformed
+
+    private void updatePatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatePatientActionPerformed
+        // TODO add your handling code here:
+         String txt = deletBtn.getText();
+        int selectedRowIndex = tblRecords.getSelectedRow();
+        if (selectedRowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "No Record is selected, Please Try Again");
+            return;
+        }
+
+            Patient patient = (Patient) tblRecords.getValueAt(selectedRowIndex, 0);
+            PatientCrud patientCrud = new PatientCrud(patient, "up");
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);
+    }//GEN-LAST:event_updatePatientActionPerformed
+private void populateAndFillRecordsTable(ArrayList<Patient> patientList) {
+        DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+
+        tableModel.setRowCount(0);
+        tableModel.setColumnCount(0);
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Name");
+        tableModel.addColumn("Gender");
+        tableModel.addColumn("Age");
+        /* JTableHeader th = tblRecords.getTableHeader();
+         TableColumnModel tcm = th.getColumnModel();
+         TableColumn tc = tcm.getColumn(0);
+        tc.setHeaderValue( "ID" );
+        TableColumn tc_one = tcm.getColumn(1);
+        tc_one.setHeaderValue("Name");
+        TableColumn tc_two = tcm.getColumn(2);
+        tc_two.setHeaderValue("Gender");
+        TableColumn tc_three = tcm.getColumn(3);
+        tc_three.setHeaderValue("Age");*/
+        try{
+        TableColumn tableColumn = tblRecords.getColumnModel().getColumn(4);
+        tblRecords.removeColumn(tableColumn);
+        
+        }catch(Exception e)
+        {
+            System.out.println("Error while deleting table column 4");
+        }
+        
+        try{
+        TableColumn tableColumn_two = tblRecords.getColumnModel().getColumn(4);
+        tblRecords.removeColumn(tableColumn_two);
+        }catch(Exception e)
+        {
+            System.out.println("Error while deleting table column 5");
+        }
+       // th.repaint();
+        tableModel.setRowCount(0);
+        try {
+            for (Patient  patient : patientList) {
+
+                Object[] row = new Object[4];
+                row[0] = patient;
+                row[1] = patient.getPerson().getName();
+                row[2] = patient.getPerson().getGender();
+                row[3] = patient.getPerson().getAge();
+                tableModel.addRow(row);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occured while populating Table e= " + e.getMessage());
+        }
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton allHospitalBtn;
+    private javax.swing.JButton allHospitalBtn1;
+    private javax.swing.JButton allHospitalBtn2;
+    private javax.swing.JButton allHospitalBtn3;
+    private javax.swing.JButton createHospital;
+    private javax.swing.JButton deletBtn;
+    private javax.swing.JButton goBtn;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel loginToContinuePanel;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel logoutLabel;
+    private javax.swing.JComboBox<String> searchByComboBox;
+    private javax.swing.JLabel searchLabel;
+    private javax.swing.JTable tblRecords;
+    private javax.swing.JButton updateBtn1;
+    private javax.swing.JButton updatePatient;
+    private javax.swing.JButton viewPatients;
     // End of variables declaration//GEN-END:variables
+
+     private void populateHospitalTable(ArrayList<Hospital> hospitalList) {
+       
+    
+     
+      DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+        tableModel.setRowCount(0);
+        tableModel.setColumnCount(0);
+      
+        
+        tableModel.addColumn("ID" );
+       
+        tableModel.addColumn("Hospital Name");
+       
+        tableModel.addColumn("Community Name");
+        
+       
+        
+        
+        try {
+            for (Hospital  hospital : hospitalList) {
+
+                Object[] row = new Object[3];
+                row[0] = hospital;
+                row[1] = hospital.getHospitalName();
+                row[2] = hospital.getCommunity().getCommunityName();
+               
+                tableModel.addRow(row);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occured while populating Table e= " + e.getMessage());
+        }
+
+     
+     
+    }
 }
