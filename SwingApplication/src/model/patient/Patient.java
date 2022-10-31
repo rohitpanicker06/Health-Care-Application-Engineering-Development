@@ -5,6 +5,7 @@
 package patient;
 
 
+import doctor.Doctor;
 import encounter.Encounter;
 import encounter.EncounterHistory;
 import hospital.Hospital;
@@ -17,7 +18,12 @@ import vitalSigns.VitalSigns;
  * @author rohitpanicker
  */
 public class Patient {
-
+ private Person person;
+    private EncounterHistory encounterHistory;
+    private int insuranceId;
+    private Hospital hospital;
+    private Doctor doctor;
+    
     public ArrayList<Encounter> getEncounterHistoryList() {
         return encounterHistory.getEncounterList();
         
@@ -40,10 +46,24 @@ public class Patient {
     }
 
     
-    private Person person;
-    private EncounterHistory encounterHistory;
-    private int insuranceId;
-    private Hospital hospital;
+   
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+    
+
+    public Patient(Person person, EncounterHistory encounterHistory, int insuranceId, Hospital hospital, Doctor doctor) {
+        this.person = person;
+        this.encounterHistory = encounterHistory;
+        this.insuranceId = insuranceId;
+        this.hospital = hospital;
+        this.doctor = doctor;
+    }
 
     public Hospital getHospital() {
         return hospital;

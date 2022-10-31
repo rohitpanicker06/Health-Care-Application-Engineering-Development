@@ -243,9 +243,9 @@ public class PatientPanel extends javax.swing.JPanel {
         
        
         
-        DoctorDirectory doctorDirectory = hospital.getDoctorDirectory();
+        ArrayList<Doctor> doctorList = hospital.getDoctorList();
         try {
-            for (Doctor  doctor : doctorDirectory.getDoctorList()) {
+            for (Doctor  doctor : doctorList) {
 
                 Object[] row = new Object[2];
                 row[0] = doctor;
@@ -400,7 +400,7 @@ public class PatientPanel extends javax.swing.JPanel {
         ArrayList<Hospital> result = new ArrayList<Hospital>();
         for(Hospital hospital : hospitalDirectory.getHospitalList())
         {
-            if(hospital.getHospitalName().equals(name))
+            if(hospital.getHospitalName().contains(name))
             {
                 result.add(hospital);
             }else{

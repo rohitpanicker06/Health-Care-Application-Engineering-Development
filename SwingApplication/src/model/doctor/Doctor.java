@@ -4,6 +4,7 @@
  */
 package doctor;
 
+import hospital.Hospital;
 import person.Person;
 
 /**
@@ -12,6 +13,20 @@ import person.Person;
  */
 public class Doctor {
     private Person person;
+    private Hospital hospital;
+
+    public Hospital getHospital() {
+        return hospital;
+    }
+
+    public void setHospital(Hospital hospital) {
+        this.hospital = hospital;
+    }
+
+    public Doctor(Person person, Hospital hospital) {
+        this.person = person;
+        this.hospital = hospital;
+    }
     
     public Doctor(Person person) {
         this.person = person;

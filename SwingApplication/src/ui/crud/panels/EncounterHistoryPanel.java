@@ -57,22 +57,7 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
     {
         
          DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
-         try{
-        TableColumn tableColumn = tblRecords.getColumnModel().getColumn(4);
-        tblRecords.removeColumn(tableColumn);
         
-        }catch(Exception e)
-        {
-            System.out.println("Error while deleting table column 4");
-        }
-        
-        try{
-        TableColumn tableColumn_two = tblRecords.getColumnModel().getColumn(4);
-        tblRecords.removeColumn(tableColumn_two);
-        }catch(Exception e)
-        {
-            System.out.println("Error while deleting table column 5");
-        }
         tableModel.setColumnCount(0);
         tableModel.addColumn("Date");
         tableModel.addColumn("Body Temp");
@@ -104,7 +89,17 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
                 row[2] = encounter.getVitalSigns().getPulseRate();
                 row[3] = encounter.getVitalSigns().getRespirationRate();
                 row[4] = encounter.getVitalSigns().getBloodPressure();
-                row[5]= encounter.getVitalSigns().getBloodPressure(); //toBeDone
+                try{
+                if(encounter.getVitalSigns().getDoctor() == null) {
+                row[5]= "Created By System Admin";
+                }else{
+                    row[5] = encounter.getVitalSigns().getDoctor().getPerson().getName();
+                }
+                }catch(Exception e)
+                {
+                    
+                }
+
                 tableModel.addRow(row);
 
             }
@@ -400,6 +395,9 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
 
     private void deleteVitalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteVitalBtnActionPerformed
         // TODO add your handling code here:
+        clearTxtFields();
+        makeLabelsDisappear();
+        makeTxtFieldsDisappear();
          searchByLabel.setVisible(false);
         searchTextField.setVisible(false);
         goButton.setVisible(false);
@@ -545,6 +543,7 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
 
     private void createVitalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createVitalBtnActionPerformed
         // TODO add your handling code here:
+        clearTxtFields();
         searchByLabel.setVisible(false);
         searchTextField.setVisible(false);
         goButton.setVisible(false);
@@ -759,22 +758,7 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
 
     private void populateTableRecordsWithEncounterHistory(ArrayList<Encounter> encounterList) {
       DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
-         try{
-        TableColumn tableColumn = tblRecords.getColumnModel().getColumn(4);
-        tblRecords.removeColumn(tableColumn);
-        
-        }catch(Exception e)
-        {
-            System.out.println("Error while deleting table column 4");
-        }
-        
-        try{
-        TableColumn tableColumn_two = tblRecords.getColumnModel().getColumn(4);
-        tblRecords.removeColumn(tableColumn_two);
-        }catch(Exception e)
-        {
-            System.out.println("Error while deleting table column 5");
-        }
+     
         tableModel.setColumnCount(0);
         tableModel.addColumn("Date");
         tableModel.addColumn("Body Temp");
@@ -782,19 +766,8 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
         tableModel.addColumn("Respiration Rate");
         tableModel.addColumn("Blood Pressure");
         tableModel.addColumn("Doctor Name");
-         /*JTableHeader th = tblRecords.getTableHeader();
-         TableColumnModel tcm = th.getColumnModel();
-         TableColumn tc = tcm.getColumn(0);
-        tc.setHeaderValue( "Date" );
-        TableColumn tc_one = tcm.getColumn(1);
-        tc_one.setHeaderValue("Body Temp");
-        TableColumn tc_two = tcm.getColumn(2);
-        tc_two.setHeaderValue("Pulse Rate");
-        TableColumn tc_three = tcm.getColumn(3);
-        tc_three.setHeaderValue("Respiration Rate");*/
        
-        
-      //  th.repaint();
+      
         tableModel.setRowCount(0);
         
         try {
@@ -806,7 +779,13 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
                 row[2] = encounter.getVitalSigns().getPulseRate();
                 row[3] = encounter.getVitalSigns().getRespirationRate();
                 row[4] = encounter.getVitalSigns().getBloodPressure();
-                row[5]= encounter.getVitalSigns().getBloodPressure(); //toBeDone
+               if(encounter.getVitalSigns().getDoctor() == null )
+               {
+                   row[5]=  "Created by System Admin";
+               }else{
+                row[5]=  encounter.getVitalSigns().getDoctor().getPerson().getName();
+                   }
+               
                 tableModel.addRow(row);
 
             }

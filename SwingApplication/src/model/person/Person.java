@@ -97,4 +97,10 @@ import house.House;
         return getId().equals(id);
     }
     
+    
+    @Override
+    public String toString()
+    {
+        return this.id.toString();
+    }
 }

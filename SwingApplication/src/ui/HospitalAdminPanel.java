@@ -5,11 +5,13 @@
 package ui;
 
 import doctor.Doctor;
+import doctor.DoctorDirectory;
 import hospital.Hospital;
 import hospital.HospitalDirectory;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import patient.Patient;
 import patient.PatientDirectory;
@@ -28,8 +30,19 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
     /**
      * Creates new form HospitalAdminPanel
      */
+    
+    private Hospital hospital = null;
+    
     public HospitalAdminPanel() {
+        
         initComponents();
+        setSearchComponentsVisibility(false);
+    }
+    public void setSearchComponentsVisibility(boolean value)
+    {
+        searchLabel.setVisible(value);
+        searchByComboBox.setVisible(value);
+        goBtn.setVisible(value);
     }
 
     /**
@@ -47,20 +60,19 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        allHospitalBtn = new javax.swing.JButton();
-        allHospitalBtn1 = new javax.swing.JButton();
         allHospitalBtn2 = new javax.swing.JButton();
-        allHospitalBtn3 = new javax.swing.JButton();
+        searchHospitalBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRecords = new javax.swing.JTable();
         searchLabel = new javax.swing.JLabel();
         searchByComboBox = new javax.swing.JComboBox<>();
-        deletBtn = new javax.swing.JButton();
+        updateBtn = new javax.swing.JButton();
         goBtn = new javax.swing.JButton();
-        updateBtn1 = new javax.swing.JButton();
-        createHospital = new javax.swing.JButton();
-        viewPatients = new javax.swing.JButton();
-        updatePatient = new javax.swing.JButton();
+        deleteHospitalBtn = new javax.swing.JButton();
+        createHospitalBtn = new javax.swing.JButton();
+        viewDetailsBtn = new javax.swing.JButton();
+        viewPatientsBtn = new javax.swing.JButton();
+        viewAllDoctorsBtn = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -130,20 +142,6 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        allHospitalBtn.setText("View Doctors");
-        allHospitalBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                allHospitalBtnActionPerformed(evt);
-            }
-        });
-
-        allHospitalBtn1.setText("View Patients");
-        allHospitalBtn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                allHospitalBtn1ActionPerformed(evt);
-            }
-        });
-
         allHospitalBtn2.setText("All Hospitals");
         allHospitalBtn2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,10 +149,10 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
             }
         });
 
-        allHospitalBtn3.setText("Search Hospital");
-        allHospitalBtn3.addActionListener(new java.awt.event.ActionListener() {
+        searchHospitalBtn.setText("Search Hospital");
+        searchHospitalBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                allHospitalBtn3ActionPerformed(evt);
+                searchHospitalBtnActionPerformed(evt);
             }
         });
 
@@ -163,9 +161,7 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(allHospitalBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-            .addComponent(allHospitalBtn1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(allHospitalBtn3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(searchHospitalBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(allHospitalBtn2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
@@ -175,12 +171,8 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(allHospitalBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(allHospitalBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(allHospitalBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(allHospitalBtn3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(searchHospitalBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -207,48 +199,56 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
         searchByComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         add(searchByComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 290, 180, 50));
 
-        deletBtn.setText("Update Hospital Record");
-        deletBtn.addActionListener(new java.awt.event.ActionListener() {
+        updateBtn.setText("Update Hospital Record");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deletBtnActionPerformed(evt);
+                updateBtnActionPerformed(evt);
             }
         });
-        add(deletBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 370, -1, 30));
+        add(updateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 370, 180, 30));
 
         goBtn.setText("Go");
         add(goBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 300, 110, 30));
 
-        updateBtn1.setText("Delete Hospital");
-        updateBtn1.addActionListener(new java.awt.event.ActionListener() {
+        deleteHospitalBtn.setText("Delete Hospital");
+        deleteHospitalBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateBtn1ActionPerformed(evt);
+                deleteHospitalBtnActionPerformed(evt);
             }
         });
-        add(updateBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 370, 160, 30));
+        add(deleteHospitalBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 510, 180, 30));
 
-        createHospital.setText("Create Hospital");
-        createHospital.addActionListener(new java.awt.event.ActionListener() {
+        createHospitalBtn.setText("Create Hospital");
+        createHospitalBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createHospitalActionPerformed(evt);
+                createHospitalBtnActionPerformed(evt);
             }
         });
-        add(createHospital, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 370, 180, 30));
+        add(createHospitalBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 440, 180, 30));
 
-        viewPatients.setText("View Patient");
-        viewPatients.addActionListener(new java.awt.event.ActionListener() {
+        viewDetailsBtn.setText("View Hospital Details");
+        viewDetailsBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewPatientsActionPerformed(evt);
+                viewDetailsBtnActionPerformed(evt);
             }
         });
-        add(viewPatients, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 370, 160, 30));
+        add(viewDetailsBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 580, 180, 30));
 
-        updatePatient.setText("UpdatePatient");
-        updatePatient.addActionListener(new java.awt.event.ActionListener() {
+        viewPatientsBtn.setText("View Patients");
+        viewPatientsBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updatePatientActionPerformed(evt);
+                viewPatientsBtnActionPerformed(evt);
             }
         });
-        add(updatePatient, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 370, 180, 30));
+        add(viewPatientsBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 370, 220, 30));
+
+        viewAllDoctorsBtn.setText("View Doctors");
+        viewAllDoctorsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewAllDoctorsBtnActionPerformed(evt);
+            }
+        });
+        add(viewAllDoctorsBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 440, 220, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLabelMousePressed
@@ -263,35 +263,139 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
         HomeScreen.homeScreen.getjSplitPane1().setDividerLocation(150);
     }//GEN-LAST:event_logoutLabelMousePressed
 
-    private void allHospitalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allHospitalBtnActionPerformed
+    private void viewAllDoctorsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllDoctorsBtnActionPerformed
         // TODO add your handling code here:
-        deletBtn.setText("Update Hospital Record");
-        String searchText= searchByComboBox.getItemAt(searchByComboBox.getSelectedIndex());
-        populateHospitalTable(HospitalDirectory.hospitalList);
-    }//GEN-LAST:event_allHospitalBtnActionPerformed
+        
+        updateBtn.setText("Update Doctor Record");
+        createHospitalBtn.setText("Create Doctor Record");
+        deleteHospitalBtn.setText("Delete Doctor Record");
+        viewDetailsBtn.setText("View Doctor Details");
+        
+         int selectedRowIndex = tblRecords.getSelectedRow();
+        if (selectedRowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "No Patient is selected, Please Try Again");
+            return;
+        }
+         DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+         
+         Hospital hospital = (Hospital) tableModel.getValueAt(selectedRowIndex, 0);
+         this.hospital = hospital;
+         populateDoctorRecords(hospital.getDoctorList());
+        
+       
+    }//GEN-LAST:event_viewAllDoctorsBtnActionPerformed
+    private void populateDoctorRecords(ArrayList<Doctor> doctorList)
+    {
+         DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+        tableModel.setRowCount(0);
+        tableModel.setColumnCount(0);
+      
+        
+        tableModel.addColumn("ID" );
+       
+        tableModel.addColumn("Doctor Name");
+       
+        tableModel.addColumn("Age");
+        
+        tableModel.addColumn("Hospital");
+        
+       
+        
+        
+        try {
+            for (Doctor  doctor : doctorList) {
 
-    private void allHospitalBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allHospitalBtn1ActionPerformed
+                Object[] row = new Object[4];
+                row[0] = doctor;
+                row[1] = doctor.getPerson().getName();
+                row[2] = doctor.getPerson().getAge();
+                row[3] = doctor.getHospital().getHospitalName();
+               
+                tableModel.addRow(row);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occured while populating Table e= " + e.getMessage());
+        }
+    }
+    
+     private void populatePatientRecords(ArrayList<Patient> patientList)
+    {
+         DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+        tableModel.setRowCount(0);
+        tableModel.setColumnCount(0);
+      
+        
+        tableModel.addColumn("ID" );
+       
+        tableModel.addColumn("Patient Name");
+       
+        tableModel.addColumn("Age");
+        
+        tableModel.addColumn("Community Name");
+        tableModel.addColumn("ZipCode");
+        
+        
+       
+        
+        
+        try {
+            for (Patient  patient : patientList) {
+
+                Object[] row = new Object[5];
+                row[0] = patient;
+                row[1] = patient.getPerson().getName();
+                row[2] = patient.getPerson().getAge();
+                row[3] = patient.getPerson().getResidence().getCommunity().getCommunityName();
+                row[4] = patient.getPerson().getResidence().getCommunity().getZipCode();
+               
+                tableModel.addRow(row);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occured while populating Table e= " + e.getMessage());
+        }
+    }
+    private void viewPatientsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewPatientsBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_allHospitalBtn1ActionPerformed
+        updateBtn.setText("Update Patient Record");
+        createHospitalBtn.setText("Create Patient Record");
+        deleteHospitalBtn.setText("Delete Patient Record");
+        viewDetailsBtn.setText("View Patient Details");
+         int selectedRowIndex = tblRecords.getSelectedRow();
+        if (selectedRowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "No Patient is selected, Please Try Again");
+            return;
+        }
+         DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+         
+         Hospital hospital = (Hospital) tableModel.getValueAt(selectedRowIndex, 0);
+         this.hospital = hospital;
+         populatePatientRecords(hospital.getPatientList());
+         
+    }//GEN-LAST:event_viewPatientsBtnActionPerformed
 
     private void allHospitalBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allHospitalBtn2ActionPerformed
         // TODO add your handling code here:
-        searchByComboBox.setVisible(false);
-        searchLabel.setVisible(false);
-        goBtn.setVisible(false);
-        deletBtn.setText("Update Hospital Record");
+       
+        updateBtn.setText("Update Hospital Record");
+        createHospitalBtn.setText("Create New Hospital");
+        deleteHospitalBtn.setText("Delete Hospital");
+        viewDetailsBtn.setText("View Hospital Details");
         String searchText= searchByComboBox.getItemAt(searchByComboBox.getSelectedIndex());
         populateHospitalTable(HospitalDirectory.hospitalList);
     }//GEN-LAST:event_allHospitalBtn2ActionPerformed
 
-    private void allHospitalBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allHospitalBtn3ActionPerformed
+    private void searchHospitalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchHospitalBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_allHospitalBtn3ActionPerformed
+        setSearchComponentsVisibility(true);
+        
+    }//GEN-LAST:event_searchHospitalBtnActionPerformed
 
-    private void deletBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletBtnActionPerformed
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
         // TODO add your handling code here:
 
-        String txt = deletBtn.getText();
+        String txt = updateBtn.getText();
         int selectedRowIndex = tblRecords.getSelectedRow();
         if (selectedRowIndex == -1) {
             JOptionPane.showMessageDialog(this, "No Record is selected, Please Try Again");
@@ -315,67 +419,98 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
 
             PatientCrud patientCrud = new PatientCrud(patient, "pu");
             HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);
-        }else if(txt.contains("Person"))
+        }
+    }//GEN-LAST:event_updateBtnActionPerformed
+
+    private void deleteHospitalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteHospitalBtnActionPerformed
+        // TODO add your handling code here:
+        
+        String txt = deleteHospitalBtn.getText();
+         int selectedRowIndex = tblRecords.getSelectedRow();
+
+            if (selectedRowIndex == -1) {
+                JOptionPane.showMessageDialog(this, "No Row is selected to Delete, Please Try Again");
+                return;
+            }
+        if(txt.contains("Patient")){
+        
+           
+            DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+            Patient patient = (Patient) tableModel.getValueAt(selectedRowIndex, 0);
+            deleteRecord(patient);
+            populateTableWithPatientRecords();
+          
+       
+        }
+        else if (txt.contains("Doctor")){
+             DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+            Doctor doctor = (Doctor) tableModel.getValueAt(selectedRowIndex, 0);
+            deleteDoctorRecord(doctor);
+            populateTableWithDoctorRecords();
+            
+        }else if (txt.contains("Hospital")){
+             DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+            Hospital hospital = (Hospital) tableModel.getValueAt(selectedRowIndex, 0);
+            deleteHospitalRecord(hospital);
+            populateTableWithHospitalRecords();
+        }
+        
+    }//GEN-LAST:event_deleteHospitalBtnActionPerformed
+ private void deleteRecord(Patient patient){
+   this.hospital.getPatientList().remove(patient);
+   
+
+        JOptionPane.showMessageDialog(this, "Record deleted successfully");
+        
+}
+    private void createHospitalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createHospitalBtnActionPerformed
+        // TODO add your handling code here:
+         
+      String txt = createHospitalBtn.getText();
+        if(txt.contains("Patient"))
         {
-            Person person = (Person ) tblRecords.getValueAt(selectedRowIndex, 0);
-            PersonCrud personCrud = new PersonCrud(person);
-            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(personCrud);
-        }
-    }//GEN-LAST:event_deletBtnActionPerformed
-
-    private void updateBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtn1ActionPerformed
-        // TODO add your handling code here:
-        
-        String txt = deletBtn.getText();
-        int selectedRowIndex = tblRecords.getSelectedRow();
-        if (selectedRowIndex == -1) {
-            JOptionPane.showMessageDialog(this, "No Record is selected, Please Try Again");
-            return;
-        }
-
-            Hospital hospital = (Hospital) tblRecords.getValueAt(selectedRowIndex, 0);
-            HospitalDirectory.hospitalList.remove(hospital);
-            JOptionPane.showMessageDialog(this, "Hospital Deleted Successfully");
-            populateHospitalTable(HospitalDirectory.hospitalList);
-        
-    }//GEN-LAST:event_updateBtn1ActionPerformed
-
-    private void createHospitalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createHospitalActionPerformed
-        // TODO add your handling code here:
-        HospitalCrud hospitalCrud = new HospitalCrud("create");
-        HomeScreen.homeScreen.getjSplitPane1().setRightComponent(hospitalCrud);
-        HomeScreen.homeScreen.getjSplitPane1().setDividerLocation(150);
-    }//GEN-LAST:event_createHospitalActionPerformed
-
-    private void viewPatientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewPatientsActionPerformed
-        // TODO add your handling code here:
-          String txt = deletBtn.getText();
-        int selectedRowIndex = tblRecords.getSelectedRow();
-        if (selectedRowIndex == -1) {
-            JOptionPane.showMessageDialog(this, "No Record is selected, Please Try Again");
-            return;
-        }
-
-            Hospital hospital = (Hospital) tblRecords.getValueAt(selectedRowIndex, 0);
-            ArrayList<Patient> patientList = hospital.getPatientList();
-            populateAndFillRecordsTable(patientList);
-            
-            
-    }//GEN-LAST:event_viewPatientsActionPerformed
-
-    private void updatePatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatePatientActionPerformed
-        // TODO add your handling code here:
-         String txt = deletBtn.getText();
-        int selectedRowIndex = tblRecords.getSelectedRow();
-        if (selectedRowIndex == -1) {
-            JOptionPane.showMessageDialog(this, "No Record is selected, Please Try Again");
-            return;
-        }
-
-            Patient patient = (Patient) tblRecords.getValueAt(selectedRowIndex, 0);
-            PatientCrud patientCrud = new PatientCrud(patient, "up");
+            PatientCrud patientCrud = new PatientCrud("cp");
             HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);
-    }//GEN-LAST:event_updatePatientActionPerformed
+        }else if(txt.contains("Doctor")){
+            PatientCrud patientCrud = new PatientCrud("cd");
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);   
+    }else if (txt.contains("Hospital"))
+    {
+        HospitalCrud hospitalCrud = new HospitalCrud("create");
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(hospitalCrud); 
+    }
+    }//GEN-LAST:event_createHospitalBtnActionPerformed
+
+    private void viewDetailsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewDetailsBtnActionPerformed
+        // TODO add your handling code here:
+           String txt = viewDetailsBtn.getText();
+         int selectedRowIndex = tblRecords.getSelectedRow();
+        if (selectedRowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "No Patient is selected, Please Try Again");
+            return;
+        }
+        
+         if(txt.contains("Patient"))
+        {   
+            
+        Patient patient = (Patient) tblRecords.getValueAt(selectedRowIndex, 0);
+        
+            PatientCrud patientCrud = new PatientCrud(patient, "pv");
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);
+        }else if(txt.contains("Doctor")){
+             
+            Doctor doctor = (Doctor) tblRecords.getValueAt(selectedRowIndex, 0);
+            PatientCrud patientCrud = new PatientCrud(doctor, "dv");
+            HomeScreen.homeScreen.getjSplitPane1().setRightComponent(patientCrud);
+        
+    }else if(txt.contains("Hospital"))
+    {
+         Hospital hospital = (Hospital) tblRecords.getValueAt(selectedRowIndex, 0);
+         HospitalCrud hospitalCrud = new HospitalCrud(hospital,"populate");
+          HomeScreen.homeScreen.getjSplitPane1().setRightComponent(hospitalCrud);
+         
+    }
+    }//GEN-LAST:event_viewDetailsBtnActionPerformed
 private void populateAndFillRecordsTable(ArrayList<Patient> patientList) {
         DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
 
@@ -431,12 +566,9 @@ private void populateAndFillRecordsTable(ArrayList<Patient> patientList) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton allHospitalBtn;
-    private javax.swing.JButton allHospitalBtn1;
     private javax.swing.JButton allHospitalBtn2;
-    private javax.swing.JButton allHospitalBtn3;
-    private javax.swing.JButton createHospital;
-    private javax.swing.JButton deletBtn;
+    private javax.swing.JButton createHospitalBtn;
+    private javax.swing.JButton deleteHospitalBtn;
     private javax.swing.JButton goBtn;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
@@ -446,11 +578,13 @@ private void populateAndFillRecordsTable(ArrayList<Patient> patientList) {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel logoutLabel;
     private javax.swing.JComboBox<String> searchByComboBox;
+    private javax.swing.JButton searchHospitalBtn;
     private javax.swing.JLabel searchLabel;
     private javax.swing.JTable tblRecords;
-    private javax.swing.JButton updateBtn1;
-    private javax.swing.JButton updatePatient;
-    private javax.swing.JButton viewPatients;
+    private javax.swing.JButton updateBtn;
+    private javax.swing.JButton viewAllDoctorsBtn;
+    private javax.swing.JButton viewDetailsBtn;
+    private javax.swing.JButton viewPatientsBtn;
     // End of variables declaration//GEN-END:variables
 
      private void populateHospitalTable(ArrayList<Hospital> hospitalList) {
@@ -468,16 +602,19 @@ private void populateAndFillRecordsTable(ArrayList<Patient> patientList) {
        
         tableModel.addColumn("Community Name");
         
+        tableModel.addColumn("ZipCode");
+        
        
         
         
         try {
             for (Hospital  hospital : hospitalList) {
 
-                Object[] row = new Object[3];
+                Object[] row = new Object[4];
                 row[0] = hospital;
                 row[1] = hospital.getHospitalName();
                 row[2] = hospital.getCommunity().getCommunityName();
+                row[3] = hospital.getCommunity().getZipCode();
                
                 tableModel.addRow(row);
 
@@ -489,4 +626,123 @@ private void populateAndFillRecordsTable(ArrayList<Patient> patientList) {
      
      
     }
+ private void deleteDoctorRecord(Doctor doctor)
+    {
+      this.hospital.getDoctorList().remove(doctor);
+       JOptionPane.showMessageDialog(this, "Record deleted successfully");
+      
+    }
+
+  private void deleteHospitalRecord(Hospital hospital)
+   {
+       HospitalDirectory.hospitalList.remove(hospital);
+       JOptionPane.showMessageDialog(this, "Record deleted successfully");
+      
+   }
+
+    private void populateTableWithPatientRecords() {
+       
+         DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+        tableModel.setRowCount(0);
+      
+         JTableHeader th = tblRecords.getTableHeader();
+         
+         tableModel.setColumnCount(0);
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Name");
+        tableModel.addColumn("Gender");
+        tableModel.addColumn("Age");
+        tableModel.addColumn("Hospital");
+        
+         
+         
+         
+       
+        try {
+            for (Patient  patient : this.hospital.getPatientList()) {
+
+                Object[] row = new Object[5];
+                row[0] = patient;
+                row[1] = patient.getPerson().getName();
+                row[2] = patient.getPerson().getGender();
+                row[3] = patient.getPerson().getAge();
+                row[4] = patient.getHospital().getHospitalName();
+                tableModel.addRow(row);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occured while populating Table e= " + e.getMessage());
+        }
+    }
+
+    private void populateTableWithDoctorRecords() {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+          tableModel.setRowCount(0);
+       
+        tableModel.setColumnCount(0);
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Doctor Name");
+        tableModel.addColumn("Age");
+        tableModel.addColumn("Hospital");
+        
+       
+      
+       
+        
+        try {
+            for (Doctor  doctor : this.hospital.getDoctorList()) {
+
+                Object[] row = new Object[4];
+                row[0] = doctor;
+                row[1] = doctor.getPerson().getName();
+                row[2] = doctor.getPerson().getAge();
+                row[3] = doctor.getHospital().getHospitalName();
+                tableModel.addRow(row);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occured while populating Table e= " + e.getMessage());
+        }
+    }
+
+    private void populateTableWithHospitalRecords() {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
+         DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+        tableModel.setRowCount(0);
+        HospitalDirectory hospitalDirectory = new HospitalDirectory();
+        
+          
+        tableModel.setColumnCount(0);
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Name");
+        tableModel.addColumn("Doctor Count");
+        tableModel.addColumn("Community Name");
+        tableModel.addColumn("Zip Code");
+        
+        
+      
+       
+        
+        
+        try {
+            for (Hospital  hospital : hospitalDirectory.getHospitalList()) {
+
+                Object[] row = new Object[5];
+                row[0] = hospital;
+                row[1] = hospital.getHospitalName();
+                row[2] = hospital.getDoctorList().size();
+                row[3] = hospital.getCommunity().getCommunityName();
+                row[4] = hospital.getCommunity().getZipCode();
+               
+                tableModel.addRow(row);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occured while populating Table e= " + e.getMessage());
+        }
+    }
+
+   
 }

@@ -21,9 +21,6 @@ public class DoctorDirectory {
      static{
          doctorList =  new ArrayList<>();
          
-         
-         
-        
      }
 
     public ArrayList<Doctor> getDoctorList() {
@@ -54,5 +51,18 @@ public class DoctorDirectory {
         }
             return null; 
          }
+
+    public Doctor findDoctorByName(String name) {
+       for(Doctor doctor : doctorList)
+       {
+           if(doctor.getPerson().getName().equals(name))
+           {
+               return doctor;
+           }
+       }
+       return null;
+    }
+
+   
     
 }

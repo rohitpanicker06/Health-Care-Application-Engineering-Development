@@ -4,6 +4,7 @@
  */
 package hospital;
 
+import doctor.Doctor;
 import doctor.DoctorDirectory;
 import java.util.ArrayList;
 import patient.Patient;
@@ -18,8 +19,16 @@ public class Hospital {
 private String hospitalName;
 private Community community;
 private int hospitalId;
-private DoctorDirectory doctorDirectory = new DoctorDirectory();
+private ArrayList<Doctor> doctorList = new ArrayList<>();
 private ArrayList<Patient> patientList = new ArrayList<>();
+
+    public ArrayList<Doctor> getDoctorList() {
+        return doctorList;
+    }
+
+    public void setDoctorList(ArrayList<Doctor> doctorList) {
+        this.doctorList = doctorList;
+    }
 
     public ArrayList<Patient> getPatientList() {
         return patientList;
@@ -36,12 +45,12 @@ private ArrayList<Patient> patientList = new ArrayList<>();
         
     }
 
-    public DoctorDirectory getDoctorDirectory() {
-        return doctorDirectory;
+    public ArrayList<Doctor> getDoctorDirectory() {
+        return doctorList;
     }
 
-    public void setDoctorDirectory(DoctorDirectory doctorDirectory) {
-        this.doctorDirectory = doctorDirectory;
+    public void setDoctorDirectory(ArrayList<Doctor> doctorList) {
+        this.doctorList = doctorList;
     }
 
    

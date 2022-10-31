@@ -12,6 +12,7 @@ import hospital.HospitalDirectory;
 import static hospital.HospitalDirectory.hospitalList;
 import house.House;
 import model.state.city.community.CommunityDirectory;
+import patient.Patient;
 import patient.PatientDirectory;
 import person.Person;
 import person.PersonDirectory;
@@ -63,38 +64,48 @@ public class PopulateData {
        
       
         PatientDirectory patientDirectory = new PatientDirectory();
-        patientDirectory.newPatient(person, 0025);
-        patientDirectory.newPatient(person_one,0026);
+        Patient patient = new Patient(person, 0025);
+        Patient patient_two = new Patient(person_one,0026);
+        patientDirectory.getPatientList().add(patient);
+        patientDirectory.getPatientList().add(patient_two);
         
         
+         Hospital hospital_one = new Hospital("Harvard Medical Center", community, 881);
+        
+         HospitalDirectory.hospitalList.add(hospital_one);
+         
+         Hospital hospital_two = new Hospital("Boston Medical Center", community, 882);
+        
+         HospitalDirectory.hospitalList.add(hospital_two);
         
         
         Person person_DoctPerson = new Person("55", "Niral Pethe", "nirmal@gmail.com", 9768, house, "Male", 50);
         PersonDirectory.personList.add(person_DoctPerson);
-        Doctor doctor = new Doctor(person_DoctPerson);
+        Doctor doctor = new Doctor(person_DoctPerson,hospital_one);
         DoctorDirectory.doctorList.add(doctor);
          
+        Person person_two = new Person("56", "Niral Pethe2", "nirmal2@gmail.com", 97682, house, "Male2", 52);
+        PersonDirectory.personList.add(person_two);
+        Doctor doctor_two = new Doctor(person_two, hospital_two);
+        DoctorDirectory.doctorList.add(doctor_two);
          
+        hospital_one.getDoctorList().add(doctor);
+        hospital_two.getDoctorList().add(doctor_two);
+        
+        patient.setHospital(hospital_one);
+        patient_two.setHospital(hospital_two);
+        
+        hospital_one.getPatientList().add(patient);
+        hospital_two.getPatientList().add(patient_two);
   
         
         
          
-        Person person_two = new Person("56", "Niral Pethe2", "nirmal2@gmail.com", 97682, house, "Male2", 52);
-        PersonDirectory.personList.add(person_two);
-        Doctor doctor_two = new Doctor(person_two);
-        DoctorDirectory.doctorList.add(doctor_two);
-         
+       
          
          
 
          
-         Hospital hospital_one = new Hospital("Harvard Medical Center", community, 881);
-         hospital_one.getDoctorDirectory().newDoctor(person_DoctPerson);
-         HospitalDirectory.hospitalList.add(hospital_one);
-         
-         Hospital hospital_two = new Hospital("Boston Medical Center", community, 882);
-         hospital_two.getDoctorDirectory().newDoctor(person_two);
-         HospitalDirectory.hospitalList.add(hospital_two);
         
          
     

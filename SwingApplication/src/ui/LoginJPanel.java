@@ -276,7 +276,7 @@ public class LoginJPanel extends javax.swing.JPanel {
                 case 0:
                     role = new SystemAdminRoleBase();
                     rbacApplicationContext.setRoleContext(role);
-                    comp= new HomeScreenNotDefault();
+                    comp= new AllDirectoriesPanel();
                     break;
                 case 1:
                     role = new PatientRoleBase();

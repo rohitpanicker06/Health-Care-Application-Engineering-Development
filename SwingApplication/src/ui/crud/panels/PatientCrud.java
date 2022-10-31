@@ -6,6 +6,8 @@ package ui.crud.panels;
 
 import doctor.Doctor;
 import doctor.DoctorDirectory;
+import hospital.Hospital;
+import hospital.HospitalDirectory;
 import house.House;
 import javax.swing.JOptionPane;
 import patient.Patient;
@@ -46,9 +48,16 @@ public class PatientCrud extends javax.swing.JPanel {
         
          populateDoctorCrudFields();
          if(operation.equals("du"))
-        {   
+        {   encounterHistoryBtn.setVisible(false);
+            populateHospitalJComboBox();
             createPatientBtn.setText("Update");
             createPatientBtn.setVisible(true);
+        }else if(operation.equals("dv"))
+        {
+            encounterHistoryBtn.setVisible(false);
+           
+            hospitalNameComboBox.removeAllItems();
+            hospitalNameComboBox.addItem(doctor.getHospital().getHospitalName());
         }
         
         
@@ -79,13 +88,22 @@ public class PatientCrud extends javax.swing.JPanel {
          this.operation = operation;
          
          initComponents();
+         if(operation.contains("cp"))
+         {
+            populateHospitalJComboBox(); 
+            encounterHistoryBtn.setVisible(false);
+         }
          
-         if(operation.contains("cd")){
+         else if(operation.contains("cd")){
          try{
              insuranceIdLabel.setText("");
              insuranceIdLabel.setVisible(false);
          insuranceIdTxtField.setText("");
          insuranceIdTxtField.setVisible(false);
+         hospitalLable.setVisible(true);
+         hospitalNameComboBox.setVisible(true);
+         encounterHistoryBtn.setVisible(false);
+          populateHospitalJComboBox(); 
          }catch(Exception e)
          {
              System.out.println(e.getMessage()); 
@@ -102,12 +120,15 @@ public class PatientCrud extends javax.swing.JPanel {
         initComponents();
         populatePatinetCrudFields();
         if(operation.equals("pv")){
-        
+        hospitalNameComboBox.removeAllItems();
+        hospitalNameComboBox.addItem(patient.getHospital().getHospitalName());
         }
         else if(operation.equals("pu"))
         {
             createPatientBtn.setText("Update");
             createPatientBtn.setVisible(true);
+            populateHospitalJComboBox();
+           
         }
     }
     /**
@@ -161,7 +182,9 @@ public class PatientCrud extends javax.swing.JPanel {
         addressLabel = new javax.swing.JLabel();
         zipCodeLabel = new javax.swing.JLabel();
         zipCodeTxtField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        encounterHistoryBtn = new javax.swing.JButton();
+        hospitalLable = new javax.swing.JLabel();
+        hospitalNameComboBox = new javax.swing.JComboBox<>();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -330,13 +353,19 @@ public class PatientCrud extends javax.swing.JPanel {
         add(zipCodeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 220, 130, -1));
         add(zipCodeTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 210, 200, -1));
 
-        jButton1.setText("View Encounter History");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        encounterHistoryBtn.setText("View Encounter History");
+        encounterHistoryBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                encounterHistoryBtnActionPerformed(evt);
             }
         });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 500, 380, -1));
+        add(encounterHistoryBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 610, 380, -1));
+
+        hospitalLable.setText("Hospital");
+        add(hospitalLable, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 450, 60, -1));
+
+        hospitalNameComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        add(hospitalNameComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 450, 200, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLabelMousePressed
@@ -368,6 +397,8 @@ public class PatientCrud extends javax.swing.JPanel {
          doctor.getPerson().getResidence().getCommunity().setCommunityName( communityNameTxtField.getText());
         doctor.getPerson().getResidence().getCommunity().setZipCode( zipCodeTxtField.getText());
         doctor.getPerson().getResidence().getCommunity().setLocation( addressTxtField.getText());
+        Hospital hospital = new HospitalDirectory().findHospitalByName((String) hospitalNameComboBox.getSelectedItem());
+        doctor.setHospital(hospital);
         JOptionPane.showMessageDialog(this, "Record Updated Successfuly");
         clearPatinetCrudFields();
     }
@@ -387,6 +418,8 @@ public class PatientCrud extends javax.swing.JPanel {
          patient.getPerson().getResidence().getCommunity().setCommunityName( communityNameTxtField.getText());
         patient.getPerson().getResidence().getCommunity().setZipCode( zipCodeTxtField.getText());
         patient.getPerson().getResidence().getCommunity().setLocation( addressTxtField.getText());
+        String hospitalName = (String)hospitalNameComboBox.getSelectedItem();
+        patient.setHospital(new HospitalDirectory().findHospitalByName(hospitalName));
         JOptionPane.showMessageDialog(this, "Record Updated Successfuly");
         clearPatinetCrudFields();
         
@@ -439,6 +472,7 @@ public class PatientCrud extends javax.swing.JPanel {
         String id = null, name = null, emailId = null, phoneNumber = null, cityName = null, state = null,
                 country = null, gender = null, age = null, insuranceId = null, communityName = null, zipCode = null,
                 address = null;
+        String hospitalName = null;
         if(this.operation.contains("cp") || this.operation.contains("cd")){
          if(ValidationHelper.isInteger(idTxtField.getText()))
          {
@@ -498,12 +532,22 @@ public class PatientCrud extends javax.swing.JPanel {
               errorCount++;
             errorNotifier.append(errorCount).append(". Age should be an Integer\n");
          }
-         
-         if(ValidationHelper.isInteger(insuranceIdTxtField.getText())){
+         if(this.operation.equalsIgnoreCase("cd"))
+         {
+         }
+         else
+         {
+             if(ValidationHelper.isInteger(insuranceIdTxtField.getText())){
               insuranceId = insuranceIdTxtField.getText();
          }else{
               errorCount++;
             errorNotifier.append(errorCount).append(". Insurance ID should be an Integer\n");
+         }
+         }
+         
+         if(hospitalName == null)
+         {
+             hospitalName = (String) hospitalNameComboBox.getSelectedItem();
          }
         
          if(ValidationHelper.isValidName(communityNameTxtField.getText())){
@@ -535,29 +579,34 @@ public class PatientCrud extends javax.swing.JPanel {
         House house = new House(community, 7, 8);
         Person person = new Person(id, name, emailId, Long.parseLong(phoneNumber), house, gender, Integer.parseInt(age));
        if(this.operation.contains("cp")){
-        Patient newPatient = new Patient(person, null, Integer.parseInt(insuranceId));
+           Hospital hospital = new HospitalDirectory().findHospitalByName(hospitalName);
+        Patient newPatient = new Patient(person, null, Integer.parseInt(insuranceId), hospital,null);
+        hospital.getPatientList().add(newPatient);
         PatientDirectory.patientList.add(newPatient);
         JOptionPane.showMessageDialog(this,"Created New Patient");
        }else if(this.operation.contains("cd")){
-        Doctor doctor = new Doctor(person);
-        DoctorDirectory.doctorList.add(doctor);
+        Hospital hospital = new HospitalDirectory().findHospitalByName(hospitalName);
+        Doctor doctor_new = new Doctor(person,hospital);
+        DoctorDirectory.doctorList.add(doctor_new);
+        hospital.getDoctorList().add(doctor_new);
         JOptionPane.showMessageDialog(this,"Created New Doctor");
        }
+       }
         }
-        }else if(this.operation.contains("pu")){
+        else if(this.operation.contains("pu")){
             updatePatient();
         }
         else if(this.operation.contains("du"))
         {
             updateDoctor();
         }
-        
          clearPatinetCrudFields();
+          
         
-        
+
     }//GEN-LAST:event_createPatientBtnActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void encounterHistoryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encounterHistoryBtnActionPerformed
         // TODO add your handling code here:
          if(applicationContext.getUser() != null){
          Role role = applicationContext.getRoleContext();
@@ -572,7 +621,7 @@ public class PatientCrud extends javax.swing.JPanel {
         }
          }
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_encounterHistoryBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -589,12 +638,14 @@ public class PatientCrud extends javax.swing.JPanel {
     private javax.swing.JButton createPatientBtn;
     private javax.swing.JLabel emailIdPersonLabel;
     private javax.swing.JTextField emailIdTxtField;
+    private javax.swing.JButton encounterHistoryBtn;
     private javax.swing.JLabel genderLabel;
     private javax.swing.JTextField genderTxtField;
+    private javax.swing.JLabel hospitalLable;
+    private javax.swing.JComboBox<String> hospitalNameComboBox;
     private javax.swing.JTextField idTxtField;
     private javax.swing.JLabel insuranceIdLabel;
     private javax.swing.JTextField insuranceIdTxtField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;
@@ -612,4 +663,23 @@ public class PatientCrud extends javax.swing.JPanel {
     private javax.swing.JLabel zipCodeLabel;
     private javax.swing.JTextField zipCodeTxtField;
     // End of variables declaration//GEN-END:variables
+
+    private void populateHospitalJComboBox() {
+        hospitalNameComboBox.removeAllItems();
+      for(Hospital hospital: HospitalDirectory.hospitalList)
+      {
+          hospitalNameComboBox.addItem(hospital.getHospitalName());
+      }
+      
+      if(this.operation == "pu" )
+      {
+          hospitalNameComboBox.setSelectedItem(this.patient.getHospital().getHospitalName());
+      }
+      else if(this.operation == "du")
+      {
+          hospitalNameComboBox.setSelectedItem(this.doctor.getHospital().getHospitalName());
+      }
+    }
+    
+   
 }

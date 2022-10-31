@@ -100,9 +100,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="jPanel5" max="32767" attributes="0"/>
-              <Component id="allHospitalBtn" pref="260" max="32767" attributes="0"/>
-              <Component id="allHospitalBtn1" alignment="1" max="32767" attributes="0"/>
-              <Component id="allHospitalBtn3" alignment="0" max="32767" attributes="0"/>
+              <Component id="searchHospitalBtn" alignment="0" max="32767" attributes="0"/>
               <Component id="allHospitalBtn2" alignment="1" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
@@ -113,12 +111,8 @@
                   <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="allHospitalBtn2" min="-2" pref="40" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                  <Component id="allHospitalBtn" min="-2" pref="40" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                  <Component id="allHospitalBtn1" min="-2" pref="40" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                  <Component id="allHospitalBtn3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="searchHospitalBtn" min="-2" pref="40" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -170,22 +164,6 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="allHospitalBtn">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="View Doctors"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="allHospitalBtnActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="allHospitalBtn1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="View Patients"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="allHospitalBtn1ActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="allHospitalBtn2">
           <Properties>
             <Property name="text" type="java.lang.String" value="All Hospitals"/>
@@ -194,12 +172,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="allHospitalBtn2ActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="allHospitalBtn3">
+        <Component class="javax.swing.JButton" name="searchHospitalBtn">
           <Properties>
             <Property name="text" type="java.lang.String" value="Search Hospital"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="allHospitalBtn3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchHospitalBtnActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -263,16 +241,16 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JButton" name="deletBtn">
+    <Component class="javax.swing.JButton" name="updateBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Update Hospital Record"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deletBtnActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateBtnActionPerformed"/>
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="270" y="370" width="-1" height="30"/>
+          <AbsoluteConstraints x="270" y="370" width="180" height="30"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -286,55 +264,68 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JButton" name="updateBtn1">
+    <Component class="javax.swing.JButton" name="deleteHospitalBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Delete Hospital"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateBtn1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteHospitalBtnActionPerformed"/>
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="660" y="370" width="160" height="30"/>
+          <AbsoluteConstraints x="270" y="510" width="180" height="30"/>
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JButton" name="createHospital">
+    <Component class="javax.swing.JButton" name="createHospitalBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Create Hospital"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createHospitalActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createHospitalBtnActionPerformed"/>
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="460" y="370" width="180" height="30"/>
+          <AbsoluteConstraints x="270" y="440" width="180" height="30"/>
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JButton" name="viewPatients">
+    <Component class="javax.swing.JButton" name="viewDetailsBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="View Patient"/>
+        <Property name="text" type="java.lang.String" value="View Hospital Details"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewPatientsActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewDetailsBtnActionPerformed"/>
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="830" y="370" width="160" height="30"/>
+          <AbsoluteConstraints x="270" y="580" width="180" height="30"/>
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JButton" name="updatePatient">
+    <Component class="javax.swing.JButton" name="viewPatientsBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="UpdatePatient"/>
+        <Property name="text" type="java.lang.String" value="View Patients"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updatePatientActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewPatientsBtnActionPerformed"/>
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="1000" y="370" width="180" height="30"/>
+          <AbsoluteConstraints x="500" y="370" width="220" height="30"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="javax.swing.JButton" name="viewAllDoctorsBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="View Doctors"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewAllDoctorsBtnActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="500" y="440" width="220" height="30"/>
         </Constraint>
       </Constraints>
     </Component>

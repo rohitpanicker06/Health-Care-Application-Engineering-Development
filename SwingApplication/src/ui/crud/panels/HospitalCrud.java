@@ -358,11 +358,12 @@ public class HospitalCrud extends javax.swing.JPanel {
             City city = new City(state, country,  cityName);
             Community community = new Community(city, communityName, country, zipCode);
             if(operation.contains("create")){
-            Hospital hospital = new Hospital(cityName, community, Integer.parseInt(id));
+            Hospital hospital = new Hospital(name, community, Integer.parseInt(id));
             HospitalDirectory.hospitalList.add(hospital);
                 
                
            JOptionPane.showMessageDialog(this,"Created New Hospital");
+           clearAllFields();
             }else if(operation.contains("update"))
             {
             hospital.setCommunity(community);
@@ -377,6 +378,7 @@ public class HospitalCrud extends javax.swing.JPanel {
                    
                    
                }
+               clearAllFields();
             }
             }
           
@@ -413,4 +415,18 @@ public class HospitalCrud extends javax.swing.JPanel {
     private javax.swing.JLabel zipCodeLabel;
     private javax.swing.JTextField zipCodeTxtField;
     // End of variables declaration//GEN-END:variables
+
+    private void clearAllFields() {
+       // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
+    hospitalIdTxtField.setText("");
+    nameTxtField.setText("");
+    communityNameTxtField1.setText("");
+    cityTxtField.setText("");
+    stateTxtField.setText("");
+    countryTxtField.setText("");
+    addressTxtField.setText("");
+    zipCodeTxtField.setText("");
+    
+    }
 }

@@ -51,4 +51,10 @@ public class User {
         this.person = person;
     }
     
+    
+    @Override
+    public String toString()
+    {
+        return this.person.getId();
+    }
 }

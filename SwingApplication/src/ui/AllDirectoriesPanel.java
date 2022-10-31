@@ -240,25 +240,29 @@ private void populateAndFillHospitalRecord(){
     DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
         tableModel.setRowCount(0);
         HospitalDirectory hospitalDirectory = new HospitalDirectory();
-         JTableHeader th = tblRecords.getTableHeader();
-         TableColumnModel tcm = th.getColumnModel();
-         TableColumn tc = tcm.getColumn(0);
-        tc.setHeaderValue( "ID" );
-        TableColumn tc_one = tcm.getColumn(1);
-        tc_one.setHeaderValue("Hospital Name");
-        TableColumn tc_two = tcm.getColumn(2);
-        tc_two.setHeaderValue("Community Name");
-        th.repaint();
-        tableModel.setRowCount(0);
+        
+          
+        tableModel.setColumnCount(0);
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Name");
+        tableModel.addColumn("Doctor Count");
+        tableModel.addColumn("Community Name");
+        tableModel.addColumn("Zip Code");
+        
+        
+      
+       
         
         
         try {
             for (Hospital  hospital : hospitalDirectory.getHospitalList()) {
 
-                Object[] row = new Object[3];
+                Object[] row = new Object[5];
                 row[0] = hospital;
                 row[1] = hospital.getHospitalName();
-                row[2] = hospital.getCommunity().getCommunityName();
+                row[2] = hospital.getDoctorList().size();
+                row[3] = hospital.getCommunity().getCommunityName();
+                row[4] = hospital.getCommunity().getZipCode();
                
                 tableModel.addRow(row);
 
@@ -283,41 +287,27 @@ private void populateAndFillHospitalRecord(){
         tableModel.setRowCount(0);
       
          JTableHeader th = tblRecords.getTableHeader();
-         TableColumnModel tcm = th.getColumnModel();
-         TableColumn tc = tcm.getColumn(0);
-        tc.setHeaderValue( "ID" );
-        TableColumn tc_one = tcm.getColumn(1);
-        tc_one.setHeaderValue("Name");
-        TableColumn tc_two = tcm.getColumn(2);
-        tc_two.setHeaderValue("Gender");
-        TableColumn tc_three = tcm.getColumn(3);
-        tc_three.setHeaderValue("Age");
-        try{
-        TableColumn tableColumn = tblRecords.getColumnModel().getColumn(4);
-        tblRecords.removeColumn(tableColumn);
+         
+         tableModel.setColumnCount(0);
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Name");
+        tableModel.addColumn("Gender");
+        tableModel.addColumn("Age");
+        tableModel.addColumn("Hospital");
         
-        }catch(Exception e)
-        {
-            System.out.println("Error while deleting table column 4");
-        }
-        
-        try{
-        TableColumn tableColumn_two = tblRecords.getColumnModel().getColumn(4);
-        tblRecords.removeColumn(tableColumn_two);
-        }catch(Exception e)
-        {
-            System.out.println("Error while deleting table column 5");
-        }
-        th.repaint();
-        tableModel.setRowCount(0);
+         
+         
+         
+       
         try {
             for (Patient  patient : PatientDirectory.patientList) {
 
-                Object[] row = new Object[4];
+                Object[] row = new Object[5];
                 row[0] = patient;
                 row[1] = patient.getPerson().getName();
                 row[2] = patient.getPerson().getGender();
                 row[3] = patient.getPerson().getAge();
+                row[4] = patient.getHospital().getHospitalName();
                 tableModel.addRow(row);
 
             }
@@ -364,6 +354,7 @@ private void populateAndFillHospitalRecord(){
         HospitalCrud hospitalCrud = new HospitalCrud("create");
             HomeScreen.homeScreen.getjSplitPane1().setRightComponent(hospitalCrud); 
     }
+        
     }//GEN-LAST:event_createRecordBtnActionPerformed
 
     private void viewRecordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewRecordBtnActionPerformed
@@ -479,45 +470,26 @@ private void populateAndFillHospitalRecord(){
     {
           
          DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
-         try{
-        TableColumn tableColumn = tblRecords.getColumnModel().getColumn(4);
-        tblRecords.removeColumn(tableColumn);
-        
-        }catch(Exception e)
-        {
-            System.out.println("Error while deleting table column 4");
-        }
-        
-        try{
-        TableColumn tableColumn_two = tblRecords.getColumnModel().getColumn(4);
-        tblRecords.removeColumn(tableColumn_two);
-        }catch(Exception e)
-        {
-            System.out.println("Error while deleting table column 5");
-        }
-        //tableModel.addColumn("Blood Pressure");
-        //tableModel.addColumn("Doctor Name");
-         JTableHeader th = tblRecords.getTableHeader();
-         TableColumnModel tcm = th.getColumnModel();
-         TableColumn tc = tcm.getColumn(0);
-        tc.setHeaderValue( "ID" );
-        TableColumn tc_one = tcm.getColumn(1);
-        tc_one.setHeaderValue("Doctor Name");
-        //TableColumn tc_two = tcm.getColumn(2);
-        //tc_two.setHeaderValue("Practising Hospital");
-       // TableColumn tc_three = tcm.getColumn(3);
-        //tc_three.setHeaderValue("Respiration Rate");
+          tableModel.setRowCount(0);
        
+        tableModel.setColumnCount(0);
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Doctor Name");
+        tableModel.addColumn("Age");
+        tableModel.addColumn("Hospital");
         
-        th.repaint();
-        tableModel.setRowCount(0);
+       
+      
+       
         DoctorDirectory doctorDirectory = new DoctorDirectory();
         try {
             for (Doctor  doctor : doctorDirectory.getDoctorList()) {
 
-                Object[] row = new Object[3];
+                Object[] row = new Object[4];
                 row[0] = doctor;
                 row[1] = doctor.getPerson().getName();
+                row[2] = doctor.getPerson().getAge();
+                row[3] = doctor.getHospital().getHospitalName();
                 tableModel.addRow(row);
 
             }

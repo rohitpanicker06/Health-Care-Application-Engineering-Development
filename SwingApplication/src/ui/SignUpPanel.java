@@ -6,7 +6,10 @@ package ui;
 
 import doctor.Doctor;
 import doctor.DoctorDirectory;
+import hospital.Hospital;
+import hospital.HospitalDirectory;
 import house.House;
+import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -40,12 +43,16 @@ public class SignUpPanel extends javax.swing.JPanel {
         initComponents();
         insuranceIdLabel.setVisible(false);
         insuranceIdTxtField.setVisible(false);
+        hospitalLable.setVisible(false);
+        hospitalNameComboBox.setVisible(false);
     }
     
     public SignUpPanel(JPanel jpanel){
         initComponents();
         insuranceIdLabel.setVisible(false);
         insuranceIdTxtField.setVisible(false);
+        hospitalLable.setVisible(false);
+        hospitalNameComboBox.setVisible(false);
         loginJpanel=jpanel;
         
     }
@@ -100,6 +107,8 @@ public class SignUpPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         userNameTxtField1 = new javax.swing.JTextField();
         passwordTxtField = new javax.swing.JPasswordField();
+        hospitalLable = new javax.swing.JLabel();
+        hospitalNameComboBox = new javax.swing.JComboBox<>();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -296,12 +305,18 @@ public class SignUpPanel extends javax.swing.JPanel {
         add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, 190, -1));
 
         jLabel1.setText("Username:");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 460, 130, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 430, 130, -1));
 
         jLabel2.setText("Password");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 550, 90, -1));
-        add(userNameTxtField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 460, 200, -1));
-        add(passwordTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 550, 200, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 480, 90, -1));
+        add(userNameTxtField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 430, 200, -1));
+        add(passwordTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 480, 200, -1));
+
+        hospitalLable.setText("Hospital");
+        add(hospitalLable, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 560, 60, -1));
+
+        hospitalNameComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        add(hospitalNameComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 560, 200, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLabelMousePressed
@@ -328,6 +343,8 @@ public class SignUpPanel extends javax.swing.JPanel {
         country = null, gender = null, age = null, insuranceId = null, communityName = null, zipCode = null,
         address = null, userName= null, password= null;
        
+        String hospitalName= null;
+        
             if(ValidationHelper.isInteger(idTxtField.getText()))
             {
                 id = idTxtField.getText();
@@ -395,7 +412,11 @@ public class SignUpPanel extends javax.swing.JPanel {
                 errorNotifier.append(errorCount).append(". Insurance ID should be an Integer\n");
             }
             }
-
+            
+            if(userTypeComboBox.getSelectedIndex() == 1 || userTypeComboBox.getSelectedIndex() ==2){
+            hospitalName = (String)hospitalNameComboBox.getSelectedItem();
+            }
+           
             if(ValidationHelper.isValidName(communityNameTxtField.getText())){
                 communityName = communityNameTxtField.getText();
             }else{
@@ -438,6 +459,7 @@ public class SignUpPanel extends javax.swing.JPanel {
             }else{
                 
                 int selectedIndex = userTypeComboBox.getSelectedIndex();
+               
                 City city = new City(state, country,  cityName);
                 Community community = new Community(city, communityName, country, zipCode);
                 CommunityDirectory.communityList.add(community);
@@ -452,11 +474,15 @@ public class SignUpPanel extends javax.swing.JPanel {
                     break;
                 case 1:
                     UserListDirectory.getPatientList().add(newUser);
-                    Patient newPatient = new Patient(person, null, Integer.parseInt(insuranceId));
+                    Hospital hospital_x = new HospitalDirectory().findHospitalByName(hospitalName);
+                    Patient newPatient = new Patient(person, null, Integer.parseInt(insuranceId),hospital_x, null);
+                    hospital_x.getPatientList().add(newPatient);
                     PatientDirectory.patientList.add(newPatient);
                     break;
                 case 2:
-                    Doctor doctor = new Doctor(person);
+                    Hospital hospital = new HospitalDirectory().findHospitalByName(hospitalName);
+                    Doctor doctor = new Doctor(person,hospital);
+                    hospital.getDoctorList().add(doctor);
                     DoctorDirectory.doctorList.add(doctor);
                     UserListDirectory.getDoctorUserList().add(newUser);
                     break;
@@ -469,7 +495,8 @@ public class SignUpPanel extends javax.swing.JPanel {
                 default:
                     break;
             }
-               
+                HashMap<String,Person> personToUserName =UserListDirectory.getUserNameToPersonMap();
+                personToUserName.put(userName, person);
                 JOptionPane.showMessageDialog(this,"Sign Up Successful");
                 clearAllTxtFields();
                 HomeScreen.homeScreen.getjSplitPane1().setRightComponent(loginJpanel);
@@ -487,14 +514,26 @@ public class SignUpPanel extends javax.swing.JPanel {
     private void userTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTypeComboBoxActionPerformed
         // TODO add your handling code here:
         
-        if(userTypeComboBox.getSelectedIndex() == 1)
+        if(userTypeComboBox.getSelectedIndex() == 1 || userTypeComboBox.getSelectedIndex() ==2)
         {
-            insuranceIdLabel.setVisible(true);
-            insuranceIdTxtField.setVisible(true);
+            if(userTypeComboBox.getSelectedIndex() ==1){
+                insuranceIdLabel.setVisible(true);
+                insuranceIdTxtField.setVisible(true);
+            }else{
+                 insuranceIdLabel.setVisible(false);
+                insuranceIdTxtField.setVisible(false);
+            }
+            
+            hospitalLable.setVisible(true);
+            hospitalNameComboBox.setVisible(true);
+            populateHospitalNameComboBox();
         }else{
             insuranceIdLabel.setVisible(false);
-            insuranceIdTxtField.setVisible(false);
-        }
+            insuranceIdTxtField.setVisible(false); 
+            hospitalLable.setVisible(false);
+            hospitalNameComboBox.setVisible(false);
+            }
+        
         
     }//GEN-LAST:event_userTypeComboBoxActionPerformed
  private void clearAllTxtFields()
@@ -531,6 +570,8 @@ public class SignUpPanel extends javax.swing.JPanel {
     private javax.swing.JTextField emailIdTxtField;
     private javax.swing.JLabel genderLabel;
     private javax.swing.JTextField genderTxtField;
+    private javax.swing.JLabel hospitalLable;
+    private javax.swing.JComboBox<String> hospitalNameComboBox;
     private javax.swing.JTextField idTxtField;
     private javax.swing.JLabel insuranceIdLabel;
     private javax.swing.JTextField insuranceIdTxtField;
@@ -559,4 +600,12 @@ public class SignUpPanel extends javax.swing.JPanel {
     private javax.swing.JLabel zipCodeLabel;
     private javax.swing.JTextField zipCodeTxtField;
     // End of variables declaration//GEN-END:variables
+
+    private void populateHospitalNameComboBox() {
+        hospitalNameComboBox.removeAllItems();
+      for(Hospital hospital: HospitalDirectory.hospitalList)
+      {
+          hospitalNameComboBox.addItem(hospital.getHospitalName());
+      }
+    }
 }

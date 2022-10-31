@@ -4,6 +4,8 @@
  */
 package ui;
 
+import doctor.Doctor;
+import doctor.DoctorDirectory;
 import encounter.Encounter;
 import encounter.EncounterHistory;
 import hospital.Hospital;
@@ -23,6 +25,10 @@ import javax.swing.table.TableColumnModel;
 import patient.PatientDirectory;
 import rbac.context.RbacApplicationContext;
 import patient.Patient;
+import person.Person;
+import person.PersonDirectory;
+import rbac.application.user.User;
+import rbac.application.user.UserListDirectory;
 import utility.DateParser;
 import utility.ValidationHelper;
 import vitalSigns.VitalSigns;
@@ -496,7 +502,7 @@ public class DoctorPanel extends javax.swing.JPanel {
                 row[2] = encounter.getVitalSigns().getPulseRate();
                 row[3] = encounter.getVitalSigns().getRespirationRate();
                 row[4] = encounter.getVitalSigns().getBloodPressure();
-                row[5]= encounter.getVitalSigns().getBloodPressure(); //toBeDone
+                row[5]= encounter.getVitalSigns().getDoctor().getPerson().getName(); //toBeDone
                 tableModel.addRow(row);
 
             }
@@ -610,7 +616,15 @@ public class DoctorPanel extends javax.swing.JPanel {
     private void btnViewPatientDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewPatientDetailsActionPerformed
         // TODO add your handling code here:
         
-        searchComboBox.setVisible(false);
+       
+        
+        DefaultTableModel tableModel = (DefaultTableModel)tblRecords.getModel();
+         int selectedRowIndex = tblRecords.getSelectedRow();
+        if (selectedRowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "No Patient is selected, Please Try Again");
+            return;
+        }
+         searchComboBox.setVisible(false);
         searchByLabel.setVisible(false);
         searchTextField.setVisible(false);
         goButton.setVisible(false);
@@ -623,13 +637,6 @@ public class DoctorPanel extends javax.swing.JPanel {
         emailIdLabel.setVisible(true);
         phoneNumberLabel.setVisible(true);
         makeAllTxtFieldsAppear();
-        
-        DefaultTableModel tableModel = (DefaultTableModel)tblRecords.getModel();
-         int selectedRowIndex = tblRecords.getSelectedRow();
-        if (selectedRowIndex == -1) {
-            JOptionPane.showMessageDialog(this, "No Patient is selected, Please Try Again");
-            return;
-        }
         Patient patient = (Patient) tblRecords.getValueAt(selectedRowIndex, 0);
         patientIDtxtField.setText(patient.getPerson().getId());
         nameTxtField.setText(patient.getPerson().getName());
@@ -695,13 +702,15 @@ public class DoctorPanel extends javax.swing.JPanel {
     private void recordEncounterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recordEncounterButtonActionPerformed
         // TODO add your handling code here:
         makeLabelsDisappear();
-        saveVariable.setVisible(true);
-        enterVitalRecordLabel.setVisible(true);
+        clearTxtFields();
+        
         int selectedRowIndex = tblRecords.getSelectedRow();
         if (selectedRowIndex == -1) {
             JOptionPane.showMessageDialog(this, "No Patient is selected, Please Try Again");
             return;
         }
+        saveVariable.setVisible(true);
+        enterVitalRecordLabel.setVisible(true);
         Patient patient = (Patient) tblRecords.getValueAt(selectedRowIndex, 0);
         
         patientIDLabel.setText("Body Temperature");
@@ -763,7 +772,11 @@ public class DoctorPanel extends javax.swing.JPanel {
         if (errorCount > 0) {
                 JOptionPane.showMessageDialog(this, errorNotifier.toString());
         }else{
-        VitalSigns vitalSigns = new VitalSigns(bodyTemp,pulseRate, respirationRate, bloodPressure, null);
+            User user = RbacApplicationContext.getInstance().getUser();
+            Person person = UserListDirectory.getUserNameToPersonMap().get(user.getUserName());
+            Doctor doctor = new DoctorDirectory().findDoctorByName(person.getName());
+            
+          VitalSigns vitalSigns = new VitalSigns(bodyTemp,pulseRate, respirationRate, bloodPressure, doctor);
         int selectedRowIndex = tblRecords.getSelectedRow();
         if (selectedRowIndex == -1) {
             JOptionPane.showMessageDialog(this, "Please select the Patient, and try again");
