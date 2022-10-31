@@ -412,7 +412,7 @@ public class DoctorPanel extends javax.swing.JPanel {
         add(nameTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 500, 150, -1));
         add(ageTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 560, 150, -1));
         add(genderTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 620, 150, -1));
-        add(addressTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 690, 150, -1));
+        add(addressTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 690, 150, 80));
         add(insuranceIdTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 420, 150, -1));
         add(emailidTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 480, 150, -1));
 
@@ -443,6 +443,7 @@ public class DoctorPanel extends javax.swing.JPanel {
     private void encounterHistoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encounterHistoryButtonActionPerformed
         // TODO add your handling code here:
         disappearVitalLabels();
+        makeTxtFieldsDisappear();
         int selectedRowIndex = tblRecords.getSelectedRow();
         if (selectedRowIndex == -1) {
             JOptionPane.showMessageDialog(this, "No Patient is selected, Please Try Again");
@@ -643,8 +644,8 @@ public class DoctorPanel extends javax.swing.JPanel {
         ageTxtField.setText(String.valueOf(patient.getPerson().getAge()));
        genderTxtField.setText(patient.getPerson().getGender());
        try{
-       String address = patient.getPerson().getResidence().getBuildingNumber() + " #" + patient.getPerson().getResidence().getApartmentNumber() + " " + patient.getPerson().getResidence().getCommunity().getCommunityName() + " " + 
-                        patient.getPerson().getResidence().getCommunity().getLocation() + " " + patient.getPerson().getResidence().getCommunity().getCity() + " " + patient.getPerson().getResidence().getCommunity().getCity();
+       String address = patient.getPerson().getResidence().getBuildingNumber() + " #" + patient.getPerson().getResidence().getApartmentNumber() + " ," + patient.getPerson().getResidence().getCommunity().getCommunityName() + " ," + 
+                        patient.getPerson().getResidence().getCommunity().getLocation() + " " + patient.getPerson().getResidence().getCommunity().getCity().getName() + " " + patient.getPerson().getResidence().getCommunity().getCity().getState();
        
        addressTextField.setText(address);
        

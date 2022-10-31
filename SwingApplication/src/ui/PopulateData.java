@@ -55,6 +55,7 @@ public class PopulateData {
          UserListDirectory.getDoctorUserList().add(user);
          UserListDirectory.getHospitalAdminList().add(user);
          UserListDirectory.getCommunityAdminList().add(user);
+         UserListDirectory.getUserNameToPersonMap().put("admin", person);
        
          
          Person person_one = new Person("02", "Rahul Panicker", "rohitpanicker06@gmail.com", 97621239, house, "Male", 24);
@@ -83,6 +84,15 @@ public class PopulateData {
         PersonDirectory.personList.add(person_DoctPerson);
         Doctor doctor = new Doctor(person_DoctPerson,hospital_one);
         DoctorDirectory.doctorList.add(doctor);
+        
+        
+         User userone = new User("rd", "rd", person_DoctPerson);
+        
+         UserListDirectory.getDoctorUserList().add(userone);
+        
+         UserListDirectory.getUserNameToPersonMap().put("rd", person_DoctPerson);
+       
+        
          
         Person person_two = new Person("56", "Niral Pethe2", "nirmal2@gmail.com", 97682, house, "Male2", 52);
         PersonDirectory.personList.add(person_two);

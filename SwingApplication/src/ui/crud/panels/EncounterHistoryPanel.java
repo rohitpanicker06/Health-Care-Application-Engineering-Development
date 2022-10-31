@@ -5,6 +5,7 @@
 package ui.crud.panels;
 
 import doctor.Doctor;
+import doctor.DoctorDirectory;
 import encounter.Encounter;
 import hospital.Hospital;
 import java.text.ParseException;
@@ -51,6 +52,7 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
         insuranceIdTxtField.setVisible(false);
         emailidTextField.setVisible(false);
         phoneNumberTextField.setVisible(false);
+        doctorComboBox.setVisible(false);
         
     }
  private void populateTableRecordsWithEncounterHistory()
@@ -154,6 +156,8 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
         phoneNumberLabel = new javax.swing.JLabel();
         phoneNumberTextField = new javax.swing.JTextField();
         saveVariable = new javax.swing.JButton();
+        doctorLabel = new javax.swing.JLabel();
+        doctorComboBox = new javax.swing.JComboBox<>();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -379,6 +383,12 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
             }
         });
         add(saveVariable, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 740, 80, 30));
+
+        doctorLabel.setText("Doctor");
+        add(doctorLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 440, 70, -1));
+
+        doctorComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        add(doctorComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 430, 150, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLabelMousePressed
@@ -398,6 +408,8 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
         clearTxtFields();
         makeLabelsDisappear();
         makeTxtFieldsDisappear();
+         doctorComboBox.setVisible(false);
+        doctorLabel.setVisible(false);
          searchByLabel.setVisible(false);
         searchTextField.setVisible(false);
         goButton.setVisible(false);
@@ -469,8 +481,9 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         int errorCount = 0;
         int pulseRate =0, respirationRate=0, bodyTemp=0;
-        String bloodPressure = null;
+        String bloodPressure = null, doctorName = null;
         StringBuffer errorNotifier = new StringBuffer("Please correct the following Errors\n");
+        Doctor doctor = null;
 
         if(ValidationHelper.isInteger(ageTxtField.getText()))
         {
@@ -504,6 +517,13 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
                 errorNotifier.append(errorCount).append(". Body Temp should be in proper Format\n");
 
             }
+            
+            if(doctorName == null)
+            {
+                doctorName = (String)doctorComboBox.getSelectedItem();
+                 doctor = new DoctorDirectory().findDoctorByName(doctorName);
+                
+            }
             if (errorCount > 0) {
                 JOptionPane.showMessageDialog(this, errorNotifier.toString());
             }else{
@@ -523,6 +543,7 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
         vitalSigns1.setPulseRate(pulseRate);
         vitalSigns1.setBodyTemperature(bodyTemp);
         vitalSigns1.setRespirationRate(respirationRate);
+        vitalSigns1.setDoctor(doctor);
         encounter.setVitalSigns(vitalSigns1);
         JOptionPane.showMessageDialog(this, "Vital Record Updated");
         populateTableRecordsWithEncounterHistory();
@@ -544,6 +565,8 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
     private void createVitalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createVitalBtnActionPerformed
         // TODO add your handling code here:
         clearTxtFields();
+        doctorComboBox.setVisible(false);
+        doctorLabel.setVisible(false);
         searchByLabel.setVisible(false);
         searchTextField.setVisible(false);
         goButton.setVisible(false);
@@ -572,19 +595,22 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
     private void updateVitalRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateVitalRecordActionPerformed
         // TODO add your handling code here:
            // TODO add your handling code here:
-            searchByLabel.setVisible(false);
-        searchTextField.setVisible(false);
-        goButton.setVisible(false);
+          
           int selectedRowIndex = tblRecords.getSelectedRow();
         if (selectedRowIndex == -1) {
             JOptionPane.showMessageDialog(this, "No Patient is selected, Please Try Again");
             return;
         }
-        
+         makeLabelsDisappear();
+          searchByLabel.setVisible(false);
+        searchTextField.setVisible(false);
+        doctorLabel.setVisible(true);
+        doctorComboBox.setVisible(true);
+        goButton.setVisible(false);
         
             Encounter encounter = (Encounter) tblRecords.getValueAt(selectedRowIndex, 0);
             
-           makeLabelsDisappear();
+          
            
            
         saveVariable.setVisible(true);
@@ -608,6 +634,7 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
         genderLabel.setVisible(true);
         addressLabel.setVisible(true);
         makeVitalTxtFieldsAppear();
+        populateJComboBox(encounter);
         
         
         
@@ -623,6 +650,8 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
          makeLabelsDisappear();
         makeTxtFieldsDisappear();
+         doctorComboBox.setVisible(false);
+        doctorLabel.setVisible(false);
         searchByLabel.setVisible(true);
         searchTextField.setVisible(true);
         goButton.setVisible(true);
@@ -659,6 +688,7 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
         insuranceIdLabel.setVisible(false);
         emailIdLabel.setVisible(false);
         phoneNumberLabel.setVisible(false);
+        doctorLabel.setVisible(false);
        
         saveVariable.setVisible(false);
 
@@ -671,6 +701,8 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
     private javax.swing.JTextField ageTxtField;
     private javax.swing.JButton createVitalBtn;
     private javax.swing.JButton deleteVitalBtn;
+    private javax.swing.JComboBox<String> doctorComboBox;
+    private javax.swing.JLabel doctorLabel;
     private javax.swing.JLabel emailIdLabel;
     private javax.swing.JTextField emailidTextField;
     private javax.swing.JLabel genderLabel;
@@ -793,5 +825,18 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
             System.out.println("Exception occured while populating Table e= " + e.getMessage());
         }
         
+    }
+
+    private void populateJComboBox(Encounter encounter) {
+     doctorComboBox.removeAllItems();
+      String name = encounter.getVitalSigns().getDoctor().getPerson().getName();
+     doctorComboBox.addItem(name);
+     for(Doctor doctor : DoctorDirectory.doctorList)
+     {
+         if(!doctor.getPerson().getName().equals(name))
+         {
+           doctorComboBox.addItem(doctor.getPerson().getName());
+         }
+     }
     }
 }

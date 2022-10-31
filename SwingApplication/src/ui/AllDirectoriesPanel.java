@@ -8,6 +8,7 @@ import doctor.Doctor;
 import doctor.DoctorDirectory;
 import hospital.Hospital;
 import hospital.HospitalDirectory;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -15,9 +16,12 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import patient.Patient;
 import patient.PatientDirectory;
+import person.Person;
+import person.PersonDirectory;
 import rbac.context.RbacApplicationContext;
 import ui.crud.panels.HospitalCrud;
 import ui.crud.panels.PatientCrud;
+import ui.crud.panels.ResetCredentials;
 
 /**
  *
@@ -50,6 +54,7 @@ public class AllDirectoriesPanel extends javax.swing.JPanel {
         btnHospitalDirectory = new javax.swing.JButton();
         btnPatientDirectory = new javax.swing.JButton();
         btnDoctorDirectory = new javax.swing.JButton();
+        allPersonsBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblRecords = new javax.swing.JTable();
         viewRecordBtn = new javax.swing.JButton();
@@ -146,12 +151,20 @@ public class AllDirectoriesPanel extends javax.swing.JPanel {
             }
         });
 
+        allPersonsBtn.setText("All Registered Users");
+        allPersonsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                allPersonsBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnHospitalDirectory, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(allPersonsBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(btnPatientDirectory, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE))
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,6 +177,8 @@ public class AllDirectoriesPanel extends javax.swing.JPanel {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(244, 244, 244)
                 .addComponent(btnHospitalDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addComponent(allPersonsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
@@ -353,6 +368,18 @@ private void populateAndFillHospitalRecord(){
     {
         HospitalCrud hospitalCrud = new HospitalCrud("create");
             HomeScreen.homeScreen.getjSplitPane1().setRightComponent(hospitalCrud); 
+    }else if(txt.contains("Reset"))
+    {
+        int selectedRowIndex = tblRecords.getSelectedRow();
+        if (selectedRowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "No Patient is selected, Please Try Again");
+            return;
+        }
+        
+        
+        Person person = (Person) tblRecords.getValueAt(selectedRowIndex, 0);
+        ResetCredentials resetCredentials = new ResetCredentials(person);
+        HomeScreen.homeScreen.getjSplitPane1().setRightComponent(resetCredentials);
     }
         
     }//GEN-LAST:event_createRecordBtnActionPerformed
@@ -446,6 +473,21 @@ private void populateAndFillHospitalRecord(){
             deleteHospitalRecord(hospital);
         }
     }//GEN-LAST:event_deleteRecordBtnActionPerformed
+   private void hideButtons(boolean value)
+   {
+       createRecordBtn.setVisible(value);
+       viewRecordBtn.setVisible(value);
+       updateRecordBtn.setVisible(value);
+       deleteRecordBtn.setVisible(value);
+   }
+    private void allPersonsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allPersonsBtnActionPerformed
+        // TODO add your handling code here:
+        hideButtons(false);
+        createRecordBtn.setVisible(true);
+        createRecordBtn.setText("Reset Credentials");
+        
+        populateAllPersons(PersonDirectory.personList);
+    }//GEN-LAST:event_allPersonsBtnActionPerformed
    private void deleteHospitalRecord(Hospital hospital)
    {
        HospitalDirectory.hospitalList.remove(hospital);
@@ -502,6 +544,7 @@ private void populateAndFillHospitalRecord(){
     }                 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton allPersonsBtn;
     private javax.swing.JButton btnDoctorDirectory;
     private javax.swing.JButton btnHospitalDirectory;
     private javax.swing.JButton btnPatientDirectory;
@@ -518,4 +561,40 @@ private void populateAndFillHospitalRecord(){
     private javax.swing.JButton updateRecordBtn;
     private javax.swing.JButton viewRecordBtn;
     // End of variables declaration//GEN-END:variables
+
+    private void populateAllPersons(ArrayList<Person> personList) {
+          
+       
+     
+     
+         DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
+         tableModel.setRowCount(0);
+         tableModel.setColumnCount(0);
+         
+           tableModel.setRowCount(0);
+        tableModel.setColumnCount(0);
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Name");
+        tableModel.addColumn("Gender");
+        tableModel.addColumn("Age");
+       
+      
+       
+        tableModel.setRowCount(0);
+        try {
+            for (Person  person : personList) {
+
+                Object[] row = new Object[4];
+                row[0] = person;
+                row[1] = person.getName();
+                row[2] = person.getGender();
+                row[3] = person.getAge();
+                tableModel.addRow(row);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occured while populating Table e= " + e.getMessage());
+        }
+     
+    }
 }

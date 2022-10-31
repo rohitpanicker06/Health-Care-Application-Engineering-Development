@@ -271,7 +271,7 @@ public class SignUpPanel extends javax.swing.JPanel {
                 signUpBtnActionPerformed(evt);
             }
         });
-        add(signUpBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 740, 300, 80));
+        add(signUpBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 820, 300, 80));
 
         personIdLabel1.setText("ID:");
         add(personIdLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 210, 70, -1));
