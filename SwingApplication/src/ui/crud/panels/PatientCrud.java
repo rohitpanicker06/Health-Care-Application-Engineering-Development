@@ -9,7 +9,12 @@ import doctor.DoctorDirectory;
 import hospital.Hospital;
 import hospital.HospitalDirectory;
 import house.House;
+import java.awt.Image;
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import patient.Patient;
 import patient.PatientDirectory;
 import person.Person;
@@ -45,17 +50,18 @@ public class PatientCrud extends javax.swing.JPanel {
         initComponents();
          insuranceIdLabel.setVisible(false);
             insuranceIdTxtField.setVisible(false);
-        
+           browseButton.setVisible(true);
          populateDoctorCrudFields();
          if(operation.equals("du"))
         {   encounterHistoryBtn.setVisible(false);
+         browseButton.setVisible(false);
             populateHospitalJComboBox();
             createPatientBtn.setText("Update");
             createPatientBtn.setVisible(true);
         }else if(operation.equals("dv"))
         {
             encounterHistoryBtn.setVisible(false);
-           
+            browseButton.setVisible(false);
             hospitalNameComboBox.removeAllItems();
             hospitalNameComboBox.addItem(doctor.getHospital().getHospitalName());
         }
@@ -79,6 +85,7 @@ public class PatientCrud extends javax.swing.JPanel {
         communityNameTxtField.setText(doctor.getPerson().getResidence().getCommunity().getCommunityName());
         zipCodeTxtField.setText(doctor.getPerson().getResidence().getCommunity().getZipCode());
         addressTxtField.setText(doctor.getPerson().getResidence().getCommunity().getLocation());
+        photoLabel.setIcon(new ImageIcon(doctor.getPerson().getImage()));
          
      }
      
@@ -92,10 +99,12 @@ public class PatientCrud extends javax.swing.JPanel {
          {
             populateHospitalJComboBox(); 
             encounterHistoryBtn.setVisible(false);
+            browseButton.setVisible(true);
          }
          
          else if(operation.contains("cd")){
          try{
+             browseButton.setVisible(true);
              insuranceIdLabel.setText("");
              insuranceIdLabel.setVisible(false);
          insuranceIdTxtField.setText("");
@@ -120,12 +129,14 @@ public class PatientCrud extends javax.swing.JPanel {
         initComponents();
         populatePatinetCrudFields();
         if(operation.equals("pv")){
+            browseButton.setVisible(false);
         hospitalNameComboBox.removeAllItems();
         hospitalNameComboBox.addItem(patient.getHospital().getHospitalName());
         }
         else if(operation.equals("pu"))
         {
             createPatientBtn.setText("Update");
+            browseButton.setVisible(false);
             createPatientBtn.setVisible(true);
             populateHospitalJComboBox();
            
@@ -185,6 +196,9 @@ public class PatientCrud extends javax.swing.JPanel {
         encounterHistoryBtn = new javax.swing.JButton();
         hospitalLable = new javax.swing.JLabel();
         hospitalNameComboBox = new javax.swing.JComboBox<>();
+        photoLabel = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        browseButton = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -313,7 +327,7 @@ public class PatientCrud extends javax.swing.JPanel {
         ageLabel.setText("Age:");
         add(ageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 630, 60, -1));
         add(insuranceIdTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 690, 150, -1));
-        add(addressTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 280, 200, 130));
+        add(addressTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 490, 200, 110));
 
         nameTxtField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -336,22 +350,22 @@ public class PatientCrud extends javax.swing.JPanel {
                 createPatientBtnActionPerformed(evt);
             }
         });
-        add(createPatientBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 740, 300, 80));
+        add(createPatientBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 790, 300, 80));
 
         personIdLabel1.setText("ID:");
         add(personIdLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 150, 70, -1));
         add(idTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 150, 150, -1));
 
         communityNameLabel.setText("Community Name:");
-        add(communityNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 150, 130, -1));
-        add(communityNameTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 150, 200, -1));
+        add(communityNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 390, 130, -1));
+        add(communityNameTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 390, 200, -1));
 
         addressLabel.setText("Address:");
-        add(addressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 280, 130, -1));
+        add(addressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 570, 130, -1));
 
         zipCodeLabel.setText("ZipCode:");
-        add(zipCodeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 220, 130, -1));
-        add(zipCodeTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 210, 200, -1));
+        add(zipCodeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 450, 130, -1));
+        add(zipCodeTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 440, 200, -1));
 
         encounterHistoryBtn.setText("View Encounter History");
         encounterHistoryBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -359,13 +373,28 @@ public class PatientCrud extends javax.swing.JPanel {
                 encounterHistoryBtnActionPerformed(evt);
             }
         });
-        add(encounterHistoryBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 610, 380, -1));
+        add(encounterHistoryBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 690, 390, -1));
 
         hospitalLable.setText("Hospital");
-        add(hospitalLable, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 450, 60, -1));
+        add(hospitalLable, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 630, 60, -1));
 
         hospitalNameComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        add(hospitalNameComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 450, 200, -1));
+        add(hospitalNameComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 620, 200, -1));
+
+        photoLabel.setBackground(new java.awt.Color(255, 255, 255));
+        photoLabel.setOpaque(true);
+        add(photoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 180, 190, 160));
+
+        jLabel4.setText("Image");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 260, 90, -1));
+
+        browseButton.setText("Browse");
+        browseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                browseButtonActionPerformed(evt);
+            }
+        });
+        add(browseButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 350, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLabelMousePressed
@@ -459,6 +488,7 @@ public class PatientCrud extends javax.swing.JPanel {
         communityNameTxtField.setText(patient.getPerson().getResidence().getCommunity().getCommunityName());
         zipCodeTxtField.setText(patient.getPerson().getResidence().getCommunity().getZipCode());
         addressTxtField.setText(patient.getPerson().getResidence().getCommunity().getLocation());
+        photoLabel.setIcon(new ImageIcon(patient.getPerson().getImage()));
     }catch(Exception e)
     {
         
@@ -472,6 +502,7 @@ public class PatientCrud extends javax.swing.JPanel {
         String id = null, name = null, emailId = null, phoneNumber = null, cityName = null, state = null,
                 country = null, gender = null, age = null, insuranceId = null, communityName = null, zipCode = null,
                 address = null;
+        Image image = null;
         String hospitalName = null;
         if(this.operation.contains("cp") || this.operation.contains("cd")){
          if(ValidationHelper.isInteger(idTxtField.getText()))
@@ -568,6 +599,14 @@ public class PatientCrud extends javax.swing.JPanel {
               errorCount++;
             errorNotifier.append(errorCount).append(". Address should be a String\n");
          }
+         
+         if(globalImage!= null)
+         {
+              image= globalImage;
+         }else{
+             errorCount++;
+            errorNotifier.append(errorCount).append(". Please select a Image\n");
+         }
         
         if(errorCount > 0 )
             {
@@ -577,7 +616,7 @@ public class PatientCrud extends javax.swing.JPanel {
         City city = new City(state, country,  cityName);
         Community community = new Community(city, communityName, country, zipCode);
         House house = new House(community, 7, 8);
-        Person person = new Person(id, name, emailId, Long.parseLong(phoneNumber), house, gender, Integer.parseInt(age));
+        Person person = new Person(id, name, emailId, Long.parseLong(phoneNumber), house, gender, Integer.parseInt(age), image);
        if(this.operation.contains("cp")){
            Hospital hospital = new HospitalDirectory().findHospitalByName(hospitalName);
         Patient newPatient = new Patient(person, null, Integer.parseInt(insuranceId), hospital,null);
@@ -622,6 +661,33 @@ public class PatientCrud extends javax.swing.JPanel {
          }
         
     }//GEN-LAST:event_encounterHistoryBtnActionPerformed
+   private Image globalImage = null;
+    private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
+        // TODO add your handling code here:
+        
+      
+        JFileChooser jFileChooser = new JFileChooser();
+        FileNameExtensionFilter fileNameExtensionFilter = new FileNameExtensionFilter("Choose your extension", "jpg");
+        jFileChooser.setFileFilter(fileNameExtensionFilter);
+
+        try {
+            int selectedOperation = jFileChooser.showOpenDialog(this);
+            if (selectedOperation == JFileChooser.APPROVE_OPTION) {
+                File file = jFileChooser.getSelectedFile();
+                String selectedImage = file.getAbsolutePath();
+
+                JOptionPane.showInternalMessageDialog(null, "Are you sure you want this Photo?");
+
+                ImageIcon imageIcon = new ImageIcon(selectedImage);
+                Image imageDefault = imageIcon.getImage();
+                Image imageDisplay = imageDefault.getScaledInstance(photoLabel.getWidth(), photoLabel.getHeight(), Image.SCALE_SMOOTH);
+                globalImage = imageDisplay;
+                photoLabel.setIcon(new ImageIcon(imageDisplay));
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occured while choosing image e= " + e.getMessage());
+        }
+    }//GEN-LAST:event_browseButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -629,6 +695,7 @@ public class PatientCrud extends javax.swing.JPanel {
     private javax.swing.JTextField addressTxtField;
     private javax.swing.JLabel ageLabel;
     private javax.swing.JTextField ageTxtField;
+    private javax.swing.JButton browseButton;
     private javax.swing.JLabel cityLabel;
     private javax.swing.JTextField cityTxtField;
     private javax.swing.JLabel communityNameLabel;
@@ -647,6 +714,7 @@ public class PatientCrud extends javax.swing.JPanel {
     private javax.swing.JLabel insuranceIdLabel;
     private javax.swing.JTextField insuranceIdTxtField;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -658,6 +726,7 @@ public class PatientCrud extends javax.swing.JPanel {
     private javax.swing.JLabel personNameLabel;
     private javax.swing.JTextField phnNumberTxtField;
     private javax.swing.JLabel phonePersonalLabel;
+    private javax.swing.JLabel photoLabel;
     private javax.swing.JLabel stateLabel;
     private javax.swing.JTextField stateTxtField;
     private javax.swing.JLabel zipCodeLabel;

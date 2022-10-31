@@ -5,6 +5,7 @@
 package person;
 
 import house.House;
+import java.awt.Image;
 
 /**
  *
@@ -18,6 +19,27 @@ import house.House;
     private House residence;
     private String gender;
     private int age;
+    Image image;
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+    
+
+    public Person(String id, String name, String emailid, long phoneNumber, House residence, String gender, int age, Image image) {
+        this.id = id;
+        this.name = name;
+        this.emailid = emailid;
+        this.phoneNumber = phoneNumber;
+        this.residence = residence;
+        this.gender = gender;
+        this.age = age;
+        this.image = image;
+    }
 
     public Person(String id, String name, String emailid, long phoneNumber, House residence, String gender, int age) {
         this.id = id;

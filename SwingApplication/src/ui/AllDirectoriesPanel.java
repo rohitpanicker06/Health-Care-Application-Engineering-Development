@@ -564,8 +564,6 @@ private void populateAndFillHospitalRecord(){
 
     private void populateAllPersons(ArrayList<Person> personList) {
           
-       
-     
      
          DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
          tableModel.setRowCount(0);

@@ -9,13 +9,18 @@ import doctor.DoctorDirectory;
 import hospital.Hospital;
 import hospital.HospitalDirectory;
 import house.House;
+import java.awt.Image;
+import java.io.File;
 import java.util.HashMap;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import model.state.city.community.CommunityDirectory;
 import patient.Patient;
 import patient.PatientDirectory;
@@ -36,6 +41,8 @@ public class SignUpPanel extends javax.swing.JPanel {
 
   
     JPanel loginJpanel;
+    private Image globalImage = null;
+    private String selectedImage;
     /**
      * Creates new form SignUpPanel
      */
@@ -109,6 +116,9 @@ public class SignUpPanel extends javax.swing.JPanel {
         passwordTxtField = new javax.swing.JPasswordField();
         hospitalLable = new javax.swing.JLabel();
         hospitalNameComboBox = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        photoLabel = new javax.swing.JLabel();
+        browseImage = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -137,7 +147,7 @@ public class SignUpPanel extends javax.swing.JPanel {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(205, 205, 205)
                 .addComponent(logoutLabel)
-                .addContainerGap(302, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,7 +200,7 @@ public class SignUpPanel extends javax.swing.JPanel {
         loginToContinuePanelLayout.setHorizontalGroup(
             loginToContinuePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginToContinuePanelLayout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(loginToConitueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -246,9 +256,9 @@ public class SignUpPanel extends javax.swing.JPanel {
         add(genderLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 640, 60, -1));
 
         ageLabel.setText("Age:");
-        add(ageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 730, 60, -1));
+        add(ageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 710, 60, -1));
         add(insuranceIdTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 780, 150, -1));
-        add(addressTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 250, 200, 130));
+        add(addressTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 450, 200, 130));
 
         nameTxtField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -278,15 +288,15 @@ public class SignUpPanel extends javax.swing.JPanel {
         add(idTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 210, 150, -1));
 
         communityNameLabel.setText("Community Name:");
-        add(communityNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 120, 130, -1));
-        add(communityNameTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 120, 200, -1));
+        add(communityNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 330, 130, -1));
+        add(communityNameTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 330, 200, -1));
 
         addressLabel.setText("Address:");
-        add(addressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 270, 130, -1));
+        add(addressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 520, 130, -1));
 
         zipCodeLabel.setText("ZipCode:");
-        add(zipCodeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 190, 130, -1));
-        add(zipCodeTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 180, 200, -1));
+        add(zipCodeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 400, 130, -1));
+        add(zipCodeTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 390, 200, -1));
 
         userTypeLabel.setText("Role");
         add(userTypeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 100, -1));
@@ -305,18 +315,39 @@ public class SignUpPanel extends javax.swing.JPanel {
         add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, 190, -1));
 
         jLabel1.setText("Username:");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 430, 130, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 640, 130, -1));
 
         jLabel2.setText("Password");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 480, 90, -1));
-        add(userNameTxtField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 430, 200, -1));
-        add(passwordTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 480, 200, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 710, 90, -1));
+
+        userNameTxtField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userNameTxtField1ActionPerformed(evt);
+            }
+        });
+        add(userNameTxtField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 640, 200, -1));
+        add(passwordTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 700, 200, -1));
 
         hospitalLable.setText("Hospital");
-        add(hospitalLable, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 560, 60, -1));
+        add(hospitalLable, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 770, 60, -1));
 
         hospitalNameComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        add(hospitalNameComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 560, 200, -1));
+        add(hospitalNameComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 760, 200, -1));
+
+        jLabel4.setText("Image");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 120, 90, -1));
+
+        photoLabel.setBackground(new java.awt.Color(255, 255, 255));
+        photoLabel.setOpaque(true);
+        add(photoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 147, 190, 160));
+
+        browseImage.setText("Browse Image");
+        browseImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                browseImageActionPerformed(evt);
+            }
+        });
+        add(browseImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 110, 180, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLabelMousePressed
@@ -342,6 +373,7 @@ public class SignUpPanel extends javax.swing.JPanel {
         String id = null, name = null, emailId = null, phoneNumber = null, cityName = null, state = null,
         country = null, gender = null, age = null, insuranceId = null, communityName = null, zipCode = null,
         address = null, userName= null, password= null;
+        Image image= null;
        
         String hospitalName= null;
         
@@ -451,6 +483,14 @@ public class SignUpPanel extends javax.swing.JPanel {
                  errorCount++;
                 errorNotifier.append(errorCount).append(". Please enter password\n");
             }
+            
+            if(this.globalImage != null)
+            {
+                image= globalImage;
+            }else{
+                 errorCount++;
+                errorNotifier.append(errorCount).append(". Please upload a  picture\n");
+            }
 
             if(errorCount > 0 )
             {
@@ -464,7 +504,7 @@ public class SignUpPanel extends javax.swing.JPanel {
                 Community community = new Community(city, communityName, country, zipCode);
                 CommunityDirectory.communityList.add(community);
                 House house = new House(community, 7, 8);
-                Person person = new Person(id, name, emailId, Long.parseLong(phoneNumber), house, gender, Integer.parseInt(age));
+                Person person = new Person(id, name, emailId, Long.parseLong(phoneNumber), house, gender, Integer.parseInt(age), image);
                 PersonDirectory.personList.add(person);
                 User newUser = new User(userName, password, person);
             // System Admin, Patient, Doctor, Hospital Admin, Community Admin
@@ -536,6 +576,37 @@ public class SignUpPanel extends javax.swing.JPanel {
         
         
     }//GEN-LAST:event_userTypeComboBoxActionPerformed
+
+    private void userNameTxtField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameTxtField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userNameTxtField1ActionPerformed
+
+    private void browseImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseImageActionPerformed
+        // TODO add your handling code here:
+        
+        globalImage = null;
+        JFileChooser jFileChooser = new JFileChooser();
+        FileNameExtensionFilter fileNameExtensionFilter = new FileNameExtensionFilter("Choose your extension", "jpg");
+        jFileChooser.setFileFilter(fileNameExtensionFilter);
+
+        try {
+            int selectedOperation = jFileChooser.showOpenDialog(this);
+            if (selectedOperation == JFileChooser.APPROVE_OPTION) {
+                File file = jFileChooser.getSelectedFile();
+                selectedImage = file.getAbsolutePath();
+
+                JOptionPane.showInternalMessageDialog(null, "Are you sure you want this Photo?");
+
+                ImageIcon imageIcon = new ImageIcon(selectedImage);
+                Image imageDefault = imageIcon.getImage();
+                Image imageDisplay = imageDefault.getScaledInstance(photoLabel.getWidth(), photoLabel.getHeight(), Image.SCALE_SMOOTH);
+                globalImage = imageDisplay;
+                photoLabel.setIcon(new ImageIcon(imageDisplay));
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occured while choosing image e= " + e.getMessage());
+        }
+    }//GEN-LAST:event_browseImageActionPerformed
  private void clearAllTxtFields()
     {
         addressTxtField.setText("");
@@ -560,6 +631,7 @@ public class SignUpPanel extends javax.swing.JPanel {
     private javax.swing.JTextField addressTxtField;
     private javax.swing.JLabel ageLabel;
     private javax.swing.JTextField ageTxtField;
+    private javax.swing.JButton browseImage;
     private javax.swing.JLabel cityLabel;
     private javax.swing.JTextField cityTxtField;
     private javax.swing.JLabel communityNameLabel;
@@ -578,6 +650,7 @@ public class SignUpPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -591,6 +664,7 @@ public class SignUpPanel extends javax.swing.JPanel {
     private javax.swing.JLabel personNameLabel;
     private javax.swing.JTextField phnNumberTxtField;
     private javax.swing.JLabel phonePersonalLabel;
+    private javax.swing.JLabel photoLabel;
     private javax.swing.JButton signUpBtn;
     private javax.swing.JLabel stateLabel;
     private javax.swing.JTextField stateTxtField;

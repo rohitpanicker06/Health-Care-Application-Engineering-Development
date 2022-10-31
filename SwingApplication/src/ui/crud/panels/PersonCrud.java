@@ -5,7 +5,12 @@
 package ui.crud.panels;
 
 import house.House;
+import java.awt.Image;
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import person.Person;
 import rbac.context.RbacApplicationContext;
 import ui.HomeScreen;
@@ -99,6 +104,9 @@ public class PersonCrud extends javax.swing.JPanel {
         addressLabel = new javax.swing.JLabel();
         zipCodeLabel = new javax.swing.JLabel();
         zipCodeTxtField = new javax.swing.JTextField();
+        photoLabel = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        browseButton = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -323,7 +331,7 @@ public class PersonCrud extends javax.swing.JPanel {
 
         ageLabel.setText("Age:");
         jPanel1.add(ageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 630, 60, -1));
-        jPanel1.add(addressTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 280, 200, 130));
+        jPanel1.add(addressTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 500, 200, 130));
 
         nameTxtField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -346,22 +354,37 @@ public class PersonCrud extends javax.swing.JPanel {
                 createPatientBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(createPatientBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 740, 300, 80));
+        jPanel1.add(createPatientBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 740, 300, 80));
 
         personIdLabel1.setText("ID:");
         jPanel1.add(personIdLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 150, 70, -1));
         jPanel1.add(idTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 150, 150, -1));
 
         communityNameLabel.setText("Community Name:");
-        jPanel1.add(communityNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 150, 130, -1));
-        jPanel1.add(communityNameTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 150, 200, -1));
+        jPanel1.add(communityNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 390, 130, -1));
+        jPanel1.add(communityNameTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 390, 200, -1));
 
         addressLabel.setText("Address:");
-        jPanel1.add(addressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 280, 130, -1));
+        jPanel1.add(addressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 520, 130, -1));
 
         zipCodeLabel.setText("ZipCode:");
-        jPanel1.add(zipCodeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 220, 130, -1));
-        jPanel1.add(zipCodeTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 210, 200, -1));
+        jPanel1.add(zipCodeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 450, 130, -1));
+        jPanel1.add(zipCodeTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 450, 200, -1));
+
+        photoLabel.setBackground(new java.awt.Color(255, 255, 255));
+        photoLabel.setOpaque(true);
+        jPanel1.add(photoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 180, 190, 160));
+
+        jLabel7.setText("Image");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 260, 90, -1));
+
+        browseButton.setText("Browse");
+        browseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                browseButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(browseButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 350, -1, -1));
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
@@ -401,6 +424,7 @@ public class PersonCrud extends javax.swing.JPanel {
         String id = null, name = null, emailId = null, phoneNumber = null, cityName = null, state = null,
         country = null, gender = null, age = null, insuranceId = null, communityName = null, zipCode = null,
         address = null;
+        Image image = null;
        
             if(ValidationHelper.isInteger(idTxtField.getText()))
             {
@@ -480,7 +504,14 @@ public class PersonCrud extends javax.swing.JPanel {
                 errorCount++;
                 errorNotifier.append(errorCount).append(". Address should be a String\n");
             }
-
+             
+            if(globalImage != null)
+            {
+                image=globalImage;
+            }else{
+                errorCount++;
+                errorNotifier.append(errorCount).append(". Please select  a Image\n");
+            }
             if(errorCount > 0 )
             {
                 JOptionPane.showMessageDialog(this, errorNotifier.toString());
@@ -497,6 +528,7 @@ public class PersonCrud extends javax.swing.JPanel {
                this.person.setGender(gender);
                this.person.setPhoneNumber(Long.parseLong(phoneNumber));
                this.person.setResidence(house);
+               this.person.setImage(globalImage);
                
                JOptionPane.showMessageDialog(this, "Person Record Updated Successfully");
                
@@ -505,6 +537,32 @@ public class PersonCrud extends javax.swing.JPanel {
           
 
     }//GEN-LAST:event_createPatientBtnActionPerformed
+    private Image globalImage = null;
+    private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
+        // TODO add your handling code here:
+        
+        JFileChooser jFileChooser = new JFileChooser();
+        FileNameExtensionFilter fileNameExtensionFilter = new FileNameExtensionFilter("Choose your extension", "jpg");
+        jFileChooser.setFileFilter(fileNameExtensionFilter);
+
+        try {
+            int selectedOperation = jFileChooser.showOpenDialog(this);
+            if (selectedOperation == JFileChooser.APPROVE_OPTION) {
+                File file = jFileChooser.getSelectedFile();
+               String selectedImage = file.getAbsolutePath();
+
+                JOptionPane.showInternalMessageDialog(null, "Are you sure you want this Photo?");
+
+                ImageIcon imageIcon = new ImageIcon(selectedImage);
+                Image imageDefault = imageIcon.getImage();
+                Image imageDisplay = imageDefault.getScaledInstance(photoLabel.getWidth(), photoLabel.getHeight(), Image.SCALE_SMOOTH);
+                globalImage = imageDisplay;
+                photoLabel.setIcon(new ImageIcon(imageDisplay));
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occured while choosing image e= " + e.getMessage());
+        }
+    }//GEN-LAST:event_browseButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -512,6 +570,7 @@ public class PersonCrud extends javax.swing.JPanel {
     private javax.swing.JTextField addressTxtField;
     private javax.swing.JLabel ageLabel;
     private javax.swing.JTextField ageTxtField;
+    private javax.swing.JButton browseButton;
     private javax.swing.JLabel cityLabel;
     private javax.swing.JTextField cityTxtField;
     private javax.swing.JLabel communityNameLabel;
@@ -528,6 +587,7 @@ public class PersonCrud extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -544,6 +604,7 @@ public class PersonCrud extends javax.swing.JPanel {
     private javax.swing.JLabel personNameLabel;
     private javax.swing.JTextField phnNumberTxtField;
     private javax.swing.JLabel phonePersonalLabel;
+    private javax.swing.JLabel photoLabel;
     private javax.swing.JLabel stateLabel;
     private javax.swing.JTextField stateTxtField;
     private javax.swing.JLabel zipCodeLabel;
