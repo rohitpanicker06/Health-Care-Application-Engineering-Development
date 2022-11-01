@@ -55,6 +55,7 @@ public class PopulateData {
         String image_six = "/Users/rohitpanicker/Downloads/hospital (1).png";
         String image_seven = "/Users/rohitpanicker/Downloads/hospital (1).png";
         String image_eight = "/Users/rohitpanicker/Downloads/hospital (1).png";
+        String image_nine = "/Users/rohitpanicker/Downloads/hospital (1).png";
                  
         
         
@@ -92,7 +93,15 @@ public class PopulateData {
           UserListDirectory.getHospitalAdminList().add(hospitalAdminUser);
           UserListDirectory.getUserNameToPersonMap().put("ha", hospitalAdmin);
           
-         
+          //Creating CommunityAdmin
+          Image comAdminImage  = getImage(image_nine);
+          Person comAdmin = new Person("111", "Rutvik Katariya", "rutvik@gmail.com", Long.parseLong("9988779900"), house, "Male", 24, comAdminImage);
+          PersonDirectory.personList.add(comAdmin);
+          User comAdminUser = new User("ca", "ca", comAdmin);
+          UserListDirectory.getCommunityAdminList().add(comAdminUser);
+          UserListDirectory.getUserNameToPersonMap().put("ca", comAdmin);
+          
+          
          //Person
          Image personImage = getImage(image_three);
          Image personBrookImage = getImage(image_four);

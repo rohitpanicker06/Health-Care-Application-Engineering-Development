@@ -51,6 +51,7 @@ public class PersonCrud extends javax.swing.JPanel {
         ageTxtField.setText(String.valueOf(person.getAge()));
         communityNameTxtField.setText(person.getResidence().getCommunity().getCommunityName());
         addressTxtField.setText(person.getResidence().getCommunity().getLocation());
+        photoLabel.setIcon(new ImageIcon(person.getImage()));
         
         
     }
@@ -528,7 +529,7 @@ public class PersonCrud extends javax.swing.JPanel {
                this.person.setGender(gender);
                this.person.setPhoneNumber(Long.parseLong(phoneNumber));
                this.person.setResidence(house);
-               this.person.setImage(globalImage);
+               this.person.setImage(image);
                
                JOptionPane.showMessageDialog(this, "Person Record Updated Successfully");
                
