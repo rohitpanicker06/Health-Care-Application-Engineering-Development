@@ -143,8 +143,8 @@ public class PopulateData {
         // Creating Doctor persons
         
         Image doctor_oneIamge = getImage(image_six);
-         Image doctorTwoIamge = getImage(image_seven);
-         Image doctor_ThreeImage = getImage(image_eight);
+        Image doctorTwoIamge = getImage(image_seven);
+        Image doctor_ThreeImage = getImage(image_eight);
          
         Person doctor_one = new Person("100", "Pradeep Shinde", "pradeep@gmail.com", Long.parseLong("9850913005"), house, "Male", 50, doctor_oneIamge);
         Person doctorTwo = new Person("101", "Rajesh Shinde", "rajesh@gmail.com", Long.parseLong("9850913006"), house_Bolyston, "Male", 51, doctorTwoIamge);

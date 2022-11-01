@@ -37,6 +37,7 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
         
         initComponents();
         setSearchComponentsVisibility(false);
+        searchTxtField.setVisible(false);
     }
     public void setSearchComponentsVisibility(boolean value)
     {
@@ -73,6 +74,7 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
         viewDetailsBtn = new javax.swing.JButton();
         viewPatientsBtn = new javax.swing.JButton();
         viewAllDoctorsBtn = new javax.swing.JButton();
+        searchTxtField = new javax.swing.JTextField();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -208,7 +210,12 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
         add(updateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 370, 180, 30));
 
         goBtn.setText("Go");
-        add(goBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 300, 110, 30));
+        goBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                goBtnActionPerformed(evt);
+            }
+        });
+        add(goBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 300, 110, 30));
 
         deleteHospitalBtn.setText("Delete Hospital");
         deleteHospitalBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -249,6 +256,7 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
             }
         });
         add(viewAllDoctorsBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 440, 220, 30));
+        add(searchTxtField, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 300, 160, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutLabelMousePressed
@@ -377,7 +385,10 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
 
     private void allHospitalBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allHospitalBtn2ActionPerformed
         // TODO add your handling code here:
-       
+       searchByComboBox.setVisible(false);
+       searchLabel.setVisible(false);
+       goBtn.setVisible(false);
+       searchTxtField.setVisible(false);
         updateBtn.setText("Update Hospital Record");
         createHospitalBtn.setText("Create New Hospital");
         deleteHospitalBtn.setText("Delete Hospital");
@@ -389,6 +400,8 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
     private void searchHospitalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchHospitalBtnActionPerformed
         // TODO add your handling code here:
         setSearchComponentsVisibility(true);
+        searchTxtField.setVisible(true);
+        populateJCombobox();
         
     }//GEN-LAST:event_searchHospitalBtnActionPerformed
 
@@ -511,6 +524,28 @@ public class HospitalAdminPanel extends javax.swing.JPanel {
          
     }
     }//GEN-LAST:event_viewDetailsBtnActionPerformed
+
+    private void goBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBtnActionPerformed
+        // TODO add your handling code here:
+        
+        String selectedIndex = (String) searchByComboBox.getSelectedItem();
+        String searchText = searchTxtField.getText();
+        
+        ArrayList<Hospital> result = new ArrayList<>();
+        
+        if(selectedIndex.contains("ID"))
+        {
+            result = searchById(searchText, result);
+        }else if(selectedIndex.contains("Name"))
+        {
+            result = searchByName(searchText, result);
+        }else if(selectedIndex.contains("City")){
+            result = searchByCity(searchText, result);
+        }else if(selectedIndex.contains("Community")){
+            result = searchByCommunity(searchText, result);
+        }
+        populateHospitalTable(result);
+    }//GEN-LAST:event_goBtnActionPerformed
 private void populateAndFillRecordsTable(ArrayList<Patient> patientList) {
         DefaultTableModel tableModel = (DefaultTableModel) tblRecords.getModel();
 
@@ -580,6 +615,7 @@ private void populateAndFillRecordsTable(ArrayList<Patient> patientList) {
     private javax.swing.JComboBox<String> searchByComboBox;
     private javax.swing.JButton searchHospitalBtn;
     private javax.swing.JLabel searchLabel;
+    private javax.swing.JTextField searchTxtField;
     private javax.swing.JTable tblRecords;
     private javax.swing.JButton updateBtn;
     private javax.swing.JButton viewAllDoctorsBtn;
@@ -744,5 +780,77 @@ private void populateAndFillRecordsTable(ArrayList<Patient> patientList) {
         }
     }
 
-   
+    private void populateJCombobox() {
+    
+    searchByComboBox.removeAllItems();
+    searchByComboBox.addItem("ID");
+    searchByComboBox.addItem("Name");
+    searchByComboBox.addItem("City");
+    searchByComboBox.addItem("Community");
+    }
+
+    private ArrayList<Hospital> searchById(String id, ArrayList<Hospital> result) {
+     
+        
+        
+        for(Hospital hospital: HospitalDirectory.hospitalList){
+         if(hospital.getHospitalId() == Integer.parseInt(id)){
+            
+             
+             result.add(hospital);
+             return result;
+         }
+     }
+        return result;
+    }
+    
+    
+    
+    private ArrayList<Hospital> searchByCity(String city, ArrayList<Hospital> result) {
+     
+        
+        
+        for(Hospital hospital: HospitalDirectory.hospitalList){
+         if(hospital.getCommunity().getCity().getName().contains(city)){
+             
+             result.add(hospital);
+             
+         }
+     }
+        return result;
+    }
+    
+    
+    private ArrayList<Hospital> searchByName(String name, ArrayList<Hospital> result) {
+     
+        
+        
+        for(Hospital hospital: HospitalDirectory.hospitalList){
+         if(hospital.getHospitalName().contains(name)){
+             
+             result.add(hospital);
+             
+         }
+     }
+        return result;
+    }
+    
+      private ArrayList<Hospital> searchByCommunity(String community, ArrayList<Hospital> result) {
+     
+        
+        
+        for(Hospital hospital: HospitalDirectory.hospitalList){
+         if(hospital.getCommunity().getCommunityName().contains(community)){
+             
+             result.add(hospital);
+             
+         }
+     }
+        return result;
+    }
+    
+    
+    
+    
+
 }
