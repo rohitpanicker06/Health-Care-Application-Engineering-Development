@@ -305,7 +305,7 @@ public class LoginJPanel extends javax.swing.JPanel {
             
             rbacApplicationContext.setUser(userListDirectory.getUser(userName, userTypeIndex));
             
-            JOptionPane.showMessageDialog(this, "Login Successfull");
+            JOptionPane.showMessageDialog(this, "Login Successful");
             
             HomeScreen.homeScreen.getjSplitPane1().setRightComponent(comp);
             HomeScreen.homeScreen.getjSplitPane1().setDividerLocation(150);

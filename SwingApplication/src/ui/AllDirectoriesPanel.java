@@ -372,7 +372,7 @@ private void populateAndFillHospitalRecord(){
     {
         int selectedRowIndex = tblRecords.getSelectedRow();
         if (selectedRowIndex == -1) {
-            JOptionPane.showMessageDialog(this, "No Patient is selected, Please Try Again");
+            JOptionPane.showMessageDialog(this, "No Record is selected, Please Try Again");
             return;
         }
         
@@ -389,7 +389,7 @@ private void populateAndFillHospitalRecord(){
         String txt = viewRecordBtn.getText();
          int selectedRowIndex = tblRecords.getSelectedRow();
         if (selectedRowIndex == -1) {
-            JOptionPane.showMessageDialog(this, "No Patient is selected, Please Try Again");
+            JOptionPane.showMessageDialog(this, "No Record is selected, Please Try Again");
             return;
         }
         

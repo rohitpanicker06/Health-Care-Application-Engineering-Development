@@ -737,7 +737,7 @@ public class DoctorPanel extends javax.swing.JPanel {
          int pulseRate =0, respirationRate=0, bodyTemp=0;
          String bloodPressure = null;
         StringBuffer errorNotifier = new StringBuffer("Please correct the following Errors\n");
-        
+        try{
         if(ValidationHelper.isInteger(ageTxtField.getText()))
                 {
          pulseRate = Integer.parseInt(ageTxtField.getText());
@@ -763,12 +763,16 @@ public class DoctorPanel extends javax.swing.JPanel {
         }
         
        // if(ValidationHelper.checkBodyTemp(patientIDtxtField.getText())){
-        if(true){
+        if(!patientIDtxtField.getText().isEmpty() && !patientIDtxtField.getText().isBlank()){
          bodyTemp = Integer.parseInt(patientIDtxtField.getText());
         }else{
             errorCount++;
             errorNotifier.append(errorCount).append(". Body Temp should be in proper Format\n");
         
+        }
+        }catch(Exception e)
+        {
+            
         }
         if (errorCount > 0) {
                 JOptionPane.showMessageDialog(this, errorNotifier.toString());

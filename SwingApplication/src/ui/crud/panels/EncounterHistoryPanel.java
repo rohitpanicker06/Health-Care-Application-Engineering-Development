@@ -484,7 +484,7 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
         String bloodPressure = null, doctorName = null;
         StringBuffer errorNotifier = new StringBuffer("Please correct the following Errors\n");
         Doctor doctor = null;
-
+        try{
         if(ValidationHelper.isInteger(ageTxtField.getText()))
         {
             pulseRate = Integer.parseInt(ageTxtField.getText());
@@ -509,8 +509,8 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
             errorNotifier.append(errorCount).append(". Blood Pressure Rate should be in proper Format\n");
         }
 
-        // if(ValidationHelper.checkBodyTemp(patientIDtxtField.getText())){
-            if(true){
+         
+            if(!patientIDtxtField.getText().isBlank() || !patientIDtxtField.getText().isEmpty()){
                 bodyTemp = Integer.parseInt(patientIDtxtField.getText());
             }else{
                 errorCount++;
@@ -524,6 +524,10 @@ public class EncounterHistoryPanel extends javax.swing.JPanel {
                  doctor = new DoctorDirectory().findDoctorByName(doctorName);
                 
             }
+        }catch(Exception e)
+        {
+            
+        }
             if (errorCount > 0) {
                 JOptionPane.showMessageDialog(this, errorNotifier.toString());
             }else{

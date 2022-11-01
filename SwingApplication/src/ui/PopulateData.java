@@ -60,7 +60,7 @@ public class PopulateData {
         
         
         // City
-         City city = new City("Massacheuttus", "USA", "Boston");
+         City city = new City("Massacheuttus", "Usa", "Boston");
 
          // Community
          Community community  = new Community (city, "Huntington", "Avenue","02115");

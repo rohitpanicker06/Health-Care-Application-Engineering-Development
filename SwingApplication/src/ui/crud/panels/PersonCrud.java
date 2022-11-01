@@ -505,13 +505,18 @@ public class PersonCrud extends javax.swing.JPanel {
                 errorCount++;
                 errorNotifier.append(errorCount).append(". Address should be a String\n");
             }
-             
-            if(globalImage != null)
+            
+            try{
+            if( globalImage != null)
             {
                 image=globalImage;
             }else{
                 errorCount++;
                 errorNotifier.append(errorCount).append(". Please select  a Image\n");
+            }
+            }catch(Exception e)
+            {
+                
             }
             if(errorCount > 0 )
             {
